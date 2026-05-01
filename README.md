@@ -1,20 +1,20 @@
-# claude-skill-rfa-bvc-analyzer
+# claude-skill-annual-report-analyzer
 
-> **Claude Code Skill** — Analyse fondamentale institutionnelle d'un Rapport Financier Annuel (RFA) d'une société cotée à la **Bourse de Casablanca (BVC / MASI)**, avec génération automatique d'une présentation HTML interactive responsive de niveau Bloomberg Terminal.
+> **Claude Code Skill** — Analyse fondamentale institutionnelle d'un **rapport financier annuel** (RFA, Annual Report, 10-K, Form 20-F, Document d'Enregistrement Universel) pour toute société cotée — toutes bourses confondues — avec génération automatique d'une présentation HTML interactive responsive de niveau Bloomberg Terminal.
 
 ## Ce que fait ce skill
 
-À partir d'un PDF de RFA d'une société cotée marocaine, le skill produit :
+À partir d'un PDF de rapport annuel d'une société cotée (BVC/Casablanca, Euronext, LSE, NYSE, NASDAQ, etc.), le skill produit :
 
-1. **Une note d'analyse 8 sections** (FR, ton sceptique audit) :
-   - Section 01 — Compte de résultat (P&L)
-   - Section 02 — Cash-flow & BFR
-   - Section 03 — Structure financière
-   - Section 04 — Rentabilité & création de valeur (ROIC vs WACC)
-   - Section 05 — Annexes qualitatives (opinion CAC, KAM, parties liées, hors bilan)
-   - Section 06 — Red Flags (mindset audit, classés par sévérité)
-   - Section 07 — Valorisation (multiples + DCF + scénarios Bull/Base/Bear)
-   - Section 08 — Synthèse exécutive (recommandation, cible 12M, thèse)
+1. **Une note d'analyse 8 sections** (FR par défaut, EN possible, ton sceptique audit) :
+   - Section 01 — Compte de résultat (P&L) — qualité du résultat, effet ciseaux
+   - Section 02 — Cash-flow & BFR — pont RN→FCF, DSO/DIO/DPO
+   - Section 03 — Structure financière — gearing, dette nette/EBITDA, covenants
+   - Section 04 — Rentabilité & création de valeur — **ROIC vs WACC** (calibration multi-marchés)
+   - Section 05 — Annexes qualitatives — opinion CAC/auditor, KAM/CAM, parties liées, hors bilan
+   - Section 06 — Red Flags — mindset audit, classés par sévérité (🔴🟠🟡)
+   - Section 07 — Valorisation — multiples + DCF + scénarios Bull/Base/Bear
+   - Section 08 — Synthèse exécutive — recommandation, cible 12M, thèse, catalyseurs
 
 2. **Une présentation HTML interactive responsive** :
    - Style Bloomberg Terminal dark
@@ -24,19 +24,35 @@
    - Meta tags Open Graph pour partage WhatsApp / LinkedIn
    - Fichier unique HTML standalone, partageable via Netlify Drop / Surge / GitHub Pages
 
+## Marchés supportés
+
+Le skill est conçu pour fonctionner sur **toute société cotée**. Calibrations pré-encodées (WACC, devise, référentiel comptable, régulateur) :
+
+| Marché | Devise | Référentiel | Régulateur | Source cours |
+|---|---|---|---|---|
+| **BVC / Maroc (MASI)** | MAD | IFRS / CGNC | AMMC | casablanca-bourse.com |
+| **Euronext (Paris, Amsterdam, Bruxelles…)** | EUR | IFRS | AMF / AFM / FSMA | live.euronext.com |
+| **LSE (Londres)** | GBP | IFRS UK-endorsed | FCA | londonstockexchange.com |
+| **NYSE / NASDAQ** | USD | US GAAP / IFRS (20-F) | SEC | SEC EDGAR |
+| **TADAWUL (Arabie Saoudite)** | SAR | IFRS | CMA SA | saudiexchange.sa |
+| **EGX (Égypte)** | EGP | EAS / IFRS | FRA | egx.com.eg |
+| **Autres** | — | — | — | demande de paramètres |
+
+Pour un marché non listé, le skill demande à l'utilisateur les paramètres clés (taux sans risque, prime de risque actions, devise).
+
 ## Aperçu
 
-Voir [`examples/adh-2025-reference.html`](examples/adh-2025-reference.html) — analyse complète d'Addoha (ADH:CSE) sur les comptes 2025 (~85 KB, ~2200 lignes, dark theme, fully responsive).
+Voir [`examples/adh-2025-reference.html`](examples/adh-2025-reference.html) — analyse complète d'**Addoha (ADH:CSE)** sur les comptes 2025 (~85 KB, ~2200 lignes, dark theme, fully responsive). Cas d'usage : promoteur immobilier marocain, recommandation NEUTRE biais négatif, 10 red flags identifiés, divergence majeure RN +70% vs FCF -7 MMAD.
 
 ## Installation
 
-### Via Claude Code (skill personnel)
+### Via Claude Code (skill personnel global)
 
 ```bash
-git clone https://github.com/LKABAL/claude-skill-rfa-bvc-analyzer.git ~/.claude/skills/analyse-rfa-institutionnelle
+git clone https://github.com/LKABAL/claude-skill-annual-report-analyzer.git ~/.claude/skills/analyse-rfa-institutionnelle
 ```
 
-Le skill est immédiatement disponible dans Claude Code — il s'auto-déclenche quand vous demandez une analyse RFA d'une société cotée BVC.
+Le skill est immédiatement disponible dans Claude Code — il s'auto-déclenche quand vous demandez une analyse de rapport annuel.
 
 ### Vérifier l'installation
 
@@ -51,24 +67,26 @@ Vous devriez voir `analyse-rfa-institutionnelle` dans la liste.
 ### Invocation explicite
 
 ```
-/analyse-rfa-institutionnelle chemin/vers/rfa-societe-2024.pdf
+/analyse-rfa-institutionnelle chemin/vers/rapport-annuel-2024.pdf
 ```
 
 ### Invocation naturelle
 
 Demandez simplement à Claude Code :
 
-- *"Analyse le RFA de IAM 2024"* (puis fournir le PDF)
-- *"Investment note pour ATW sur l'exercice 2024"*
-- *"Voici le rapport annuel d'ADI 2024, fais-moi l'analyse institutionnelle"*
+- *"Analyse le RFA d'Addoha 2025"* (puis fournir le PDF)
+- *"Investment note pour Sanofi sur l'exercice 2024"*
+- *"Voici le 10-K d'Apple FY2024, fais-moi l'analyse institutionnelle"*
+- *"Fais-moi une analyse buy-side du DEU de TotalEnergies"*
 
 ### Arguments optionnels
 
 ```
-/analyse-rfa-institutionnelle <pdf-path> [--year=YYYY] [--out-dir=path]
+/analyse-rfa-institutionnelle <pdf-path> [--year=YYYY] [--market=BVC|EURONEXT|LSE|NYSE|...] [--out-dir=path]
 ```
 
-- `--year` : année à analyser si le RFA contient plusieurs exercices (défaut : le plus récent)
+- `--year` : année à analyser si le rapport contient plusieurs exercices (défaut : le plus récent)
+- `--market` : forcer la calibration marché (défaut : déduit du ticker / rapport)
 - `--out-dir` : dossier de sortie (défaut : `<HOME>/<TICKER>-Analysis-<YEAR>/`)
 
 ## Sortie
@@ -86,43 +104,44 @@ Pour partager publiquement, plusieurs options :
 
 ### Couleur d'accent par secteur
 
-Le skill choisit automatiquement une couleur d'accent visuelle cohérente avec le secteur de la société :
+Le skill choisit automatiquement une couleur d'accent visuelle cohérente avec le secteur :
 
 | Secteur | Couleur | Hex |
 |---|---|---|
-| Immobilier | Amber | `#f59e0b` |
-| Banques | Blue | `#3b82f6` |
-| Télécoms | Purple | `#8b5cf6` |
-| Mines / Énergie | Red / Emerald | `#ef4444` / `#10b981` |
-| Agro / Conso | Green | `#22c55e` |
-| Assurance | Cyan | `#06b6d4` |
-| BTP / Cimenterie | Slate | `#a3a3a3` |
+| Real Estate / Immobilier | Amber | `#f59e0b` |
+| Financials / Banques | Blue | `#3b82f6` |
+| Tech / Télécoms | Purple | `#8b5cf6` |
+| Energy / Mines | Red / Emerald | `#ef4444` / `#10b981` |
+| Consumer Staples / Agro | Green | `#22c55e` |
+| Insurance | Cyan | `#06b6d4` |
+| Materials / Cimenterie | Slate | `#a3a3a3` |
+| Healthcare / Pharma | Pink | `#ec4899` |
 
-### Recommandations
+### Échelle de recommandations
 
-Le skill suit l'échelle institutionnelle classique :
+Échelle institutionnelle classique :
 - **ACHAT FORT** — upside > 25% + faible risque
 - **ACHAT** — upside 10-25%
 - **NEUTRE** (biais positif/négatif) — upside ±10%
 - **VENTE** — downside 10-25%
 - **VENTE FORTE** — downside > 25%
 
+## Méthodologie — points clés
+
+- **Pont RN → FCF systématique** : c'est là que se cachent la plupart des manipulations comptables (capitalisation agressive, BFR qui explose, provisions opportunistes)
+- **ROIC vs WACC** : si ROIC < WACC, destruction de valeur économique (EVA négative) — message majeur
+- **Effet ciseaux CA / RN** : croissance asymétrique = signal à creuser
+- **Lecture systématique des KAM / CAM** : les Key/Critical Audit Matters révèlent les zones de risque réelles selon le commissaire aux comptes
+- **DCF avec scénarios Bull/Base/Bear** : pas de cible unique trompeuse, fourchette de valorisation transparente
+
 ## Contraintes & garde-fous encodés
 
-- **Aucun mock data** : si une donnée manque dans le RFA, le skill le mentionne explicitement
-- **Conformité AMMC 43-12** : citation systématique du RFA comme source primaire
+- **Aucun mock data** : si une donnée manque dans le rapport, le skill le mentionne explicitement
+- **Citation systématique** des sources réglementaires (AMMC, AMF, SEC, FCA, etc.)
 - **Mindset audit** : recherche systématique des incohérences P&L vs Cash-Flow vs Bilan
 - **Pas de déploiement automatique** : l'utilisateur garde le contrôle du partage
-- **Langue par défaut** : français (adaptable)
-
-## Contexte BVC / MASI
-
-Ce skill est calibré pour les spécificités du marché marocain :
-- Référentiel comptable IFRS pour comptes consolidés (CGNC pour comptes sociaux)
-- Convention de présentation BVC (montants en MMAD)
-- Cours de bourse récupérables via [casablanca-bourse.com](https://www.casablanca-bourse.com)
-- WACC type marché marocain (Rf MAD ~3%, ERP Maroc ~7%, β sectoriel)
-- Recommandations conformes pratique sell-side locale
+- **Disclaimer** : analyse éducative / informationnelle, pas un conseil en investissement personnalisé
+- **Langue par défaut** : français (adaptable EN)
 
 ## Stack technique
 
@@ -133,9 +152,18 @@ Ce skill est calibré pour les spécificités du marché marocain :
 
 ## Limitations connues
 
-- Skill optimisé pour les RFA des sociétés cotées BVC. Pour des sociétés non-cotées ou hors Maroc, adapter manuellement.
-- La qualité de l'analyse dépend de la qualité du PDF source (RFA scanné en image = extraction limitée).
-- Le DCF est simplifié (3-5 ans + valeur terminale) — pour valorisation complète, compléter manuellement.
+- La qualité de l'analyse dépend de la qualité du PDF source (rapport scanné en image = extraction limitée — préférer les PDFs textuels natifs).
+- Le DCF est simplifié (3-5 ans + valeur terminale) — pour valorisation complète multi-scénarios, compléter manuellement.
+- Pour les sociétés très complexes (conglomérats multi-segments, banques avec compte de résultat bancaire spécifique, assurances avec ratio combiné…), le skill produit une base solide mais nécessite enrichissement sectoriel.
+- Calibrations WACC fournies à titre indicatif — vérifier les conditions de marché en vigueur à la date d'analyse.
+
+## Cas d'usage typiques
+
+- **Buy-side** : pré-screening avant approfondissement, génération de notes courtes pour comité d'investissement
+- **Sell-side** : structure de note initiation, mise à jour post-publication des comptes
+- **Family office / wealth management** : pédagogie client (la prez HTML est compréhensible par un non-spécialiste)
+- **Étudiants finance / CFA** : cas pratique structuré sur n'importe quelle société cotée
+- **Journalisme financier** : décryptage rapide d'un rapport annuel publié
 
 ## Licence
 
@@ -147,7 +175,7 @@ MIT — voir [LICENSE](LICENSE).
 
 ## Contributions
 
-Issues et PRs bienvenues. Pour ajouter le support d'autres bourses (Tunis, Alger, Égypte, Nigeria…), ouvrir une issue d'abord.
+Issues et PRs bienvenues. Pour ajouter le support fin d'autres bourses (Tunis, Alger, Nigeria, Kenya, Arabie, Inde…), ouvrir une issue d'abord avec : référentiel comptable, devise, régulateur, source de cours, calibration WACC type.
 
 ---
 
