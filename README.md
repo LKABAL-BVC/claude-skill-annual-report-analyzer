@@ -49,7 +49,7 @@ Voir [`examples/adh-2025-reference.html`](examples/adh-2025-reference.html) — 
 ### Via Claude Code (skill personnel global)
 
 ```bash
-git clone https://github.com/LKABAL/claude-skill-annual-report-analyzer.git ~/.claude/skills/analyse-rfa-institutionnelle
+git clone https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer.git ~/.claude/skills/analyse-rfa-institutionnelle
 ```
 
 Le skill est immédiatement disponible dans Claude Code — il s'auto-déclenche quand vous demandez une analyse de rapport annuel.
@@ -171,7 +171,7 @@ MIT — voir [LICENSE](LICENSE).
 
 ## Auteur
 
-**LKABAL**
+**LKABAL** — [@LKABAL-BVC](https://github.com/LKABAL-BVC) on GitHub
 
 ## Contributions
 

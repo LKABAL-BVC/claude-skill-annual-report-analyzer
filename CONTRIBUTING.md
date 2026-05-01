@@ -5,7 +5,7 @@ Merci de l'intérêt pour ce projet. Les contributions sont bienvenues — bugs,
 ## Comment contribuer
 
 ### 1. Signaler un bug ou suggérer une amélioration
-Ouvrir une [issue](https://github.com/LKABAL/claude-skill-annual-report-analyzer/issues) avec :
+Ouvrir une [issue](https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer/issues) avec :
 - **Titre clair** : *"[Bug] La table dette ne s'affiche pas sur mobile ≤ 380px"*
 - **Étapes de reproduction** (si bug)
 - **Comportement attendu vs observé**
@@ -24,7 +24,7 @@ Pour ajouter le support d'une nouvelle place boursière (Tunis BVMT, Alger SGBV,
 ### 3. Soumettre une Pull Request
 
 ```bash
-git clone https://github.com/LKABAL/claude-skill-annual-report-analyzer.git
+git clone https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer.git
 cd claude-skill-annual-report-analyzer
 git checkout -b feat/nom-de-la-feature
 # ... modifications ...
@@ -72,8 +72,8 @@ Bienveillance, factualité, respect. Ce projet sert l'analyse financière éduca
 
 ## Questions
 
-Ouvrir une [discussion](https://github.com/LKABAL/claude-skill-annual-report-analyzer/discussions) plutôt qu'une issue pour les questions ouvertes.
+Ouvrir une [discussion](https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer/discussions) plutôt qu'une issue pour les questions ouvertes.
 
 ---
 
-*Maintained by LKABAL.*
+*Maintained by LKABAL ([@LKABAL-BVC](https://github.com/LKABAL-BVC)).*
