@@ -1,0 +1,2187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ADH 2025 — Investment Note | Analyse Institutionnelle</title>
+
+<!-- SEO -->
+<meta name="description" content="Analyse fondamentale institutionnelle d'Addoha (ADH:CSE) sur les comptes 2025. RN +70% mais FCF négatif, ROIC 2,3% vs WACC 8%. Recommandation NEUTRE biais négatif.">
+<meta name="author" content="LKABAL">
+
+<!-- Open Graph (WhatsApp / LinkedIn / Twitter preview) -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="ADH 2025 — Investment Note Institutionnelle">
+<meta property="og:description" content="Analyse fondamentale Addoha FY2025 · RN +70% contredit par FCF -7 MMAD · ROIC 2,3% vs WACC 8% · 10 red flags · Recommandation NEUTRE biais négatif">
+<meta property="og:image" content="https://og.tailgraph.com/og?fontFamily=Inter&title=ADH%202025&titleTailwind=text-white%20font-extrabold%20text-7xl&text=Investment%20Note%20%C2%B7%20NEUTRE%20%E2%88%99%20Bias%20N%C3%A9gatif%20%E2%80%94%20FCF%20-7%20MMAD%20%C2%B7%20ROIC%202%2C3%25&textTailwind=text-amber-400%20text-2xl%20mt-6&bgTailwind=bg-gradient-to-br%20from-slate-900%20via-slate-800%20to-amber-900&footer=LKABAL%20%E2%80%A2%20Casablanca%20Stock%20Exchange&footerTailwind=text-slate-400%20text-lg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="LKABAL">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ADH 2025 — Investment Note Institutionnelle">
+<meta name="twitter:description" content="Analyse fondamentale Addoha FY2025 · RN +70% contredit par FCF -7 MMAD · 10 red flags · NEUTRE biais négatif">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+  :root {
+    --bg-primary: #0a0e1a;
+    --bg-secondary: #131826;
+    --bg-tertiary: #1a2032;
+    --bg-elevated: #1f2842;
+    --border: #243049;
+    --border-strong: #2d3a5a;
+    --accent: #f59e0b;
+    --accent-soft: rgba(245, 158, 11, 0.12);
+    --success: #10b981;
+    --success-soft: rgba(16, 185, 129, 0.12);
+    --danger: #ef4444;
+    --danger-soft: rgba(239, 68, 68, 0.12);
+    --warning: #fbbf24;
+    --warning-soft: rgba(251, 191, 36, 0.12);
+    --info: #3b82f6;
+    --info-soft: rgba(59, 130, 246, 0.12);
+    --text-primary: #f3f4f6;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+    --mono: 'JetBrains Mono', 'SF Mono', Consolas, monospace;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ======= TOP BAR ======= */
+  .topbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    padding: 0 24px;
+    z-index: 100;
+    gap: 24px;
+  }
+  .ticker {
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 16px;
+    letter-spacing: 0.5px;
+  }
+  .topbar-divider { width: 1px; height: 24px; background: var(--border-strong); }
+  .topbar-meta {
+    display: flex;
+    gap: 24px;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 12px;
+  }
+  .topbar-meta strong { color: var(--text-primary); margin-left: 6px; }
+  .topbar-spacer { flex: 1; }
+  .rating-pill {
+    padding: 6px 14px;
+    border-radius: 4px;
+    background: var(--warning-soft);
+    color: var(--warning);
+    font-weight: 600;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    border: 1px solid var(--warning);
+  }
+
+  /* ======= LAYOUT ======= */
+  .layout { display: flex; padding-top: 56px; min-height: 100vh; }
+
+  /* ======= SIDEBAR ======= */
+  .sidebar {
+    position: fixed;
+    top: 56px;
+    left: 0;
+    bottom: 0;
+    width: 240px;
+    background: var(--bg-secondary);
+    border-right: 1px solid var(--border);
+    padding: 20px 12px;
+    overflow-y: auto;
+  }
+  .sidebar-section {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: var(--text-dim);
+    padding: 12px 12px 8px;
+    font-weight: 700;
+  }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 13px;
+    border-radius: 6px;
+    margin-bottom: 2px;
+    cursor: pointer;
+    transition: all 0.15s;
+    gap: 10px;
+  }
+  .nav-item:hover {
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+  }
+  .nav-item.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-left: 3px solid var(--accent);
+    padding-left: 9px;
+  }
+  .nav-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-dim);
+    min-width: 16px;
+  }
+  .nav-item.active .nav-num { color: var(--accent); }
+
+  /* ======= MAIN ======= */
+  .main {
+    margin-left: 240px;
+    flex: 1;
+    padding: 32px 40px 80px;
+    max-width: calc(100vw - 240px);
+  }
+
+  /* ======= SECTIONS ======= */
+  .section {
+    margin-bottom: 64px;
+    scroll-margin-top: 80px;
+  }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+  }
+  .section-num {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 1px;
+  }
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+    letter-spacing: -0.3px;
+  }
+  .section-subtitle {
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    font-style: italic;
+  }
+
+  /* ======= GRID ======= */
+  .grid { display: grid; gap: 16px; }
+  .grid-2 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+  .grid-4 { grid-template-columns: repeat(4, 1fr); }
+  @media (max-width: 1100px) {
+    .grid-3, .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  /* ======= CARDS ======= */
+  .card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    transition: border-color 0.15s;
+  }
+  .card:hover { border-color: var(--border-strong); }
+  .card-elevated {
+    background: var(--bg-tertiary);
+    border-color: var(--border-strong);
+  }
+  .card-title {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+  .card-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 6px;
+    letter-spacing: -0.5px;
+  }
+  .card-delta {
+    font-size: 12px;
+    font-family: var(--mono);
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .delta-pos { color: var(--success); }
+  .delta-neg { color: var(--danger); }
+  .delta-neutral { color: var(--text-muted); }
+  .card-foot {
+    margin-top: 8px;
+    color: var(--text-muted);
+    font-size: 11px;
+  }
+
+  /* ======= CHART CONTAINER ======= */
+  .chart-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .chart-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .chart-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .chart-wrap {
+    position: relative;
+    height: 300px;
+  }
+  .chart-wrap-tall { height: 380px; }
+
+  /* ======= TABLES ======= */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .data-table thead th {
+    text-align: left;
+    padding: 12px 16px;
+    background: var(--bg-tertiary);
+    color: var(--text-muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .data-table tbody td {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-secondary);
+  }
+  .data-table tbody tr:hover { background: var(--bg-tertiary); }
+  .data-table .num { text-align: right; color: var(--text-primary); }
+  .data-table .label-cell { font-family: -apple-system, sans-serif; color: var(--text-primary); font-weight: 500; }
+  .data-table .strong-row td {
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border-color: var(--accent);
+  }
+
+  /* ======= BADGES ======= */
+  .badge {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    text-transform: uppercase;
+  }
+  .badge-danger { background: var(--danger-soft); color: var(--danger); border: 1px solid rgba(239,68,68,0.3); }
+  .badge-warning { background: var(--warning-soft); color: var(--warning); border: 1px solid rgba(251,191,36,0.3); }
+  .badge-success { background: var(--success-soft); color: var(--success); border: 1px solid rgba(16,185,129,0.3); }
+  .badge-info { background: var(--info-soft); color: var(--info); border: 1px solid rgba(59,130,246,0.3); }
+  .badge-muted { background: var(--bg-tertiary); color: var(--text-muted); }
+
+  /* ======= EXEC SUMMARY ======= */
+  .hero {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(245,158,11,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .hero-tag {
+    display: inline-block;
+    padding: 4px 12px;
+    background: var(--accent-soft);
+    color: var(--accent);
+    border-radius: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .hero-sub {
+    color: var(--text-muted);
+    font-size: 15px;
+    max-width: 800px;
+    margin-bottom: 24px;
+  }
+
+  /* Conviction gauge */
+  .conviction {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    margin-top: 24px;
+    padding: 24px;
+    background: var(--bg-primary);
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .conviction-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 6px;
+  }
+  .conviction-rating {
+    font-size: 36px;
+    font-weight: 800;
+    color: var(--warning);
+    letter-spacing: -1px;
+  }
+  .conviction-bias {
+    font-size: 13px;
+    color: var(--danger);
+    font-weight: 600;
+    margin-top: 2px;
+  }
+  .conviction-meter {
+    flex: 1;
+  }
+  .meter-track {
+    height: 10px;
+    background: var(--bg-tertiary);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 38%;
+    background: linear-gradient(90deg, var(--danger), var(--warning));
+    border-radius: 5px;
+  }
+  .meter-labels {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  /* ======= KPI BAR ======= */
+  .kpi-bar {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 24px;
+  }
+  .kpi-bar-item {
+    background: var(--bg-secondary);
+    padding: 16px 20px;
+  }
+  .kpi-bar-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .kpi-bar-value {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .kpi-bar-delta {
+    font-size: 11px;
+    margin-top: 4px;
+    font-family: var(--mono);
+  }
+
+  /* ======= RED FLAGS ======= */
+  .flags-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .flag-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-left-width: 4px;
+    border-radius: 6px;
+    padding: 16px;
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    transition: transform 0.15s, border-color 0.15s;
+  }
+  .flag-card:hover { transform: translateX(2px); }
+  .flag-critical { border-left-color: var(--danger); }
+  .flag-high { border-left-color: var(--warning); }
+  .flag-medium { border-left-color: var(--info); }
+  .flag-num {
+    font-family: var(--mono);
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--text-dim);
+    min-width: 28px;
+  }
+  .flag-content { flex: 1; }
+  .flag-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+  }
+  .flag-desc {
+    font-size: 12px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .flag-severity {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 8px;
+    display: inline-block;
+  }
+  .flag-critical .flag-severity { color: var(--danger); }
+  .flag-high .flag-severity { color: var(--warning); }
+  .flag-medium .flag-severity { color: var(--info); }
+
+  /* ======= BULL/BEAR ======= */
+  .scenarios { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .scenario {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .scenario-bull { border-top: 3px solid var(--success); }
+  .scenario-bear { border-top: 3px solid var(--danger); }
+  .scenario-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+  }
+  .scenario-title {
+    font-size: 18px;
+    font-weight: 700;
+  }
+  .scenario-bull .scenario-title { color: var(--success); }
+  .scenario-bear .scenario-title { color: var(--danger); }
+  .scenario-list { list-style: none; }
+  .scenario-list li {
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+    display: flex;
+    gap: 10px;
+  }
+  .scenario-list li:last-child { border-bottom: none; }
+  .scenario-bullet {
+    font-family: var(--mono);
+    font-weight: 700;
+    min-width: 14px;
+  }
+  .scenario-bull .scenario-bullet { color: var(--success); }
+  .scenario-bear .scenario-bullet { color: var(--danger); }
+
+  /* ======= TIMELINE ======= */
+  .timeline {
+    position: relative;
+    padding-left: 28px;
+    margin-top: 24px;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 8px;
+    bottom: 8px;
+    width: 2px;
+    background: var(--border-strong);
+  }
+  .timeline-item {
+    position: relative;
+    padding-bottom: 20px;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -24px;
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 3px solid var(--bg-primary);
+    box-shadow: 0 0 0 1px var(--accent);
+  }
+  .timeline-date {
+    font-family: var(--mono);
+    color: var(--accent);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .timeline-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 4px 0;
+    font-size: 14px;
+  }
+  .timeline-desc {
+    color: var(--text-muted);
+    font-size: 12px;
+  }
+
+  /* ======= QUOTE BLOCK ======= */
+  .quote {
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    padding: 16px 20px;
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 14px;
+    line-height: 1.6;
+    margin: 16px 0;
+  }
+  .quote strong { color: var(--text-primary); }
+  .quote-warn { border-left-color: var(--warning); background: var(--warning-soft); }
+  .quote-danger { border-left-color: var(--danger); background: var(--danger-soft); }
+  .quote-success { border-left-color: var(--success); background: var(--success-soft); }
+
+  /* ======= GAUGE ======= */
+  .gauge-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 16px;
+  }
+  .gauge-svg { width: 200px; height: 120px; }
+  .gauge-value {
+    font-family: var(--mono);
+    font-size: 28px;
+    font-weight: 800;
+    margin-top: -32px;
+  }
+  .gauge-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-top: 6px;
+  }
+
+  /* ======= QUESTIONS IR ======= */
+  .question-list {
+    list-style: none;
+    counter-reset: q;
+  }
+  .question-list li {
+    counter-increment: q;
+    padding: 14px 0 14px 40px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .question-list li::before {
+    content: 'Q' counter(q);
+    position: absolute;
+    left: 0;
+    top: 14px;
+    font-family: var(--mono);
+    font-weight: 700;
+    color: var(--accent);
+    font-size: 12px;
+  }
+
+  /* ======= FOOTER ======= */
+  .footer {
+    margin-top: 80px;
+    padding: 24px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-size: 11px;
+    text-align: center;
+    line-height: 1.7;
+  }
+  .footer code {
+    font-family: var(--mono);
+    color: var(--text-muted);
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 10px; height: 10px; }
+  ::-webkit-scrollbar-track { background: var(--bg-primary); }
+  ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
+
+  /* Print */
+  @media print {
+    .sidebar, .topbar { display: none; }
+    .main { margin-left: 0; }
+    .section { page-break-inside: avoid; }
+  }
+
+  /* Tabs */
+  .tabs {
+    display: flex;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 20px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .tab {
+    padding: 10px 16px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    margin-bottom: -1px;
+    font-family: inherit;
+  }
+  .tab.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
+  .tab-panel { display: none; }
+  .tab-panel.active { display: block; }
+
+  /* ============ HAMBURGER MENU ============ */
+  .menu-btn {
+    display: none;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-strong);
+    color: var(--text-primary);
+    width: 38px;
+    height: 38px;
+    border-radius: 6px;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: 18px;
+  }
+  .menu-btn:active { background: var(--accent-soft); }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.6);
+    z-index: 90;
+    backdrop-filter: blur(2px);
+  }
+  .sidebar-backdrop.active { display: block; }
+
+  /* ============ TABLET ≤1100px ============ */
+  @media (max-width: 1100px) {
+    .topbar-meta { gap: 14px; font-size: 11px; }
+    .topbar-meta span:nth-child(2) { display: none; }
+    .main { padding: 24px 24px 60px; }
+    .hero { padding: 24px; }
+    .hero-title { font-size: 26px; }
+    .conviction { flex-direction: column; align-items: flex-start; gap: 16px; }
+    .scenarios { grid-template-columns: 1fr; }
+    .flags-grid { grid-template-columns: 1fr; }
+  }
+
+  /* ============ MOBILE ≤768px ============ */
+  @media (max-width: 768px) {
+    body { font-size: 13px; }
+
+    /* Top bar */
+    .topbar { padding: 0 12px; gap: 10px; }
+    .ticker { font-size: 14px; }
+    .topbar-meta { display: none; }
+    .topbar-divider { display: none; }
+    .rating-pill { font-size: 10px; padding: 5px 10px; }
+    .menu-btn { display: flex; }
+
+    /* Sidebar = off-canvas */
+    .sidebar {
+      transform: translateX(-100%);
+      transition: transform 0.25s ease;
+      width: 260px;
+      z-index: 95;
+      box-shadow: 4px 0 24px rgba(0,0,0,0.5);
+    }
+    .sidebar.open { transform: translateX(0); }
+    .nav-item { padding: 14px 12px; font-size: 14px; }
+
+    /* Main */
+    .main {
+      margin-left: 0;
+      padding: 16px 14px 60px;
+      max-width: 100vw;
+    }
+
+    /* Sections */
+    .section { margin-bottom: 40px; }
+    .section-header { gap: 10px; padding-bottom: 10px; flex-wrap: wrap; }
+    .section-num { font-size: 12px; }
+    .section-title { font-size: 19px; line-height: 1.3; }
+    .section-subtitle { font-size: 13px; margin-bottom: 18px; }
+
+    /* Hero */
+    .hero { padding: 20px 16px; border-radius: 8px; }
+    .hero-title { font-size: 21px; line-height: 1.25; }
+    .hero-sub { font-size: 13px; }
+    .conviction { padding: 16px; }
+    .conviction-rating { font-size: 28px; }
+
+    /* Grids → 1 col */
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+
+    /* KPI bar → 2 cols */
+    .kpi-bar { grid-template-columns: 1fr 1fr; }
+    .kpi-bar-item { padding: 12px 14px; }
+    .kpi-bar-value { font-size: 18px; }
+    .kpi-bar-label { font-size: 9px; }
+
+    /* Cards */
+    .card { padding: 16px; }
+    .card-value { font-size: 22px; }
+    .card-title { font-size: 11px; }
+
+    /* Charts plus petits */
+    .chart-card { padding: 16px; }
+    .chart-wrap { height: 240px; }
+    .chart-wrap-tall { height: 300px; }
+    .chart-title { font-size: 13px; }
+    .chart-desc { font-size: 11px; margin-bottom: 14px; }
+
+    /* Tables scrollables horizontalement */
+    .card { overflow-x: auto; }
+    .data-table { min-width: 480px; font-size: 12px; }
+    .data-table thead th, .data-table tbody td { padding: 10px 12px; }
+
+    /* Tabs */
+    .tab { padding: 10px 12px; font-size: 12px; white-space: nowrap; flex-shrink: 0; }
+
+    /* Quote */
+    .quote { padding: 14px 16px; font-size: 13px; }
+
+    /* Flags */
+    .flag-card { padding: 14px; }
+    .flag-num { font-size: 16px; min-width: 22px; }
+    .flag-title { font-size: 12.5px; }
+    .flag-desc { font-size: 11.5px; }
+
+    /* Scenarios */
+    .scenario { padding: 18px; }
+    .scenario-title { font-size: 16px; }
+    .scenario-list li { padding: 8px 0; font-size: 12.5px; }
+
+    /* Timeline */
+    .timeline { padding-left: 22px; }
+    .timeline-title { font-size: 13px; }
+    .timeline-desc { font-size: 11.5px; }
+
+    /* Question list */
+    .question-list li { font-size: 12.5px; padding: 12px 0 12px 32px; }
+
+    /* Footer */
+    .footer { font-size: 10px; padding: 16px; margin-top: 40px; }
+
+    /* Gauges plus compactes */
+    .gauge-svg { width: 160px; height: 96px; }
+    .gauge-value { font-size: 22px; }
+  }
+
+  /* ============ TRÈS PETIT MOBILE ≤380px ============ */
+  @media (max-width: 380px) {
+    .kpi-bar { grid-template-columns: 1fr; }
+    .hero-title { font-size: 19px; }
+    .section-title { font-size: 17px; }
+    .topbar { gap: 6px; }
+    .ticker { font-size: 12px; }
+    .rating-pill { font-size: 9px; padding: 4px 8px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ TOP BAR ============ -->
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Menu">☰</button>
+  <div class="ticker">ADH:CSE</div>
+  <div class="topbar-divider"></div>
+  <div class="topbar-meta">
+    <span>Émetteur :<strong>Douja Promotion Groupe Addoha</strong></span>
+    <span>Secteur :<strong>Immobilier</strong></span>
+    <span>Marché :<strong>MASI</strong></span>
+    <span>Exercice :<strong>FY 2025</strong></span>
+  </div>
+  <div class="topbar-spacer"></div>
+  <div class="rating-pill">NEUTRE — biais négatif</div>
+</header>
+
+<div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+
+<div class="layout">
+
+<!-- ============ SIDEBAR ============ -->
+<nav class="sidebar">
+  <div class="sidebar-section">Investment Note</div>
+  <a class="nav-item active" data-target="overview"><span class="nav-num">00</span>Synthèse Exécutive</a>
+  <a class="nav-item" data-target="s1"><span class="nav-num">01</span>P&L &amp; Performance</a>
+  <a class="nav-item" data-target="s2"><span class="nav-num">02</span>Cash &amp; BFR</a>
+  <a class="nav-item" data-target="s3"><span class="nav-num">03</span>Structure Financière</a>
+  <a class="nav-item" data-target="s4"><span class="nav-num">04</span>Création de Valeur</a>
+  <a class="nav-item" data-target="s5"><span class="nav-num">05</span>Annexes &amp; Qualitatif</a>
+  <a class="nav-item" data-target="s6"><span class="nav-num">06</span>Red Flags</a>
+  <a class="nav-item" data-target="s7"><span class="nav-num">07</span>Valorisation</a>
+  <a class="nav-item" data-target="s8"><span class="nav-num">08</span>Bull vs Bear</a>
+  <a class="nav-item" data-target="s9"><span class="nav-num">09</span>Recommandation</a>
+
+  <div class="sidebar-section" style="margin-top: 24px;">Source</div>
+  <div style="padding: 8px 12px; font-size: 11px; color: var(--text-muted); line-height: 1.6;">
+    RFA 2025 — 129 pages<br>
+    Audit : Fidaroc GT &amp; Hdid<br>
+    Opinion : sans réserve<br>
+    Date : 28 avr. 2026
+  </div>
+</nav>
+
+<!-- ============ MAIN ============ -->
+<main class="main">
+
+  <!-- ============ OVERVIEW ============ -->
+  <section class="section" id="overview">
+    <div class="hero">
+      <div class="hero-tag">Investment Memo</div>
+      <h1 class="hero-title">Le narrative de redressement contredit par les fondamentaux cash</h1>
+      <p class="hero-sub">
+        Le résultat net consolidé bondit de +70 % (516 MMAD), mais le free cash-flow opérationnel ressort à <strong style="color:var(--danger)">-7 MMAD</strong>.
+        Le BFR a absorbé 100 % de la CAF. Le holding social affiche une perte de 90 MMAD tout en distribuant 201 MMAD de dividendes sur réserves.
+        Le ROIC à 2,3 % détruit ~600 bps de valeur économique versus le WACC.
+      </p>
+
+      <div class="conviction">
+        <div>
+          <div class="conviction-label">Recommandation</div>
+          <div class="conviction-rating">NEUTRE</div>
+          <div class="conviction-bias">↓ Biais négatif</div>
+        </div>
+        <div class="conviction-meter">
+          <div class="conviction-label">Conviction analytique</div>
+          <div class="meter-track"><div class="meter-fill"></div></div>
+          <div class="meter-labels">
+            <span>Sell</span><span>Reduce</span><span style="color:var(--warning)">▲ Hold-</span><span>Buy</span><span>Strong Buy</span>
+          </div>
+          <div style="margin-top:14px; font-size:12px; color:var(--text-muted); line-height:1.6;">
+            Catalyseurs binaires (Blanca City Park, S1 2026 cash conversion). Re-rating possible vers HOLD+ si le BFR se résorbe sur 2 semestres consécutifs.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- KPI BAR -->
+    <div class="kpi-bar">
+      <div class="kpi-bar-item">
+        <div class="kpi-bar-label">CA Consolidé</div>
+        <div class="kpi-bar-value">2 709<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
+        <div class="kpi-bar-delta delta-pos">+4,4 % YoY</div>
+      </div>
+      <div class="kpi-bar-item">
+        <div class="kpi-bar-label">RN Part Groupe</div>
+        <div class="kpi-bar-value">454<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
+        <div class="kpi-bar-delta delta-pos">+65 % YoY</div>
+      </div>
+      <div class="kpi-bar-item">
+        <div class="kpi-bar-label">FCF Opérationnel</div>
+        <div class="kpi-bar-value" style="color:var(--danger);">-7<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
+        <div class="kpi-bar-delta delta-neg">vs +223 en 2024</div>
+      </div>
+      <div class="kpi-bar-item">
+        <div class="kpi-bar-label">ROIC</div>
+        <div class="kpi-bar-value" style="color:var(--danger);">2,3<span style="font-size:12px;color:var(--text-muted);"> %</span></div>
+        <div class="kpi-bar-delta delta-neg">WACC ~8-9 % → EVA -</div>
+      </div>
+    </div>
+
+    <!-- 3-COL OVERVIEW -->
+    <div class="grid grid-3">
+      <div class="card" style="border-top:3px solid var(--success);">
+        <div class="card-title" style="color:var(--success);">▲ Points Forts</div>
+        <ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+          <li>• Préventes 11 035 unités (+3 %)</li>
+          <li>• CA sécurisé <strong>11,7 Md MAD</strong> (+27 %)</li>
+          <li>• Pivot Afrique : CI +152 %</li>
+          <li>• 4,3 ans de visibilité</li>
+          <li>• Décote book value (P/B ≈ 0,47x)</li>
+          <li>• Dividende rétabli (yield ~4,5 %)</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--danger);">
+        <div class="card-title" style="color:var(--danger);">▼ Risques Critiques</div>
+        <ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+          <li>• Divergence RN / Cash-Flow majeure</li>
+          <li>• Holding en perte → dividende non couvert</li>
+          <li>• BFR 13,9 Md MAD vs CA 2,7 Md</li>
+          <li>• Interest coverage 1,65x</li>
+          <li>• Taux effectif 11 % (vs 25,5 %)</li>
+          <li>• Hors-bilan +42 % YoY</li>
+        </ul>
+      </div>
+      <div class="card" style="border-top:3px solid var(--accent);">
+        <div class="card-title" style="color:var(--accent);">► Verdict</div>
+        <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+          Dossier de qualité <strong style="color:var(--warning)">FAIBLE à MOYEN</strong>. Une thèse "deep value" est défendable sur la décote P/B,
+          mais le couple <em>ROIC 2 % / Levier 7x EBITDA / Coverage 1,65x</em> est structurellement fragile.
+        </p>
+        <p style="font-size:13px; line-height:1.7; color:var(--text-secondary); margin-top:10px;">
+          <strong style="color:var(--text-primary)">Investissement long terme :</strong> à éviter tant que le FCF reste négatif sur 2 semestres consécutifs.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ S1 P&L ============ -->
+  <section class="section" id="s1">
+    <div class="section-header">
+      <span class="section-num">01 //</span>
+      <h2 class="section-title">Performance Opérationnelle</h2>
+    </div>
+    <p class="section-subtitle">La rupture comptable masque une stagnation économique réelle</p>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title">Évolution du Chiffre d'Affaires</div>
+        <div class="chart-desc">Le pro-forma "ancien référentiel" n'est pas auditable — à traiter comme communication management</div>
+        <div class="chart-wrap"><canvas id="chartCA"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Marges Opérationnelles</div>
+        <div class="chart-desc">Marge brute +100 bps mais REX en érosion (-1,3 %)</div>
+        <div class="chart-wrap"><canvas id="chartMarges"></canvas></div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title">Mix Géographique du CA</div>
+        <div class="chart-desc">L'Afrique de l'Ouest porte 41 % du CA — risque pays/devise non hedgé</div>
+        <div class="chart-wrap"><canvas id="chartGeo"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Mix par Standing (Maroc)</div>
+        <div class="chart-desc">Effondrement Haut Standing -47 % — segment qui devait porter les marges</div>
+        <div class="chart-wrap"><canvas id="chartStanding"></canvas></div>
+      </div>
+    </div>
+
+    <div class="quote quote-warn">
+      <strong>Retraitement du résultat normatif :</strong> Le bond du RN +70 % est artificiellement gonflé par
+      (i) un résultat financier qui passe de +14 à +131 MMAD (reprises de provisions, change), et
+      (ii) un taux d'imposition effectif de 10,96 % vs 25,5 % théorique. <strong>RN normatif estimé ~360 MMAD</strong> →
+      l'amélioration réelle est ~+18 %, pas +70 %.
+    </div>
+
+    <div class="card-elevated card">
+      <div class="card-title">Tableau de retraitement</div>
+      <table class="data-table">
+        <thead><tr><th>MMAD</th><th class="num">Publié 2025</th><th class="num">Retraitement</th><th class="num">Normatif</th></tr></thead>
+        <tbody>
+          <tr><td class="label-cell">Résultat opérationnel (REX)</td><td class="num">448</td><td class="num">0</td><td class="num">448</td></tr>
+          <tr><td class="label-cell">Résultat financier</td><td class="num" style="color:var(--success)">+131</td><td class="num" style="color:var(--danger)">-117</td><td class="num">+14</td></tr>
+          <tr><td class="label-cell">Charge d'impôt (taux effectif)</td><td class="num">-64 (11%)</td><td class="num" style="color:var(--danger)">-90</td><td class="num">-154 (25,5%)</td></tr>
+          <tr class="strong-row"><td class="label-cell">RN Consolidé</td><td class="num">516</td><td class="num">-156</td><td class="num">~360</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ S2 CASH ============ -->
+  <section class="section" id="s2">
+    <div class="section-header">
+      <span class="section-num">02 //</span>
+      <h2 class="section-title">Cash-Flow &amp; BFR</h2>
+    </div>
+    <p class="section-subtitle">L'incohérence majeure du dossier — la machine à profits ne génère pas de cash</p>
+
+    <div class="quote quote-danger" style="margin-bottom:24px;">
+      🚨 <strong>RED FLAG #1 :</strong> Résultat Net intégré +516 MMAD ↔ Free Cash Flow opérationnel <strong>-7 MMAD</strong>.
+      Le BFR a absorbé 100 % de la CAF (-559 MMAD). Stocks +1 588 MMAD sur l'année. Ratio stocks/CA = <strong>6,3 années</strong>.
+    </div>
+
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div class="chart-title">Bridge Cash-Flow : RN → FCF Opérationnel</div>
+      <div class="chart-desc">Visualisation waterfall — le BFR détruit la conversion cash</div>
+      <div class="chart-wrap chart-wrap-tall"><canvas id="chartWaterfall"></canvas></div>
+    </div>
+
+    <div class="grid grid-3" style="margin-bottom:20px;">
+      <div class="card">
+        <div class="card-title">DSO — Délai client</div>
+        <div class="card-value">148<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
+        <div class="card-foot">Lent, partiellement compensé par avances clients (+441 MMAD)</div>
+      </div>
+      <div class="card">
+        <div class="card-title">DPO — Délai fournisseur</div>
+        <div class="card-value" style="color:var(--warning)">247<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
+        <div class="card-foot">Étirement anormal — financement par retard fournisseurs</div>
+      </div>
+      <div class="card">
+        <div class="card-title">DIO — Rotation stocks</div>
+        <div class="card-value" style="color:var(--danger)">~2 300<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
+        <div class="card-foot">Acceptable secteur, mais cumulativement insoutenable</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2">
+      <div class="chart-card">
+        <div class="chart-title">Évolution du BFR</div>
+        <div class="chart-desc">Croissance mécanique liée aux stocks — bombe à retardement de liquidité</div>
+        <div class="chart-wrap"><canvas id="chartBFR"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Capex — Sous-investissement structurel</div>
+        <div class="chart-desc">21 MMAD de Capex pour 17 Md de stocks — outil non renouvelé</div>
+        <div class="chart-wrap"><canvas id="chartCapex"></canvas></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ S3 STRUCTURE ============ -->
+  <section class="section" id="s3">
+    <div class="section-header">
+      <span class="section-num">03 //</span>
+      <h2 class="section-title">Structure Financière &amp; Solvabilité</h2>
+    </div>
+    <p class="section-subtitle">Solidité affichée, fragilité réelle — divergence du gearing communiqué</p>
+
+    <div class="grid grid-4" style="margin-bottom:20px;">
+      <div class="card">
+        <div class="card-title">Dette Nette</div>
+        <div class="card-value">4 385<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
+        <div class="card-foot">Stable vs 4 119 en 2024</div>
+      </div>
+      <div class="card">
+        <div class="card-title">Gearing publié</div>
+        <div class="card-value" style="color:var(--success)">30 %</div>
+        <div class="card-foot">Communication officielle</div>
+      </div>
+      <div class="card" style="border-color:var(--warning);">
+        <div class="card-title" style="color:var(--warning)">Gearing recalculé</div>
+        <div class="card-value" style="color:var(--warning)">42 %</div>
+        <div class="card-foot">Avec découverts bancaires</div>
+      </div>
+      <div class="card" style="border-color:var(--danger);">
+        <div class="card-title" style="color:var(--danger)">Coverage Ratio</div>
+        <div class="card-value" style="color:var(--danger)">1,65x</div>
+        <div class="card-foot">EBIT / Charges d'intérêts</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title">Composition de l'Endettement</div>
+        <div class="chart-desc">~960 MMAD de découverts bancaires = dépendance court terme</div>
+        <div class="chart-wrap"><canvas id="chartDette"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Sensibilité Coverage Ratio aux taux</div>
+        <div class="chart-desc">+100 bps → Coverage tombe à 1,3x — zone critique</div>
+        <div class="chart-wrap"><canvas id="chartSensibTaux"></canvas></div>
+      </div>
+    </div>
+
+    <div class="quote quote-warn">
+      <strong>Incohérence de présentation :</strong> Le management communique un gearing de 30 %, mais Dette Nette / CP =
+      4 385 / 10 411 = <strong>42 %</strong>. Le calcul officiel exclut probablement les découverts bancaires (~960 MMAD)
+      des "dettes financières". <strong>Trésorerie nette négative</strong> de 960 MMAD — le Groupe vit sur les facilités à vue.
+    </div>
+
+    <div class="card">
+      <div class="card-title">Profil de la dette</div>
+      <table class="data-table">
+        <thead><tr><th>Composante</th><th class="num">Montant (MMAD)</th><th class="num">% du total</th><th>Maturité</th></tr></thead>
+        <tbody>
+          <tr><td class="label-cell">Emprunts obligataires</td><td class="num">883</td><td class="num">19 %</td><td>Refinancements récurrents</td></tr>
+          <tr><td class="label-cell">Crédits bancaires LMT</td><td class="num">2 542</td><td class="num">56 %</td><td>Mixte</td></tr>
+          <tr><td class="label-cell">Crédits CT</td><td class="num">1 128</td><td class="num">25 %</td><td>&lt; 1 an</td></tr>
+          <tr><td class="label-cell">Découverts bancaires</td><td class="num" style="color:var(--warning)">~960</td><td class="num">21 %*</td><td>À vue</td></tr>
+          <tr class="strong-row"><td class="label-cell">Dette financière brute</td><td class="num">~5 513</td><td class="num">100 %</td><td>Coût moyen ~6,1 %</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ S4 VALUE ============ -->
+  <section class="section" id="s4">
+    <div class="section-header">
+      <span class="section-num">04 //</span>
+      <h2 class="section-title">Création (Destruction) de Valeur</h2>
+    </div>
+    <p class="section-subtitle">L'EVA est négatif depuis plusieurs années — ROIC bien sous le coût du capital</p>
+
+    <div class="grid grid-3" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title" style="text-align:center;">ROIC vs WACC</div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 200 120">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#243049" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 20 110 A 80 80 0 0 1 60 35" fill="none" stroke="#ef4444" stroke-width="14" stroke-linecap="round"/>
+            <line x1="100" y1="110" x2="55" y2="65" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="110" r="6" fill="#fbbf24"/>
+          </svg>
+          <div class="gauge-value" style="color:var(--danger)">2,3 %</div>
+          <div class="gauge-label">ROIC vs WACC ~8-9 %</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="text-align:center;">ROE vs Coût des Fonds Propres</div>
+        <div class="gauge-wrap">
+          <svg class="gauge-svg" viewBox="0 0 200 120">
+            <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#243049" stroke-width="14" stroke-linecap="round"/>
+            <path d="M 20 110 A 80 80 0 0 1 80 32" fill="none" stroke="#fbbf24" stroke-width="14" stroke-linecap="round"/>
+            <line x1="100" y1="110" x2="70" y2="55" stroke="#fbbf24" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="100" cy="110" r="6" fill="#fbbf24"/>
+          </svg>
+          <div class="gauge-value" style="color:var(--warning)">4,8 %</div>
+          <div class="gauge-label">ROE vs Ke ~11-12 %</div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title" style="text-align:center;">EVA Estimé</div>
+        <div class="gauge-wrap" style="padding-top:32px;">
+          <div style="font-family:var(--mono); font-size:36px; font-weight:800; color:var(--danger);">-900</div>
+          <div style="color:var(--text-muted); font-size:11px; margin-top:6px;">MMAD/an</div>
+          <div style="margin-top:18px; font-size:12px; color:var(--text-secondary); text-align:center; line-height:1.6;">
+            Destruction structurelle de valeur économique — typique du secteur immobilier marocain post-2012
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-card">
+      <div class="chart-title">Décomposition DuPont du ROE</div>
+      <div class="chart-desc">Marge nette acceptable mais turnover famélique × levier modéré → ROE structurellement bas</div>
+      <div class="chart-wrap"><canvas id="chartDupont"></canvas></div>
+    </div>
+  </section>
+
+  <!-- ============ S5 QUALITATIVE ============ -->
+  <section class="section" id="s5">
+    <div class="section-header">
+      <span class="section-num">05 //</span>
+      <h2 class="section-title">Analyse Qualitative &amp; Annexes</h2>
+    </div>
+    <p class="section-subtitle">Les zones grises pointées par les Commissaires aux Comptes (Key Audit Matters)</p>
+
+    <div class="tabs">
+      <button class="tab active" data-tab="holding">Holding social (DPGA)</button>
+      <button class="tab" data-tab="filiales">Portefeuille Filiales</button>
+      <button class="tab" data-tab="hors-bilan">Engagements Hors-Bilan</button>
+      <button class="tab" data-tab="parties-liees">Parties Liées</button>
+    </div>
+
+    <div class="tab-panel active" data-panel="holding">
+      <div class="quote quote-danger">
+        <strong>🚨 RED FLAG #2 :</strong> La société-mère <em>Douja Promotion Groupe Addoha</em> affiche
+        <strong>-90 MMAD de perte nette</strong>, <strong>-129 MMAD de résultat d'exploitation</strong>,
+        et un CA en chute de -60 % à 473 MMAD. Pourtant, <strong>distribution de 201 MMAD de dividendes</strong>
+        puisée sur les réserves accumulées (2,6 Md disponibles).
+      </div>
+
+      <div class="grid grid-4" style="margin-top:20px;">
+        <div class="card">
+          <div class="card-title">CA Social</div>
+          <div class="card-value" style="color:var(--danger)">473</div>
+          <div class="card-delta delta-neg">-60 % YoY</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Résultat d'exploitation</div>
+          <div class="card-value" style="color:var(--danger)">-129</div>
+          <div class="card-delta delta-neg">vs +86 en 2024</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Résultat Net Social</div>
+          <div class="card-value" style="color:var(--danger)">-90</div>
+          <div class="card-delta delta-neg">vs +57 en 2024</div>
+        </div>
+        <div class="card">
+          <div class="card-title">Dividende distribué</div>
+          <div class="card-value" style="color:var(--warning)">201</div>
+          <div class="card-delta delta-neg">Non couvert par le RN</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="filiales">
+      <div class="quote quote-warn">
+        <strong>Provisions sur titres de participation : 863 MMAD</strong> non reprises en 2025.
+        Plusieurs filiales sont structurellement provisionnées à 100 % — actifs morts maintenus au périmètre.
+      </div>
+      <div class="card" style="margin-top:16px;">
+        <table class="data-table">
+          <thead><tr><th>Filiale</th><th class="num">Prix d'acquisition</th><th class="num">Valeur nette</th><th class="num">Dépréciation</th><th>Statut</th></tr></thead>
+          <tbody>
+            <tr><td class="label-cell">Al Makane Al Jamil</td><td class="num">124</td><td class="num">0</td><td class="num" style="color:var(--danger)">-124</td><td><span class="badge badge-danger">Sinistré</span></td></tr>
+            <tr><td class="label-cell">Beladi Hadj Fatah</td><td class="num">391</td><td class="num">0</td><td class="num" style="color:var(--danger)">-391</td><td><span class="badge badge-danger">Sinistré</span></td></tr>
+            <tr><td class="label-cell">Marrakech Golden Resort</td><td class="num">419</td><td class="num">398</td><td class="num" style="color:var(--warning)">-20</td><td><span class="badge badge-warning">Surveillance</span></td></tr>
+            <tr><td class="label-cell">Mabani Détroit (ex GIL Maroc)</td><td class="num">840</td><td class="num">825</td><td class="num">-15</td><td><span class="badge badge-success">Sain</span></td></tr>
+            <tr><td class="label-cell">CITA</td><td class="num">829</td><td class="num">829</td><td class="num">0</td><td><span class="badge badge-warning">Perte 2025</span></td></tr>
+            <tr><td class="label-cell">DPGA Côte d'Ivoire</td><td class="num">63</td><td class="num">63</td><td class="num">0</td><td><span class="badge badge-success">Top contributeur</span></td></tr>
+            <tr><td class="label-cell">DPGA Cameroun / Congo / Tchad / Niger / Burundi</td><td class="num">~0,8</td><td class="num">0</td><td class="num">-0,8</td><td><span class="badge badge-muted">Coquilles</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px; color:var(--text-muted); font-size:12px; font-style:italic;">
+        En MMAD. Source : RFA Annexe B4 (Tableau des titres de participation).
+        <strong>Question clé d'audit signalée par les CAC</strong> : évaluation des titres et des avances filiales.
+      </p>
+    </div>
+
+    <div class="tab-panel" data-panel="hors-bilan">
+      <div class="quote quote-warn">
+        Engagements hors-bilan en <strong>croissance de +42 %</strong> en un an : 4 602 MMAD vs 3 239 MMAD en 2024.
+        Niveau désormais équivalent à <strong>~50 % des fonds propres</strong>.
+      </div>
+      <div class="chart-card" style="margin-top:16px;">
+        <div class="chart-title">Évolution des engagements donnés</div>
+        <div class="chart-wrap"><canvas id="chartHorsBilan"></canvas></div>
+      </div>
+    </div>
+
+    <div class="tab-panel" data-panel="parties-liees">
+      <div class="grid grid-2">
+        <div class="card">
+          <div class="card-title">Compte courant — M. Anas Sefrioui</div>
+          <div class="card-value">615<span style="font-size:14px;color:var(--text-muted);"> MMAD</span></div>
+          <div class="card-foot">Dont <strong>500 MMAD bloqués 4 ans</strong>. Taux 2,60 % HT.</div>
+          <p style="margin-top:12px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
+            <span class="badge badge-info">Signal mixte</span><br>
+            ✓ Engagement personnel positif de l'actionnaire de référence<br>
+            ✗ Dépendance non orthodoxe au financement intra-actionnaire
+          </p>
+        </div>
+        <div class="card">
+          <div class="card-title">Avances aux filiales</div>
+          <div class="card-value">1 192<span style="font-size:14px;color:var(--text-muted);"> MMAD</span></div>
+          <div class="card-foot">Rémunérées à 2,74 % — <strong>sous le coût du capital</strong></div>
+          <p style="margin-top:12px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
+            Top destinataires : Immolog 409, Addoha Sud 295, Foncière Iskane 147, Mabani Détroit 115, Kamam 65.
+            <span class="badge badge-warning" style="margin-top:8px; display:inline-block;">Risque de non-recouvrement</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ S6 RED FLAGS ============ -->
+  <section class="section" id="s6">
+    <div class="section-header">
+      <span class="section-num">06 //</span>
+      <h2 class="section-title">Détection des Red Flags</h2>
+    </div>
+    <p class="section-subtitle">10 signaux d'alerte cartographiés par sévérité</p>
+
+    <div class="flags-grid">
+      <div class="flag-card flag-critical">
+        <div class="flag-num">01</div>
+        <div class="flag-content">
+          <div class="flag-title">RN +70 % vs FCF opérationnel négatif</div>
+          <div class="flag-desc">516 MMAD de RN consolidé vs -7 MMAD de FCF. Le BFR absorbe toute la CAF.</div>
+          <div class="flag-severity">⬤ Critique</div>
+        </div>
+      </div>
+      <div class="flag-card flag-critical">
+        <div class="flag-num">02</div>
+        <div class="flag-content">
+          <div class="flag-title">Holding en perte distribuant un dividende</div>
+          <div class="flag-desc">DPGA -90 MMAD vs distribution 201 MMAD. Soutenabilité 24 mois questionnable.</div>
+          <div class="flag-severity">⬤ Critique</div>
+        </div>
+      </div>
+      <div class="flag-card flag-high">
+        <div class="flag-num">03</div>
+        <div class="flag-content">
+          <div class="flag-title">Dual-reporting du CA</div>
+          <div class="flag-desc">Pourquoi maintenir un pro-forma "ancien référentiel" non auditable (+36 %) ?</div>
+          <div class="flag-severity">⬤ Élevé</div>
+        </div>
+      </div>
+      <div class="flag-card flag-high">
+        <div class="flag-num">04</div>
+        <div class="flag-content">
+          <div class="flag-title">Taux d'imposition effectif anormal</div>
+          <div class="flag-desc">10,96 % vs 25,5 % théorique → boost RN non récurrent.</div>
+          <div class="flag-severity">⬤ Élevé</div>
+        </div>
+      </div>
+      <div class="flag-card flag-high">
+        <div class="flag-num">05</div>
+        <div class="flag-content">
+          <div class="flag-title">Gearing communiqué vs réel</div>
+          <div class="flag-desc">30 % publié vs 42 % avec découverts bancaires inclus.</div>
+          <div class="flag-severity">⬤ Élevé</div>
+        </div>
+      </div>
+      <div class="flag-card flag-high">
+        <div class="flag-num">06</div>
+        <div class="flag-content">
+          <div class="flag-title">Engagements hors-bilan +42 %</div>
+          <div class="flag-desc">4 602 MMAD de cautions/avals — ~50 % des fonds propres.</div>
+          <div class="flag-severity">⬤ Élevé</div>
+        </div>
+      </div>
+      <div class="flag-card flag-high">
+        <div class="flag-num">07</div>
+        <div class="flag-content">
+          <div class="flag-title">Coverage 1,65x — fragilité aux taux</div>
+          <div class="flag-desc">+100 bps → 1,3x. Refinancement obligataire récurrent.</div>
+          <div class="flag-severity">⬤ Élevé</div>
+        </div>
+      </div>
+      <div class="flag-card flag-medium">
+        <div class="flag-num">08</div>
+        <div class="flag-content">
+          <div class="flag-title">DPO 247 jours — étirement fournisseurs</div>
+          <div class="flag-desc">Financement implicite par retard de paiement aux sous-traitants.</div>
+          <div class="flag-severity">⬤ Modéré</div>
+        </div>
+      </div>
+      <div class="flag-card flag-medium">
+        <div class="flag-num">09</div>
+        <div class="flag-content">
+          <div class="flag-title">Exposition Afrique non hedgée</div>
+          <div class="flag-desc">31 % du CA sécurisé en Afrique — XOF/GNF sans hedging documenté.</div>
+          <div class="flag-severity">⬤ Modéré</div>
+        </div>
+      </div>
+      <div class="flag-card flag-medium">
+        <div class="flag-num">10</div>
+        <div class="flag-content">
+          <div class="flag-title">Stocks provisionnés 239 MMAD</div>
+          <div class="flag-desc">Produits finis vieillissants — rotation à risque sur certains projets.</div>
+          <div class="flag-severity">⬤ Modéré</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card-elevated card" style="margin-top:24px;">
+      <div class="card-title">Score Global Red Flags</div>
+      <div style="display:flex; align-items:center; gap:24px; margin-top:8px;">
+        <div style="font-family:var(--mono); font-size:48px; font-weight:800; color:var(--danger);">7,2<span style="font-size:18px; color:var(--text-muted);">/10</span></div>
+        <div style="flex:1;">
+          <div style="height:8px; background:var(--bg-primary); border-radius:4px; overflow:hidden;">
+            <div style="height:100%; width:72%; background:linear-gradient(90deg, var(--warning), var(--danger));"></div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10px; color:var(--text-muted); font-family:var(--mono);">
+            <span>SAIN</span><span>VIGILANCE</span><span>RISQUE</span><span>CRITIQUE</span>
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:14px; color:var(--text-secondary); font-size:13px; line-height:1.6;">
+        Score pondéré : 2 critiques (×3) + 5 élevés (×2) + 3 modérés (×1) = 19/26 ≈ <strong style="color:var(--danger)">7,3/10</strong>.
+        Niveau de vigilance élevé requis sur les 4 prochains trimestres.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ S7 VALORISATION ============ -->
+  <section class="section" id="s7">
+    <div class="section-header">
+      <span class="section-num">07 //</span>
+      <h2 class="section-title">Valorisation &amp; Comparables</h2>
+    </div>
+    <p class="section-subtitle">Décote book value massive vs prime EV/EBITDA — lecture contradictoire</p>
+
+    <div class="quote">
+      <strong>Hypothèse de travail :</strong> Cours ADH retenu à 11 MAD (fourchette historique 9-13 MAD).
+      <em>Capitalisation ≈ 4 428 MMAD · EV ≈ 8 813 MMAD.</em>
+      <span class="badge badge-info" style="margin-left:8px;">À recalibrer en data live</span>
+    </div>
+
+    <div class="grid grid-4" style="margin-bottom:20px;">
+      <div class="card">
+        <div class="card-title">P/E (publié)</div>
+        <div class="card-value">9,7x</div>
+        <div class="card-foot">BPA 1,13 MAD</div>
+      </div>
+      <div class="card" style="border-color:var(--warning);">
+        <div class="card-title">P/E (normatif)</div>
+        <div class="card-value" style="color:var(--warning)">13,7x</div>
+        <div class="card-foot">BPA retraité ~0,80 MAD</div>
+      </div>
+      <div class="card" style="border-color:var(--success);">
+        <div class="card-title">P/B</div>
+        <div class="card-value" style="color:var(--success)">0,47x</div>
+        <div class="card-foot">Décote massive sur fonds propres</div>
+      </div>
+      <div class="card" style="border-color:var(--danger);">
+        <div class="card-title">EV/EBITDA</div>
+        <div class="card-value" style="color:var(--danger)">~14,7x</div>
+        <div class="card-foot">Cher vs pairs 8-10x</div>
+      </div>
+    </div>
+
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="chart-card">
+        <div class="chart-title">Multiples vs Pairs Sectoriels</div>
+        <div class="chart-desc">EV/EBITDA premium difficile à justifier au regard du ROIC</div>
+        <div class="chart-wrap"><canvas id="chartMultiples"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Sensibilité de la Valorisation</div>
+        <div class="chart-desc">Impact sur l'EV de variations clés</div>
+        <div class="chart-wrap"><canvas id="chartSensibVal"></canvas></div>
+      </div>
+    </div>
+
+    <div class="card-elevated card">
+      <div class="card-title">Tableau de Sensibilité</div>
+      <table class="data-table">
+        <thead><tr><th>Scénario</th><th class="num">Impact RN</th><th class="num">Impact EV/EBITDA</th><th class="num">Impact Gearing</th><th>Lecture</th></tr></thead>
+        <tbody>
+          <tr><td class="label-cell">+100 bps taux directeur</td><td class="num" style="color:var(--danger)">-50 MMAD</td><td class="num">+0,5x</td><td class="num">+1 pt</td><td><span class="badge badge-warning">Sensible</span></td></tr>
+          <tr><td class="label-cell">-5 % marge brute</td><td class="num" style="color:var(--danger)">-100 MMAD</td><td class="num">+2,5x</td><td class="num">+3 pts</td><td><span class="badge badge-danger">Critique</span></td></tr>
+          <tr><td class="label-cell">+10 % BFR (stocks)</td><td class="num">~0</td><td class="num">~0</td><td class="num" style="color:var(--danger)">+13 pts</td><td><span class="badge badge-danger">Critique</span></td></tr>
+          <tr><td class="label-cell">Choc XOF -10 %</td><td class="num" style="color:var(--danger)">-25 MMAD</td><td class="num">+0,3x</td><td class="num">~0</td><td><span class="badge badge-info">Modéré</span></td></tr>
+          <tr><td class="label-cell">Lancement Blanca City Park</td><td class="num" style="color:var(--success)">+150 MMAD T+24</td><td class="num">-2x</td><td class="num">+5 pts (CT)</td><td><span class="badge badge-success">Catalyseur</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ============ S8 BULL VS BEAR ============ -->
+  <section class="section" id="s8">
+    <div class="section-header">
+      <span class="section-num">08 //</span>
+      <h2 class="section-title">Scénarios Bull vs Bear</h2>
+    </div>
+    <p class="section-subtitle">Les deux thèses extrêmes — point d'équilibre actuel : Bear l'emporte sur les fondamentaux cash</p>
+
+    <div class="scenarios">
+      <div class="scenario scenario-bull">
+        <div class="scenario-head">
+          <span class="badge badge-success">BULL CASE</span>
+          <span class="scenario-title">+45 % upside potentiel</span>
+        </div>
+        <ul class="scenario-list">
+          <li><span class="scenario-bullet">▲</span><span><strong>Pivot africain réussi.</strong> CI +152 % YoY · pipeline 4,2 Md sécurisé · 5 pays opérationnels</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Visibilité commerciale.</strong> 11,7 Md de CA sécurisé = 4,3 années de revenus garantis</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Restructuration achevée.</strong> Désendettement maîtrisé, structure assainie</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Décote deep value.</strong> P/B 0,47x – un acquéreur stratégique paierait 7-8 Md pour les fonds propres comptables</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Acquisitions foncières prime.</strong> Abidjan Zone 4 (3 Md potentiel), Dar Bouazza, Marrakech Annakhil</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Yield 4,5 %.</strong> Dividende rétabli – signal positif aux actionnaires</span></li>
+        </ul>
+      </div>
+
+      <div class="scenario scenario-bear">
+        <div class="scenario-head">
+          <span class="badge badge-danger">BEAR CASE</span>
+          <span class="scenario-title">-30 % downside potentiel</span>
+        </div>
+        <ul class="scenario-list">
+          <li><span class="scenario-bullet">▼</span><span><strong>Cash-flow opérationnel négatif.</strong> Le RN ne se convertit pas en cash – modèle économique à interroger</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Holding en perte sociale.</strong> Distribution non couverte – tension liquidité à 24 mois</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Destruction de valeur économique.</strong> ROIC 2,3 % vs WACC ~8 % = -600 bps</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>BFR explosif.</strong> 13,9 Md vs CA 2,7 Md – bombe à retardement de liquidité</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Coverage 1,65x.</strong> Toute remontée de taux fragilise structurellement</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Filiales sinistrées.</strong> 863 MMAD de provisions sur titres non reprises</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-top:20px;">
+      <div class="chart-title">Catalyseurs 12 mois — Timeline</div>
+      <div class="chart-desc">Événements binaires susceptibles de débloquer ou détruire la valeur</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-date">▶ T2 2026</div>
+          <div class="timeline-title">Publication semestrielle S1 2026</div>
+          <div class="timeline-desc">Test critique de la conversion CAF → cash. Si BFR continue de grossir → confirmation Bear case.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">▶ T3 2026</div>
+          <div class="timeline-title">Lancement effectif Blanca City Park</div>
+          <div class="timeline-desc">Catalyseur positif majeur — CA potentiel 12 Md sur 5-7 ans. Re-rating possible vers HOLD+.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">▶ T4 2026</div>
+          <div class="timeline-title">Refinancement obligataire</div>
+          <div class="timeline-desc">Test du marché obligataire marocain. Spread d'émission = thermomètre du risque crédit perçu.</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-date">▶ Continu</div>
+          <div class="timeline-title">Évolution taux BAM</div>
+          <div class="timeline-desc">Statu quo attendu à 2,75 % – impact neutre. Toute hausse = stress sur Coverage Ratio.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ S9 RECOMMANDATION ============ -->
+  <section class="section" id="s9">
+    <div class="section-header">
+      <span class="section-num">09 //</span>
+      <h2 class="section-title">Recommandation Finale &amp; Plan d'Action</h2>
+    </div>
+
+    <div class="hero" style="margin-top:0;">
+      <div class="hero-tag">VERDICT TRANCHÉ</div>
+      <h2 class="hero-title">Qualité du dossier : <span style="color:var(--warning)">FAIBLE à MOYEN</span></h2>
+      <p class="hero-sub">
+        Addoha présente un narrative de redressement crédible (préventes, pipeline, Afrique) <strong>contredit par les fondamentaux cash</strong>.
+        La machine génère du résultat comptable mais ne génère pas de cash, finance sa croissance par l'extension du BFR
+        et les avances de l'actionnaire de référence, et distribue un dividende non couvert.
+      </p>
+
+      <div class="grid grid-3" style="margin-top:24px;">
+        <div class="card" style="background:var(--bg-primary);">
+          <div class="card-title">Profil Trade Spéculatif</div>
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            Positionnement court terme possible sur catalyseur Blanca City Park ou re-rating sectoriel.
+            <strong style="color:var(--success)">Fenêtre tactique uniquement.</strong>
+          </p>
+        </div>
+        <div class="card" style="background:var(--bg-primary); border-color:var(--warning);">
+          <div class="card-title" style="color:var(--warning)">Profil Investissement LT</div>
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            <strong style="color:var(--warning)">À éviter</strong> tant que la conversion cash ne se matérialise pas
+            sur 2 semestres consécutifs. Re-rating possible si BFR se résorbe.
+          </p>
+        </div>
+        <div class="card" style="background:var(--bg-primary); border-color:var(--info);">
+          <div class="card-title" style="color:var(--info)">Profil Deep Value</div>
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            Décote P/B 0,47x défendable, mais <strong>asset quality discount</strong> justifié par
+            les filiales provisionnées et le risque foncier.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-title">Questions à challenger directement avec l'IR (Anas Berrada — a.berrada@groupeaddoha.com)</div>
+      <ol class="question-list">
+        <li>Justification du pro-forma "ancien référentiel" — pourquoi maintenir 2 lectures du CA, et est-ce conforme aux recommandations AMMC en matière de communication financière ?</li>
+        <li>Plan de résorption du BFR sur 2026-2027 : quel est le rythme cible de monétisation des stocks (DIO target, % stocks vieillissants à écouler) ?</li>
+        <li>Couverture du dividende social par les remontées de filiales : quelle politique de remontée et quel échéancier de retour à un ROE social positif ?</li>
+        <li>Stratégie de hedging FCFA / GNF sur les filiales africaines (33 % du CA sécurisé), et appétit au risque change ?</li>
+        <li>Échéancier précis de la dette obligataire : montants, maturités 2026-2028 et stratégie de refinancement dans un contexte de taux stable ?</li>
+        <li>Justification du taux d'imposition effectif à 11 % (vs 25,5 %) — quels actifs d'impôt différé ont été activés et sur quelles hypothèses de bénéfices futurs ?</li>
+        <li>Statut opérationnel des filiales africaines totalement provisionnées (Cameroun, Congo, Tchad, Niger, Burundi) — projet de cession ou maintien stratégique ?</li>
+      </ol>
+    </div>
+
+    <div class="card" style="margin-top:24px;">
+      <div class="card-title">Watchlist — Indicateurs à surveiller activement</div>
+      <table class="data-table">
+        <thead><tr><th>Indicateur</th><th class="num">Valeur 2025</th><th class="num">Seuil d'alerte</th><th class="num">Cible re-rating</th><th>Fréquence</th></tr></thead>
+        <tbody>
+          <tr><td class="label-cell">FCF opérationnel</td><td class="num" style="color:var(--danger)">-7</td><td class="num">&lt; -200</td><td class="num" style="color:var(--success)">&gt; +300</td><td>Trimestriel</td></tr>
+          <tr><td class="label-cell">BFR (MMAD)</td><td class="num">13 900</td><td class="num">&gt; 15 000</td><td class="num" style="color:var(--success)">&lt; 12 500</td><td>Semestriel</td></tr>
+          <tr><td class="label-cell">Interest Coverage</td><td class="num">1,65x</td><td class="num">&lt; 1,3x</td><td class="num" style="color:var(--success)">&gt; 2,5x</td><td>Trimestriel</td></tr>
+          <tr><td class="label-cell">Découverts bancaires</td><td class="num">~960</td><td class="num">&gt; 1 200</td><td class="num" style="color:var(--success)">&lt; 500</td><td>Mensuel</td></tr>
+          <tr><td class="label-cell">CA sécurisé (Md)</td><td class="num" style="color:var(--success)">11,7</td><td class="num">&lt; 9,0</td><td class="num" style="color:var(--success)">&gt; 13,5</td><td>Semestriel</td></tr>
+          <tr><td class="label-cell">Préventes (unités)</td><td class="num" style="color:var(--success)">11 035</td><td class="num">&lt; 9 500</td><td class="num" style="color:var(--success)">&gt; 12 500</td><td>Trimestriel</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="footer">
+    Analyse établie sous contrainte d'informations <code>RFA 2025</code> uniquement (129 pages).<br>
+    Cours boursier et benchmarks pairs (Alliances, RDS) à recalibrer en données de marché live.<br>
+    Hypothèses : <code>WACC 8-9 %</code> · <code>Ke 11-12 %</code> basées sur taux BAM 2,75 % + prime Maroc + prime secteur immobilier.<br>
+    Document à usage interne — ne constitue pas un conseil en investissement.
+  </div>
+
+</main>
+</div>
+
+<script>
+// ============ MOBILE MENU ============
+const menuBtn = document.getElementById('menuBtn');
+const sidebar = document.querySelector('.sidebar');
+const backdrop = document.getElementById('sidebarBackdrop');
+
+function openMenu() {
+  sidebar.classList.add('open');
+  backdrop.classList.add('active');
+}
+function closeMenu() {
+  sidebar.classList.remove('open');
+  backdrop.classList.remove('active');
+}
+
+menuBtn.addEventListener('click', () => {
+  sidebar.classList.contains('open') ? closeMenu() : openMenu();
+});
+backdrop.addEventListener('click', closeMenu);
+
+// ============ NAVIGATION ============
+const navItems = document.querySelectorAll('.nav-item');
+const sections = document.querySelectorAll('.section');
+
+navItems.forEach(item => {
+  item.addEventListener('click', () => {
+    const target = item.dataset.target;
+    document.getElementById(target).scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (window.innerWidth <= 768) closeMenu();
+  });
+});
+
+// Update active nav on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[data-target="${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+
+sections.forEach(s => observer.observe(s));
+
+// ============ TABS ============
+document.querySelectorAll('.tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    const tabName = tab.dataset.tab;
+    const parent = tab.closest('.section');
+    parent.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    parent.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tab.classList.add('active');
+    parent.querySelector(`.tab-panel[data-panel="${tabName}"]`).classList.add('active');
+  });
+});
+
+// ============ CHART CONFIG ============
+Chart.defaults.color = '#94a3b8';
+Chart.defaults.borderColor = '#243049';
+Chart.defaults.font.family = "'Inter', -apple-system, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.plugins.legend.labels.usePointStyle = true;
+Chart.defaults.plugins.legend.labels.padding = 16;
+Chart.defaults.plugins.tooltip.backgroundColor = '#0a0e1a';
+Chart.defaults.plugins.tooltip.borderColor = '#2d3a5a';
+Chart.defaults.plugins.tooltip.borderWidth = 1;
+Chart.defaults.plugins.tooltip.padding = 12;
+Chart.defaults.plugins.tooltip.titleFont = { weight: 600, size: 12 };
+Chart.defaults.plugins.tooltip.bodyFont = { size: 12 };
+
+const COLORS = {
+  accent: '#f59e0b',
+  success: '#10b981',
+  danger: '#ef4444',
+  warning: '#fbbf24',
+  info: '#3b82f6',
+  muted: '#64748b'
+};
+
+// ============ CHART CA ============
+new Chart(document.getElementById('chartCA'), {
+  type: 'bar',
+  data: {
+    labels: ['2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'CA Reporté (MMAD)',
+        data: [1378, 2134, 2595, 2709],
+        backgroundColor: COLORS.accent,
+        borderRadius: 4,
+        order: 2
+      },
+      {
+        label: 'CA Pro-forma ancien référentiel',
+        data: [null, null, null, 3535],
+        type: 'line',
+        borderColor: COLORS.warning,
+        backgroundColor: COLORS.warning,
+        borderDash: [5, 5],
+        pointRadius: 6,
+        pointStyle: 'rectRot',
+        order: 1
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' }
+    },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' MMAD' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CHART MARGES ============
+new Chart(document.getElementById('chartMarges'), {
+  type: 'line',
+  data: {
+    labels: ['2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'Marge Brute %',
+        data: [22, 24, 26, 27],
+        borderColor: COLORS.success,
+        backgroundColor: 'rgba(16,185,129,0.1)',
+        tension: 0.3,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: COLORS.success
+      },
+      {
+        label: 'Marge d\'Exploitation %',
+        data: [12, 15, 17.5, 16.5],
+        borderColor: COLORS.accent,
+        backgroundColor: 'rgba(245,158,11,0.1)',
+        tension: 0.3,
+        fill: true,
+        pointRadius: 5,
+        pointBackgroundColor: COLORS.accent
+      },
+      {
+        label: 'Marge Nette %',
+        data: [3, 8, 11.7, 16.7],
+        borderColor: COLORS.info,
+        borderDash: [5, 5],
+        tension: 0.3,
+        pointRadius: 5,
+        pointBackgroundColor: COLORS.info
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' %' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CHART GEO ============
+new Chart(document.getElementById('chartGeo'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Maroc', 'Côte d\'Ivoire', 'Guinée', 'Sénégal'],
+    datasets: [{
+      data: [1599, 961, 113, 35],
+      backgroundColor: [COLORS.accent, COLORS.success, COLORS.info, COLORS.warning],
+      borderWidth: 2,
+      borderColor: '#131826'
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    cutout: '60%',
+    plugins: {
+      legend: { position: 'right' },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed} MMAD (${(ctx.parsed/2708*100).toFixed(1)}%)` } }
+    }
+  }
+});
+
+// ============ CHART STANDING ============
+new Chart(document.getElementById('chartStanding'), {
+  type: 'bar',
+  data: {
+    labels: ['Économique & Moyen Standing', 'Haut Standing'],
+    datasets: [
+      { label: '2024', data: [1870, 725], backgroundColor: COLORS.muted, borderRadius: 4 },
+      { label: '2025', data: [2325, 384], backgroundColor: COLORS.accent, borderRadius: 4 }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    indexAxis: 'y',
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      x: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' MMAD' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ WATERFALL CHART ============
+const waterfallData = [
+  { label: 'RN Intégré', value: 516, cumul: 516, type: 'positive' },
+  { label: 'Amort. & Prov.', value: 28, cumul: 544, type: 'positive' },
+  { label: 'Δ Impôts différés', value: 107, cumul: 651, type: 'positive' },
+  { label: 'Autres non-cash', value: -98, cumul: 553, type: 'negative' },
+  { label: 'CAF', value: 553, cumul: 553, type: 'total' },
+  { label: 'Δ BFR', value: -559, cumul: -7, type: 'negative' },
+  { label: 'FCF Opér.', value: -7, cumul: -7, type: 'totalNeg' }
+];
+
+new Chart(document.getElementById('chartWaterfall'), {
+  type: 'bar',
+  data: {
+    labels: waterfallData.map(d => d.label),
+    datasets: [
+      {
+        label: 'Floor',
+        data: waterfallData.map((d, i) => {
+          if (d.type === 'total' || d.type === 'totalNeg') return 0;
+          if (i === 0) return 0;
+          if (d.type === 'negative') return d.cumul;
+          return d.cumul - d.value;
+        }),
+        backgroundColor: 'transparent',
+        stack: 'wf'
+      },
+      {
+        label: 'Variation',
+        data: waterfallData.map(d => Math.abs(d.value)),
+        backgroundColor: waterfallData.map(d => {
+          if (d.type === 'total') return COLORS.accent;
+          if (d.type === 'totalNeg') return COLORS.danger;
+          if (d.type === 'positive') return COLORS.success;
+          return COLORS.danger;
+        }),
+        stack: 'wf',
+        borderRadius: 3
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { display: false },
+      tooltip: {
+        callbacks: {
+          label: ctx => {
+            const d = waterfallData[ctx.dataIndex];
+            return `${d.value > 0 ? '+' : ''}${d.value} MMAD (cumul: ${d.cumul})`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' MMAD' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ BFR CHART ============
+new Chart(document.getElementById('chartBFR'), {
+  type: 'line',
+  data: {
+    labels: ['2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'BFR (Md MAD)',
+        data: [11.5, 12.4, 13.3, 13.9],
+        borderColor: COLORS.warning,
+        backgroundColor: 'rgba(251,191,36,0.15)',
+        tension: 0.3,
+        fill: true,
+        pointRadius: 6,
+        pointBackgroundColor: COLORS.warning,
+        yAxisID: 'y'
+      },
+      {
+        label: 'CA (Md MAD)',
+        data: [1.4, 2.1, 2.6, 2.7],
+        borderColor: COLORS.accent,
+        tension: 0.3,
+        pointRadius: 5,
+        pointBackgroundColor: COLORS.accent,
+        yAxisID: 'y'
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' Md' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CAPEX CHART ============
+new Chart(document.getElementById('chartCapex'), {
+  type: 'bar',
+  data: {
+    labels: ['2022', '2023', '2024', '2025'],
+    datasets: [
+      {
+        label: 'Capex (MMAD)',
+        data: [25, 18, 30, 21],
+        backgroundColor: COLORS.info,
+        borderRadius: 4
+      },
+      {
+        label: 'CAF (MMAD)',
+        data: [380, 450, 526, 553],
+        type: 'line',
+        borderColor: COLORS.accent,
+        backgroundColor: 'transparent',
+        tension: 0.3,
+        pointRadius: 5,
+        pointBackgroundColor: COLORS.accent,
+        yAxisID: 'y2'
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      y: { position: 'left', grid: { color: '#1f2842' }, ticks: { callback: v => v + ' MMAD' }, title: { display: true, text: 'Capex' } },
+      y2: { position: 'right', grid: { display: false }, ticks: { callback: v => v + ' MMAD' }, title: { display: true, text: 'CAF' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CHART DETTE ============
+new Chart(document.getElementById('chartDette'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Crédits LMT', 'Crédits CT', 'Découverts', 'Obligataire'],
+    datasets: [{
+      data: [2542, 1128, 960, 883],
+      backgroundColor: [COLORS.accent, COLORS.warning, COLORS.danger, COLORS.info],
+      borderWidth: 2,
+      borderColor: '#131826'
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    cutout: '55%',
+    plugins: {
+      legend: { position: 'right' },
+      tooltip: { callbacks: { label: ctx => `${ctx.label}: ${ctx.parsed} MMAD` } }
+    }
+  }
+});
+
+// ============ SENSIBILITE TAUX ============
+new Chart(document.getElementById('chartSensibTaux'), {
+  type: 'bar',
+  data: {
+    labels: ['-100 bps', 'Actuel', '+50 bps', '+100 bps', '+150 bps', '+200 bps'],
+    datasets: [{
+      label: 'Coverage Ratio (EBIT/Intérêts)',
+      data: [2.10, 1.65, 1.45, 1.30, 1.18, 1.05],
+      backgroundColor: ['#10b981', '#fbbf24', '#fbbf24', '#ef4444', '#ef4444', '#ef4444'],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      y: {
+        grid: { color: '#1f2842' },
+        ticks: { callback: v => v + 'x' },
+        suggestedMin: 0,
+        suggestedMax: 2.5
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CHART DUPONT ============
+new Chart(document.getElementById('chartDupont'), {
+  type: 'bar',
+  data: {
+    labels: ['Marge nette', 'Asset Turnover', 'Levier financier', 'ROE résultant'],
+    datasets: [
+      {
+        label: 'ADH 2025',
+        data: [16.7, 0.12, 2.4, 4.8],
+        backgroundColor: COLORS.accent,
+        borderRadius: 4
+      },
+      {
+        label: 'Pair sectoriel médian',
+        data: [10, 0.45, 1.8, 8.1],
+        backgroundColor: COLORS.muted,
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' },
+      tooltip: {
+        callbacks: {
+          afterLabel: ctx => {
+            const labels = ['%', '×', '×', '%'];
+            return `Unité: ${labels[ctx.dataIndex]}`;
+          }
+        }
+      }
+    },
+    scales: {
+      y: { grid: { color: '#1f2842' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ CHART HORS BILAN ============
+new Chart(document.getElementById('chartHorsBilan'), {
+  type: 'bar',
+  data: {
+    labels: ['Avals & cautions bancaires', 'Promesses hypothèque', 'Autres engagements'],
+    datasets: [
+      { label: '2024', data: [2536, 702, 0], backgroundColor: COLORS.muted, borderRadius: 4 },
+      { label: '2025', data: [3858, 743, 0], backgroundColor: COLORS.warning, borderRadius: 4 }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' MMAD' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ MULTIPLES ============
+new Chart(document.getElementById('chartMultiples'), {
+  type: 'bar',
+  data: {
+    labels: ['ADH', 'Pair Sect. Maroc', 'Médiane Internationale'],
+    datasets: [
+      { label: 'P/E', data: [9.7, 12.5, 14.2], backgroundColor: COLORS.accent, borderRadius: 4 },
+      { label: 'EV/EBITDA', data: [14.7, 9.5, 8.2], backgroundColor: COLORS.danger, borderRadius: 4 },
+      { label: 'P/B', data: [0.47, 0.85, 1.2], backgroundColor: COLORS.success, borderRadius: 4 }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: { legend: { position: 'bottom' } },
+    scales: {
+      y: { grid: { color: '#1f2842' }, ticks: { callback: v => v + 'x' } },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ SENSIBILITE VAL ============
+new Chart(document.getElementById('chartSensibVal'), {
+  type: 'bar',
+  data: {
+    labels: ['Hausse 100bps', 'Baisse marge -5%', 'Hausse BFR +10%', 'Choc XOF -10%', 'Lancement Blanca'],
+    datasets: [{
+      label: 'Impact EV (%)',
+      data: [-3.5, -10.0, -7.5, -1.8, +12.5],
+      backgroundColor: ctx => {
+        const v = ctx.raw;
+        if (v > 0) return COLORS.success;
+        if (v > -5) return COLORS.warning;
+        return COLORS.danger;
+      },
+      borderRadius: 4
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#1f2842' }, ticks: { callback: v => v + ' %' } },
+      y: { grid: { display: false } }
+    }
+  }
+});
+</script>
+
+</body>
+</html>
