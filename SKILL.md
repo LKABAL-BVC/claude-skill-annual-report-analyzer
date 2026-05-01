@@ -49,6 +49,19 @@ Workflow complet : Rapport financier annuel PDF → Note d'analyse institutionne
    - **US (NYSE/NASDAQ)** : `https://www.sec.gov/cgi-bin/browse-edgar` (10-K, 10-Q, 8-K)
    - Sinon demander à l'utilisateur ou utiliser `WebFetch` sur le site IR de la société
 
+5. **OBLIGATOIRE — Récupérer le cours actuel de la valeur** (cours de clôture du dernier jour de bourse disponible) via `WebFetch` :
+   - **BVC** : `https://www.casablanca-bourse.com/live-market/emetteurs/<CODE>` — chercher la balise prix
+   - **Euronext** : `https://live.euronext.com/en/product/equities/<ISIN>-<MIC>` (ex : `FR0000120271-XPAR` pour Total)
+   - **LSE** : `https://www.londonstockexchange.com/stock/<TICKER>/<COMPANY-SLUG>/quote`
+   - **NYSE/NASDAQ** : `https://finance.yahoo.com/quote/<TICKER>` ou `https://www.google.com/finance/quote/<TICKER>:NASDAQ`
+   - **Deutsche Börse** : `https://www.boerse-frankfurt.de/equity/<ISIN>`
+   - **SIX Swiss** : `https://www.six-group.com/en/market-data/shares/explorer/<ISIN>.html`
+   - **Autres** : Yahoo Finance reste le fallback universel le plus fiable
+   - **Capturer** : cours, devise, date/heure de cotation, volume du jour, variation YTD
+   - **Calculer** : capitalisation boursière actuelle = cours × nombre d'actions diluées (à recouper avec celle publiée par la bourse)
+   - **Si la récupération échoue** (page JS-rendered, accès bloqué, ticker non trouvé) : demander explicitement le cours à l'utilisateur — **ne jamais inventer un cours**
+   - **Documenter** dans le HTML : badge "Cours au [date heure]" visible dans le hero ; mentionner clairement si le cours est utilisateur-fourni vs scrappé
+
 ### Étape 2 — Analyse 8 sections (livrable n°1 : note écrite)
 
 Produire une note structurée en **8 sections numérotées**, dans la langue demandée (FR par défaut), ton institutionnel sceptique. Chaque section doit citer les chiffres exacts du rapport et **systématiquement chercher les incohérences**.
@@ -172,6 +185,47 @@ Reprendre les media queries du fichier de référence :
 - `≤ 768px` : sidebar off-canvas + bouton hamburger ☰ + grids → 1 colonne + KPI bar 2 colonnes + chart-wrap 240px
 - `≤ 380px` : KPI bar 1 colonne
 
+#### Disclaimer OBLIGATOIRE — à inclure systématiquement
+
+**Le disclaimer suivant doit apparaître dans 3 endroits du livrable HTML**, sans exception :
+
+**1. Dans le `<head>` en commentaire HTML :**
+```html
+<!--
+DISCLAIMER : Ce document est produit à des fins éducatives et informationnelles uniquement.
+Il ne constitue PAS un conseil en investissement, une recommandation personnalisée, une
+sollicitation à acheter ou vendre des instruments financiers, ni une analyse financière
+indépendante au sens réglementaire. L'auteur ne détient pas nécessairement de position
+sur la valeur analysée et n'assume aucune responsabilité quant aux décisions prises sur
+la base de ce document. Toute décision d'investissement doit être prise après consultation
+d'un conseiller en investissement agréé et lecture intégrale des documents officiels de
+l'émetteur (RFA, prospectus, communiqués réglementés).
+-->
+```
+
+**2. Dans une bannière visible en haut de la première page (juste après le hero / KPI bar) :**
+```html
+<div class="disclaimer-banner" style="background: var(--warning-soft); border: 1px solid var(--warning); border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0; border-radius: 4px; font-size: 12px; color: var(--text-secondary); line-height: 1.5;">
+  <strong style="color: var(--warning);">⚠️ AVERTISSEMENT</strong> — Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation</strong> à acheter ou vendre des instruments financiers. Les opinions exprimées reflètent l'analyse de l'auteur à la date de publication et peuvent évoluer sans préavis. Toute décision d'investissement doit être prise après consultation d'un conseiller agréé et lecture intégrale des documents officiels de l'émetteur.
+</div>
+```
+
+**3. Dans le footer en pied de page (toujours visible) :**
+```html
+<footer class="legal-footer" style="margin-top: 48px; padding: 20px; background: var(--bg-secondary); border-top: 1px solid var(--border); font-size: 11px; color: var(--text-muted); line-height: 1.6; text-align: center;">
+  <p><strong>Disclaimer légal</strong> — Document à finalité éducative et informationnelle. Ne constitue pas un conseil en investissement, une recommandation personnalisée, une sollicitation, ni une analyse financière indépendante au sens réglementaire (AMMC / AMF / SEC / FCA selon la juridiction). L'auteur n'assume aucune responsabilité quant aux décisions prises sur la base de ce document. Les performances passées ne préjugent pas des performances futures. La valeur des investissements peut fluctuer à la baisse comme à la hausse.</p>
+  <p style="margin-top: 8px;">Sources : <a href="#" style="color: var(--accent);">Rapport Financier Annuel <ANNÉE> de l'émetteur</a> · Cours boursier au <DATE_HEURE_RÉCUPÉRATION> · Données de marché <SOURCE_COURS>.</p>
+</footer>
+```
+
+**Adaptation EN si livrable en anglais** : remplacer le texte par sa traduction stricte ; conserver les 3 emplacements et le ton réglementaire neutre.
+
+**JAMAIS** :
+- Omettre l'un des 3 emplacements
+- Réduire ou édulcorer le disclaimer
+- Le mettre en très petit ou peu visible (bannière = warning color visible)
+- Supprimer la mention "ne constitue pas un conseil en investissement"
+
 ### Étape 4 — Livraison
 
 1. **Créer le dossier** `<out-dir>` (par défaut `<HOME>/<TICKER>-Analysis-<YEAR>/`)
@@ -216,10 +270,11 @@ Si marché non reconnu, demander à l'utilisateur : devise, référentiel compta
 - **Langue** : par défaut français (analyse + UI HTML), adaptable EN sur demande
 - **Tonalité** : sceptique, factuelle, pas de superlatifs commerciaux
 - **Chiffres** : toujours citer la source (page du rapport si possible) ; en devise locale du reporting
+- **Cours actuel OBLIGATOIRE** : récupérer le dernier cours de bourse disponible via WebFetch (cf. Étape 1 §5). Afficher cours + date + heure dans le hero. Si récupération échoue, demander à l'utilisateur ; **jamais inventer**.
+- **Disclaimer OBLIGATOIRE** : 3 emplacements dans le HTML (commentaire `<head>`, bannière warning visible après le hero, footer légal). Mention explicite *"ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation"*. Voir Étape 3 § Disclaimer pour le texte exact à reprendre.
 - **Pas de déploiement web automatique** : laisser l'utilisateur gérer le partage
 - **Pas de mock/fake data** : si une donnée manque dans le rapport, le mentionner explicitement (ex: "Non publié par l'émetteur — à demander en IR")
 - **Conformité réglementaire** : ne pas reformuler les données réglementées au-delà du raisonnable, citer le rapport comme source primaire (AMMC pour Maroc, AMF pour France, SEC pour USA, FCA pour UK, etc.)
-- **Disclaimer** : toujours rappeler que l'analyse est éducative / informationnelle et ne constitue pas un conseil en investissement personnalisé
 
 ## Référence
 

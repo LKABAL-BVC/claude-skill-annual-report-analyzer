@@ -7,9 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- **Récupération automatique du cours actuel** (obligatoire) — WebFetch vers casablanca-bourse.com / live.euronext.com / londonstockexchange.com / Yahoo Finance / boerse-frankfurt.de / six-group.com selon le marché. Capture cours, devise, date/heure, volume, variation YTD. Calcul de la capitalisation boursière à recouper avec celle publiée. Si échec : demande explicite à l'utilisateur, jamais d'invention.
+- **Disclaimer légal triple — obligatoire dans tous les livrables HTML** :
+  - Commentaire HTML dans `<head>` pour traçabilité
+  - Bannière warning visible juste après le hero (couleur warning, non éludable)
+  - Footer légal en pied de page (mentions réglementaires + sources)
+  - Texte explicite : "ne constitue ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation"
+  - Adaptable EN si livrable en anglais
+
 ### Idées en discussion
-- Support TADAWUL (Arabie Saoudite) avec calibration WACC SAR + spécificités CMA SA
-- Support BVMT (Tunis) avec calibration TND + référentiel Système Comptable Tunisien
+- Support des bourses européennes restantes (Vienne, Athènes, Lisbonne natif, Varsovie WSE, Prague PSE)
+- Support marchés Asie-Pacifique développés (TSE Tokyo, HKEX, SGX Singapour)
 - Profil "Banques" : adapter S01 (PNB / cost-to-income / NIM) et S03 (CET1 / Tier 1 / RWA)
 - Profil "Assurance" : adapter avec ratio combiné, marge S/P, primes acquises
 - Export PDF natif (sans passer par Chrome) via Puppeteer headless
