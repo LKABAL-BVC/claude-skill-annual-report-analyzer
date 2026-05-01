@@ -2,6 +2,25 @@
 
 > **Claude Code Skill** — Analyse fondamentale institutionnelle d'un **rapport financier annuel** (RFA, Annual Report, 10-K, Form 20-F, Document d'Enregistrement Universel) pour toute société cotée — toutes bourses confondues — avec génération automatique d'une présentation HTML interactive responsive de niveau Bloomberg Terminal.
 
+[![Lint](https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer/actions/workflows/lint.yml/badge.svg)](https://github.com/LKABAL-BVC/claude-skill-annual-report-analyzer/actions/workflows/lint.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Claude Code](https://img.shields.io/badge/Claude_Code-skill-orange)](https://docs.claude.com/claude-code)
+
+## Aperçu visuel
+
+<table>
+  <tr>
+    <td align="center"><b>Desktop — Bloomberg Terminal style</b></td>
+    <td align="center"><b>Mobile — responsive</b></td>
+  </tr>
+  <tr>
+    <td><img src="docs/screenshots/desktop-overview.png" alt="Vue desktop de la présentation HTML institutionnelle" width="640"></td>
+    <td><img src="docs/screenshots/mobile-overview.png" alt="Vue mobile responsive avec sidebar off-canvas" width="220"></td>
+  </tr>
+</table>
+
+*Exemple : analyse Addoha (ADH:CSE) FY2025 — recommandation NEUTRE biais négatif, divergence Net Income +70% vs FCF -7 MMAD, 10 red flags identifiés.*
+
 ## Ce que fait ce skill
 
 À partir d'un PDF de rapport annuel d'une société cotée (BVC/Casablanca, Euronext, LSE, NYSE, NASDAQ, etc.), le skill produit :

@@ -1,0 +1,20 @@
+{
+  "extends": ["html-validate:recommended"],
+  "rules": {
+    "no-inline-style": "off",
+    "void-style": "off",
+    "wcag/h30": "off",
+    "wcag/h32": "off",
+    "wcag/h36": "off",
+    "wcag/h37": "off",
+    "wcag/h63": "off",
+    "wcag/h67": "off",
+    "wcag/h71": "off",
+    "no-trailing-whitespace": "off",
+    "attr-quotes": "off",
+    "element-required-attributes": "warn",
+    "no-raw-characters": "off",
+    "long-title": "off",
+    "meta-refresh": "off"
+  }
+}
