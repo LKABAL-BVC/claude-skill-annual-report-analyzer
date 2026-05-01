@@ -23,6 +23,27 @@
 <meta name="twitter:title" content="ADH 2025 — Investment Note Institutionnelle">
 <meta name="twitter:description" content="Analyse fondamentale Addoha FY2025 · RN +70% contredit par FCF -7 MMAD · 10 red flags · NEUTRE biais négatif">
 
+<!--
+================================================================================
+DISCLAIMER LÉGAL
+================================================================================
+Ce document est produit à des fins éducatives et informationnelles uniquement.
+Il ne constitue PAS un conseil en investissement, une recommandation personnalisée,
+une sollicitation à acheter ou vendre des instruments financiers, ni une analyse
+financière indépendante au sens réglementaire (AMMC pour le Maroc, AMF pour la
+France, SEC pour les USA, FCA pour le Royaume-Uni).
+
+L'auteur ne détient pas nécessairement de position sur la valeur analysée et
+n'assume aucune responsabilité quant aux décisions prises sur la base de ce
+document. Les performances passées ne préjugent pas des performances futures.
+Toute décision d'investissement doit être prise après consultation d'un
+conseiller en investissement agréé et lecture intégrale des documents officiels
+de l'émetteur (RFA, prospectus, communiqués réglementés AMMC).
+
+Sources : Rapport Financier Annuel 2025 d'Addoha (publié sur ammc.ma) ;
+cours boursier via investing.com (snapshot au 30/04/2026).
+================================================================================
+-->
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
   :root {
@@ -93,6 +114,50 @@
     font-size: 12px;
   }
   .topbar-meta strong { color: var(--text-primary); margin-left: 6px; }
+
+  /* ======= LIVE PRICE BADGE ======= */
+  .price-badge {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-strong);
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text-secondary);
+    line-height: 1.2;
+  }
+  .price-badge-label {
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--text-dim);
+  }
+  .price-badge-value {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
+  }
+  .price-badge-delta {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .price-badge-delta.neg {
+    background: var(--danger-soft);
+    color: var(--danger);
+  }
+  .price-badge-delta.pos {
+    background: var(--success-soft);
+    color: var(--success);
+  }
+  .price-badge-meta {
+    font-size: 9px;
+    color: var(--text-dim);
+  }
   .topbar-spacer { flex: 1; }
   .rating-pill {
     padding: 6px 14px;
@@ -780,6 +845,10 @@
     .topbar { padding: 0 12px; gap: 10px; }
     .ticker { font-size: 14px; }
     .topbar-meta { display: none; }
+    .price-badge { padding: 4px 8px; gap: 6px; }
+    .price-badge-label, .price-badge-meta { display: none; }
+    .price-badge-value { font-size: 12px; }
+    .price-badge-delta { font-size: 10px; padding: 1px 4px; }
     .topbar-divider { display: none; }
     .rating-pill { font-size: 10px; padding: 5px 10px; }
     .menu-btn { display: flex; }
@@ -900,6 +969,14 @@
     <span>Exercice :<strong>FY 2025</strong></span>
   </div>
   <div class="topbar-spacer"></div>
+  <div class="price-badge" id="priceBadge" title="Cours via investing.com — actualisation manuelle">
+    <div>
+      <div class="price-badge-label">Cours actuel</div>
+      <div><span class="price-badge-value" id="priceValue">33,41</span><span style="color:var(--text-muted);font-size:11px;margin-left:3px;">MAD</span></div>
+    </div>
+    <div class="price-badge-delta neg" id="priceDelta">-2,34%</div>
+    <div class="price-badge-meta" id="priceMeta">30/04 · vol. 245K</div>
+  </div>
   <div class="rating-pill">NEUTRE — biais négatif</div>
 </header>
 
@@ -961,6 +1038,11 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- DISCLAIMER BANNER (obligatoire) -->
+    <div role="note" style="background: var(--warning-soft); border: 1px solid var(--warning); border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0 24px; border-radius: 4px; font-size: 12px; color: var(--text-secondary); line-height: 1.55;">
+      <strong style="color: var(--warning);">⚠️ AVERTISSEMENT</strong> — Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation</strong> à acheter ou vendre des instruments financiers, ni une analyse financière indépendante au sens réglementaire (AMMC). Les opinions exprimées reflètent l'analyse de l'auteur à la date de publication et peuvent évoluer sans préavis. Toute décision d'investissement doit être prise après consultation d'un conseiller agréé et lecture intégrale du <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">RFA officiel sur ammc.ma</a>.
     </div>
 
     <!-- KPI BAR -->
@@ -1673,10 +1755,18 @@
 
   <div class="footer">
     Analyse établie sous contrainte d'informations <code>RFA 2025</code> uniquement (129 pages).<br>
-    Cours boursier et benchmarks pairs (Alliances, RDS) à recalibrer en données de marché live.<br>
-    Hypothèses : <code>WACC 8-9 %</code> · <code>Ke 11-12 %</code> basées sur taux BAM 2,75 % + prime Maroc + prime secteur immobilier.<br>
-    Document à usage interne — ne constitue pas un conseil en investissement.
+    Cours boursier capturé via investing.com au <code>30/04/2026</code>.<br>
+    Hypothèses : <code>WACC 8-9 %</code> · <code>Ke 11-12 %</code> basées sur taux BAM 2,75 % + prime Maroc + prime secteur immobilier.
   </div>
+
+  <!-- ============ LEGAL FOOTER (obligatoire) ============ -->
+  <footer style="margin: 48px -28px -28px; padding: 24px 32px; background: var(--bg-secondary); border-top: 2px solid var(--warning); font-size: 11px; color: var(--text-muted); line-height: 1.7;">
+    <div style="max-width: 980px; margin: 0 auto;">
+      <p style="margin-bottom: 10px;"><strong style="color: var(--warning);">DISCLAIMER LÉGAL —</strong> Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation à acheter ou vendre des instruments financiers, ni une analyse financière indépendante</strong> au sens réglementaire (AMMC pour le Maroc). L'auteur n'assume aucune responsabilité quant aux décisions prises sur la base de ce document. Les performances passées ne préjugent pas des performances futures. La valeur des investissements peut fluctuer à la baisse comme à la hausse.</p>
+      <p style="margin-bottom: 10px;"><strong style="color: var(--text-secondary);">Sources —</strong> <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">Rapport Financier Annuel 2025 d'Addoha publié sur ammc.ma</a> (129 pages) · Cours boursier <a href="https://www.investing.com/equities/addoha" target="_blank" rel="noopener" style="color: var(--accent);">via investing.com</a> au <span id="footerPriceDate">30 avril 2026</span> · Taux BAM 2,75 % au 28/04/2026 · Calculs WACC selon CAPM (Rf 10Y MAD ~3 %, ERP Maroc ~7 %, β secteur immobilier ~1,1).</p>
+      <p style="text-align: center; color: var(--text-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);">Toute décision d'investissement doit être prise après consultation d'un <strong>conseiller en investissement agréé</strong> et lecture intégrale des documents officiels de l'émetteur.</p>
+    </div>
+  </footer>
 
 </main>
 </div>
