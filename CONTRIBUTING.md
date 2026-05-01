@@ -13,13 +13,27 @@ Ouvrir une [issue](https://github.com/LKABAL-BVC/claude-skill-annual-report-anal
 - **Screenshot** si UI
 
 ### 2. Proposer un nouveau marché
-Pour ajouter le support d'une nouvelle place boursière (Tunis BVMT, Alger SGBV, NSE Nairobi, BIST Istanbul, BSE Mumbai, etc.), ouvrir une issue avec :
+**Priorité actuelle** : marchés développés et structurés (Europe + Amérique du Nord + Asie-Pacifique développée).
+
+Exemples de places visées en priorité :
+- **Deutsche Börse / Xetra** (Frankfurt) — DAX
+- **SIX Swiss Exchange** (Zurich) — SMI
+- **Borsa Italiana** (Milan) — FTSE MIB
+- **BME** (Madrid) — IBEX 35
+- **Euronext Amsterdam / Bruxelles / Lisbonne / Dublin / Oslo**
+- **NASDAQ Nordic** (Stockholm OMX30, Helsinki, Copenhague)
+- **TSX** (Toronto)
+- **ASX** (Sydney)
+- **TSE** (Tokyo) — TOPIX, Nikkei
+- **HKEX** (Hong Kong) — pour les sociétés non-PRC
+
+Pour proposer une nouvelle place, ouvrir une issue avec :
 - **Devise de reporting** (code ISO 4217)
-- **Référentiel comptable** dominant (IFRS, US GAAP, local GAAP)
+- **Référentiel comptable** dominant (IFRS, US GAAP, local GAAP avec convergence IFRS)
 - **Régulateur** + numéro de circulaire pertinente
 - **Source de cours** (URL publique préférée)
-- **Calibration WACC type** (Rf 10Y govt + ERP) avec justification (source)
-- **Format type du rapport annuel** (PDF, HTML, XBRL…)
+- **Calibration WACC type** (Rf 10Y govt + ERP) avec justification (source : Damodaran, KPMG, etc.)
+- **Format type du rapport annuel** (PDF, HTML, XBRL/iXBRL…)
 
 ### 3. Soumettre une Pull Request
 

@@ -194,7 +194,7 @@ MIT — voir [LICENSE](LICENSE).
 
 ## Contributions
 
-Issues et PRs bienvenues. Pour ajouter le support fin d'autres bourses (Tunis, Alger, Nigeria, Kenya, Arabie, Inde…), ouvrir une issue d'abord avec : référentiel comptable, devise, régulateur, source de cours, calibration WACC type.
+Issues et PRs bienvenues. Priorité actuelle : enrichir le support des **marchés développés et structurés** — Deutsche Börse (Xetra), SIX Swiss Exchange, Borsa Italiana, BME (Madrid), Euronext Amsterdam/Bruxelles/Lisbonne/Dublin/Oslo, NASDAQ Nordic (Stockholm, Helsinki, Copenhague), TSX (Toronto), ASX (Sydney), TSE (Tokyo). Pour proposer une nouvelle place, ouvrir une issue avec : référentiel comptable, devise, régulateur, source de cours, calibration WACC type.
 
 ---
 

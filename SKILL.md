@@ -11,7 +11,7 @@ allowed-tools: Read Write Bash Grep Glob WebFetch
 
 Workflow complet : Rapport financier annuel PDF → Note d'analyse institutionnelle → Présentation HTML interactive responsive partageable.
 
-**Marchés supportés** : toute société cotée. Calibration par défaut pour la BVC (Casablanca / MASI), profils additionnels pour Euronext, LSE, NYSE/NASDAQ, marchés émergents MENA. Si le marché n'est pas reconnu, le skill demande à l'utilisateur les paramètres clés (taux sans risque, prime de risque, devise).
+**Marchés supportés** : toute société cotée. Calibrations encodées pour les principales places développées et structurées : Euronext (Paris, Amsterdam, Bruxelles, Lisbonne, Dublin, Oslo), LSE, NYSE/NASDAQ, Deutsche Börse (Xetra), SIX Swiss Exchange, Borsa Italiana, BME, NASDAQ Nordic, TSX, ASX, TSE. Cas couvert également : BVC (Casablanca / MASI), utilisé comme exemple de référence dans `examples/`. Si le marché n'est pas reconnu, le skill demande à l'utilisateur les paramètres clés (taux sans risque, prime de risque, devise).
 
 ## Inputs
 
@@ -90,7 +90,11 @@ Produire une note structurée en **8 sections numérotées**, dans la langue dem
 | Euronext (EUR) | ~3% | ~5,5% | OAT 10Y / Bund 10Y |
 | LSE (GBP) | ~4% | ~5,5% | Gilt 10Y |
 | NYSE/NASDAQ (USD) | ~4% | ~5% | UST 10Y |
-| Émergents MENA | ~5-8% | ~7-10% | + spread souverain |
+| Deutsche Börse (EUR) | ~3% | ~5,5% | Bund 10Y |
+| SIX Swiss (CHF) | ~1% | ~5% | SNB 10Y |
+| TSX (CAD) | ~3,5% | ~5,5% | GoC 10Y |
+| ASX (AUD) | ~4% | ~6% | ACGB 10Y |
+| TSE (JPY) | ~1% | ~6% | JGB 10Y |
 
 Si les conditions de marché ont évolué, recouper via WebFetch ou demander à l'utilisateur.
 
