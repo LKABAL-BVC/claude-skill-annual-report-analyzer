@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
+- **Méthodologie valorisation enrichie (Section 07)** — FCF normalisé obligatoire (moyenne 3-5 ans ou FCF normatif NOPAT-based) pour éviter les DCF distordus par un exercice atypique. Reverse DCF systématique (implication de croissance du cours actuel). Décotes explicites pour marchés émergents et small/mid cap : décote de liquidité −15 % à −25 % (flottant, volume, spread) + décote gouvernance −5 % à −15 %. Pondération multi-méthodes obligatoire (DCF + multiples + méthode sectorielle) avec poids calibrés par secteur (NAV 50 % pour immobilier, DDM 50 % pour banques, SOTP pour conglomérats). Tableau cible Bear/Base/Bull par méthode + cible finale ajustée. Chart bar groupé multi-méthodes ajouté dans le gabarit HTML de référence.
+- **Toggle bilingue FR/EN intégré dans le HTML** — argument `--lang=BILINGUAL` génère un fichier HTML unique avec bascule FR↔EN en un clic. Libellés UI via dictionnaire JS `i18n` (`data-i18n`), texte analytique via blocs `data-lang="fr"` / `data-lang="en"`. Préférence mémorisée en `localStorage`. Charts Chart.js mis à jour sans animation au changement de langue. `--lang=FR` (défaut) ou `--lang=EN` génèrent un HTML monolingue sans toggle.
 - **Récupération automatique du cours actuel** (obligatoire) — WebFetch vers casablanca-bourse.com / live.euronext.com / londonstockexchange.com / Yahoo Finance / boerse-frankfurt.de / six-group.com selon le marché. Capture cours, devise, date/heure, volume, variation YTD. Calcul de la capitalisation boursière à recouper avec celle publiée. Si échec : demande explicite à l'utilisateur, jamais d'invention.
 - **Disclaimer légal triple — obligatoire dans tous les livrables HTML** :
   - Commentaire HTML dans `<head>` pour traçabilité
@@ -17,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Adaptable EN si livrable en anglais
 
 ### Idées en discussion
+
 - Support des bourses européennes restantes (Vienne, Athènes, Lisbonne natif, Varsovie WSE, Prague PSE)
 - Support marchés Asie-Pacifique développés (TSE Tokyo, HKEX, SGX Singapour)
 - Profil "Banques" : adapter S01 (PNB / cost-to-income / NIM) et S03 (CET1 / Tier 1 / RWA)
@@ -27,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.0] — 2026-05-01
 
 ### Changed
+
 - **Élargissement du périmètre** : le skill ne se limite plus à la BVC (Casablanca). Il fonctionne désormais sur toute société cotée, tous marchés (Euronext, LSE, NYSE, NASDAQ, TADAWUL, EGX, etc.).
 - Ajout d'une grille de calibration WACC multi-marchés (Rf + ERP par place)
 - Section "Spécificités par marché" ajoutée dans `SKILL.md` (devise, référentiel, régulateur, source cours)
@@ -38,11 +43,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Repo renommé : `claude-skill-rfa-bvc-analyzer` → `claude-skill-annual-report-analyzer`
 
 ### Why
+
 - Retour utilisateur : la méthodologie (8 sections, audit mindset, divergence P&L vs Cash, DCF) est universelle, seule la calibration locale change. Limiter le skill à la BVC le rendait artificiellement restreint.
 
 ## [0.1.0] — 2026-05-01
 
 ### Added
+
 - **Initial release**.
 - Skill `analyse-rfa-institutionnelle` pour Claude Code.
 - Workflow 4 étapes : Extraction PDF → Note 8 sections → HTML interactif → Livraison.

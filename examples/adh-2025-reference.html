@@ -760,6 +760,33 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   ::-webkit-scrollbar-thumb { background: var(--border-strong); border-radius: 5px; }
   ::-webkit-scrollbar-thumb:hover { background: var(--text-dim); }
 
+  /* ======= LANGUAGE TOGGLE ======= */
+  .lang-toggle {
+    display: flex;
+    align-items: center;
+    background: var(--bg-tertiary);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    padding: 2px;
+    flex-shrink: 0;
+  }
+  .lang-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    padding: 4px 9px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .lang-btn.active { background: var(--accent-soft); color: var(--accent); }
+  .lang-btn:hover:not(.active) { color: var(--text-primary); background: var(--bg-elevated); }
+  @media (max-width: 768px) { .lang-toggle { display: none; } }
+
   /* Print */
   @media print {
     .sidebar, .topbar { display: none; }
@@ -963,21 +990,25 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <div class="ticker">ADH:CSE</div>
   <div class="topbar-divider"></div>
   <div class="topbar-meta">
-    <span>Émetteur :<strong>Douja Promotion Groupe Addoha</strong></span>
-    <span>Secteur :<strong>Immobilier</strong></span>
-    <span>Marché :<strong>MASI</strong></span>
-    <span>Exercice :<strong>FY 2025</strong></span>
+    <span data-lang="fr">Émetteur :<strong>Douja Promotion Groupe Addoha</strong></span><span data-lang="en" style="display:none">Issuer :<strong>Douja Promotion Groupe Addoha</strong></span>
+    <span data-lang="fr">Secteur :<strong>Immobilier</strong></span><span data-lang="en" style="display:none">Sector :<strong>Real Estate</strong></span>
+    <span data-lang="fr">Marché :<strong>MASI</strong></span><span data-lang="en" style="display:none">Market :<strong>MASI</strong></span>
+    <span data-lang="fr">Exercice :<strong>FY 2025</strong></span><span data-lang="en" style="display:none">FY :<strong>FY 2025</strong></span>
   </div>
   <div class="topbar-spacer"></div>
-  <div class="price-badge" id="priceBadge" title="Cours via investing.com — actualisation manuelle">
+  <div class="price-badge" id="priceBadge" title="Price via investing.com — manual update">
     <div>
-      <div class="price-badge-label">Cours actuel</div>
+      <div class="price-badge-label"><span data-lang="fr">Cours actuel</span><span data-lang="en" style="display:none">Last price</span></div>
       <div><span class="price-badge-value" id="priceValue">33,41</span><span style="color:var(--text-muted);font-size:11px;margin-left:3px;">MAD</span></div>
     </div>
     <div class="price-badge-delta neg" id="priceDelta">-2,34%</div>
     <div class="price-badge-meta" id="priceMeta">30/04 · vol. 245K</div>
   </div>
-  <div class="rating-pill">NEUTRE — biais négatif</div>
+  <div class="lang-toggle" id="langToggle" aria-label="Langue / Language">
+    <button class="lang-btn active" data-lang="fr" onclick="setLang('fr')" aria-label="Français">FR</button>
+    <button class="lang-btn" data-lang="en" onclick="setLang('en')" aria-label="English">EN</button>
+  </div>
+  <div class="rating-pill"><span data-lang="fr">NEUTRE — biais négatif</span><span data-lang="en" style="display:none">NEUTRAL — negative bias</span></div>
 </header>
 
 <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
@@ -987,23 +1018,26 @@ cours boursier via investing.com (snapshot au 30/04/2026).
 <!-- ============ SIDEBAR ============ -->
 <nav class="sidebar">
   <div class="sidebar-section">Investment Note</div>
-  <a class="nav-item active" data-target="overview"><span class="nav-num">00</span>Synthèse Exécutive</a>
-  <a class="nav-item" data-target="s1"><span class="nav-num">01</span>P&L &amp; Performance</a>
-  <a class="nav-item" data-target="s2"><span class="nav-num">02</span>Cash &amp; BFR</a>
-  <a class="nav-item" data-target="s3"><span class="nav-num">03</span>Structure Financière</a>
-  <a class="nav-item" data-target="s4"><span class="nav-num">04</span>Création de Valeur</a>
-  <a class="nav-item" data-target="s5"><span class="nav-num">05</span>Annexes &amp; Qualitatif</a>
-  <a class="nav-item" data-target="s6"><span class="nav-num">06</span>Red Flags</a>
-  <a class="nav-item" data-target="s7"><span class="nav-num">07</span>Valorisation</a>
-  <a class="nav-item" data-target="s8"><span class="nav-num">08</span>Bull vs Bear</a>
-  <a class="nav-item" data-target="s9"><span class="nav-num">09</span>Recommandation</a>
+  <a class="nav-item active" data-target="overview"><span class="nav-num">00</span><span data-i18n="nav.overview">Synthèse Exécutive</span></a>
+  <a class="nav-item" data-target="s1"><span class="nav-num">01</span><span data-i18n="nav.s1">P&amp;L &amp; Performance</span></a>
+  <a class="nav-item" data-target="s2"><span class="nav-num">02</span><span data-i18n="nav.s2">Cash &amp; BFR</span></a>
+  <a class="nav-item" data-target="s3"><span class="nav-num">03</span><span data-i18n="nav.s3">Structure Financière</span></a>
+  <a class="nav-item" data-target="s4"><span class="nav-num">04</span><span data-i18n="nav.s4">Création de Valeur</span></a>
+  <a class="nav-item" data-target="s5"><span class="nav-num">05</span><span data-i18n="nav.s5">Annexes &amp; Qualitatif</span></a>
+  <a class="nav-item" data-target="s6"><span class="nav-num">06</span><span data-i18n="nav.s6">Red Flags</span></a>
+  <a class="nav-item" data-target="s7"><span class="nav-num">07</span><span data-i18n="nav.s7">Valorisation</span></a>
+  <a class="nav-item" data-target="s8"><span class="nav-num">08</span><span data-i18n="nav.s8">Bull vs Bear</span></a>
+  <a class="nav-item" data-target="s9"><span class="nav-num">09</span><span data-i18n="nav.s9">Recommandation</span></a>
 
   <div class="sidebar-section" style="margin-top: 24px;">Source</div>
   <div style="padding: 8px 12px; font-size: 11px; color: var(--text-muted); line-height: 1.6;">
     RFA 2025 — 129 pages<br>
-    Audit : Fidaroc GT &amp; Hdid<br>
+    <span data-lang="fr">Audit : Fidaroc GT &amp; Hdid<br>
     Opinion : sans réserve<br>
-    Date : 28 avr. 2026
+    Date : 28 avr. 2026</span>
+    <span data-lang="en" style="display:none">Auditor: Fidaroc GT &amp; Hdid<br>
+    Opinion: unqualified<br>
+    Date: 28 Apr. 2026</span>
   </div>
 </nav>
 
@@ -1014,27 +1048,40 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="overview">
     <div class="hero">
       <div class="hero-tag">Investment Memo</div>
-      <h1 class="hero-title">Le narrative de redressement contredit par les fondamentaux cash</h1>
-      <p class="hero-sub">
-        Le résultat net consolidé bondit de +70 % (516 MMAD), mais le free cash-flow opérationnel ressort à <strong style="color:var(--danger)">-7 MMAD</strong>.
-        Le BFR a absorbé 100 % de la CAF. Le holding social affiche une perte de 90 MMAD tout en distribuant 201 MMAD de dividendes sur réserves.
-        Le ROIC à 2,3 % détruit ~600 bps de valeur économique versus le WACC.
-      </p>
+      <div data-lang="fr">
+        <h1 class="hero-title">Le narrative de redressement contredit par les fondamentaux cash</h1>
+        <p class="hero-sub">
+          Le résultat net consolidé bondit de +70 % (516 MMAD), mais le free cash-flow opérationnel ressort à <strong style="color:var(--danger)">-7 MMAD</strong>.
+          Le BFR a absorbé 100 % de la CAF. Le holding social affiche une perte de 90 MMAD tout en distribuant 201 MMAD de dividendes sur réserves.
+          Le ROIC à 2,3 % détruit ~600 bps de valeur économique versus le WACC.
+        </p>
+      </div>
+      <div data-lang="en" style="display:none">
+        <h1 class="hero-title">The recovery narrative contradicted by cash fundamentals</h1>
+        <p class="hero-sub">
+          Consolidated net income jumped +70% (MAD 516M), yet operating free cash flow came in at <strong style="color:var(--danger)">-MAD 7M</strong>.
+          Working capital absorbed 100% of operating cash flow. The parent company posted a MAD 90M loss while distributing MAD 201M in dividends from reserves.
+          ROIC at 2.3% destroys ~600 bps of economic value versus WACC.
+        </p>
+      </div>
 
       <div class="conviction">
         <div>
-          <div class="conviction-label">Recommandation</div>
+          <div class="conviction-label" data-i18n="rec.label">Recommandation</div>
           <div class="conviction-rating">NEUTRE</div>
-          <div class="conviction-bias">↓ Biais négatif</div>
+          <div class="conviction-bias"><span data-lang="fr">↓ Biais négatif</span><span data-lang="en" style="display:none">↓ Negative bias</span></div>
         </div>
         <div class="conviction-meter">
-          <div class="conviction-label">Conviction analytique</div>
+          <div class="conviction-label" data-i18n="rec.conviction">Conviction analytique</div>
           <div class="meter-track"><div class="meter-fill"></div></div>
           <div class="meter-labels">
             <span>Sell</span><span>Reduce</span><span style="color:var(--warning)">▲ Hold-</span><span>Buy</span><span>Strong Buy</span>
           </div>
-          <div style="margin-top:14px; font-size:12px; color:var(--text-muted); line-height:1.6;">
+          <div data-lang="fr" style="margin-top:14px; font-size:12px; color:var(--text-muted); line-height:1.6;">
             Catalyseurs binaires (Blanca City Park, S1 2026 cash conversion). Re-rating possible vers HOLD+ si le BFR se résorbe sur 2 semestres consécutifs.
+          </div>
+          <div data-lang="en" style="margin-top:14px; font-size:12px; color:var(--text-muted); line-height:1.6; display:none">
+            Binary catalysts (Blanca City Park, H1 2026 cash conversion). Re-rating possible toward HOLD+ if working capital resolves over 2 consecutive halves.
           </div>
         </div>
       </div>
@@ -1042,28 +1089,29 @@ cours boursier via investing.com (snapshot au 30/04/2026).
 
     <!-- DISCLAIMER BANNER (obligatoire) -->
     <div role="note" style="background: var(--warning-soft); border: 1px solid var(--warning); border-left: 4px solid var(--warning); padding: 12px 16px; margin: 16px 0 24px; border-radius: 4px; font-size: 12px; color: var(--text-secondary); line-height: 1.55;">
-      <strong style="color: var(--warning);">⚠️ AVERTISSEMENT</strong> — Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation</strong> à acheter ou vendre des instruments financiers, ni une analyse financière indépendante au sens réglementaire (AMMC). Les opinions exprimées reflètent l'analyse de l'auteur à la date de publication et peuvent évoluer sans préavis. Toute décision d'investissement doit être prise après consultation d'un conseiller agréé et lecture intégrale du <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">RFA officiel sur ammc.ma</a>.
+      <span data-lang="fr"><strong style="color: var(--warning);">⚠️ AVERTISSEMENT</strong> — Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation</strong> à acheter ou vendre des instruments financiers, ni une analyse financière indépendante au sens réglementaire (AMMC). Les opinions exprimées reflètent l'analyse de l'auteur à la date de publication et peuvent évoluer sans préavis. Toute décision d'investissement doit être prise après consultation d'un conseiller agréé et lecture intégrale du <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">RFA officiel sur ammc.ma</a>.</span>
+      <span data-lang="en" style="display:none"><strong style="color: var(--warning);">⚠️ DISCLAIMER</strong> — This document is produced for <strong>educational and informational purposes only</strong>. It does not constitute <strong>investment advice, a personalised recommendation, or a solicitation</strong> to buy or sell financial instruments, nor an independent financial analysis in the regulatory sense (AMMC). The opinions expressed reflect the author's analysis at the date of publication and may change without notice. Any investment decision must be made after consulting a licensed adviser and reading the full <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">official annual report on ammc.ma</a>.</span>
     </div>
 
     <!-- KPI BAR -->
     <div class="kpi-bar">
       <div class="kpi-bar-item">
-        <div class="kpi-bar-label">CA Consolidé</div>
+        <div class="kpi-bar-label" data-i18n="kpi.revenue">CA Consolidé</div>
         <div class="kpi-bar-value">2 709<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
         <div class="kpi-bar-delta delta-pos">+4,4 % YoY</div>
       </div>
       <div class="kpi-bar-item">
-        <div class="kpi-bar-label">RN Part Groupe</div>
+        <div class="kpi-bar-label" data-i18n="kpi.netincome">RN Part Groupe</div>
         <div class="kpi-bar-value">454<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
         <div class="kpi-bar-delta delta-pos">+65 % YoY</div>
       </div>
       <div class="kpi-bar-item">
-        <div class="kpi-bar-label">FCF Opérationnel</div>
+        <div class="kpi-bar-label" data-i18n="kpi.fcf">FCF Opérationnel</div>
         <div class="kpi-bar-value" style="color:var(--danger);">-7<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
-        <div class="kpi-bar-delta delta-neg">vs +223 en 2024</div>
+        <div class="kpi-bar-delta delta-neg"><span data-lang="fr">vs +223 en 2024</span><span data-lang="en" style="display:none">vs +223 in 2024</span></div>
       </div>
       <div class="kpi-bar-item">
-        <div class="kpi-bar-label">ROIC</div>
+        <div class="kpi-bar-label" data-i18n="kpi.roic">ROIC</div>
         <div class="kpi-bar-value" style="color:var(--danger);">2,3<span style="font-size:12px;color:var(--text-muted);"> %</span></div>
         <div class="kpi-bar-delta delta-neg">WACC ~8-9 % → EVA -</div>
       </div>
@@ -1072,36 +1120,63 @@ cours boursier via investing.com (snapshot au 30/04/2026).
     <!-- 3-COL OVERVIEW -->
     <div class="grid grid-3">
       <div class="card" style="border-top:3px solid var(--success);">
-        <div class="card-title" style="color:var(--success);">▲ Points Forts</div>
-        <ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+        <div class="card-title" style="color:var(--success);" data-i18n="card.strengths">▲ Points Forts</div>
+        <div data-lang="fr"><ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
           <li>• Préventes 11 035 unités (+3 %)</li>
           <li>• CA sécurisé <strong>11,7 Md MAD</strong> (+27 %)</li>
           <li>• Pivot Afrique : CI +152 %</li>
           <li>• 4,3 ans de visibilité</li>
           <li>• Décote book value (P/B ≈ 0,47x)</li>
           <li>• Dividende rétabli (yield ~4,5 %)</li>
-        </ul>
+        </ul></div>
+        <div data-lang="en" style="display:none"><ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+          <li>• Pre-sales 11,035 units (+3%)</li>
+          <li>• Secured revenue backlog <strong>MAD 11.7Bn</strong> (+27%)</li>
+          <li>• Africa pivot: Côte d'Ivoire +152%</li>
+          <li>• 4.3 years revenue visibility</li>
+          <li>• Book value discount (P/B ≈ 0.47x)</li>
+          <li>• Dividend reinstated (yield ~4.5%)</li>
+        </ul></div>
       </div>
       <div class="card" style="border-top:3px solid var(--danger);">
-        <div class="card-title" style="color:var(--danger);">▼ Risques Critiques</div>
-        <ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+        <div class="card-title" style="color:var(--danger);" data-i18n="card.risks">▼ Risques Critiques</div>
+        <div data-lang="fr"><ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
           <li>• Divergence RN / Cash-Flow majeure</li>
           <li>• Holding en perte → dividende non couvert</li>
           <li>• BFR 13,9 Md MAD vs CA 2,7 Md</li>
           <li>• Interest coverage 1,65x</li>
           <li>• Taux effectif 11 % (vs 25,5 %)</li>
           <li>• Hors-bilan +42 % YoY</li>
-        </ul>
+        </ul></div>
+        <div data-lang="en" style="display:none"><ul style="list-style:none; font-size:13px; line-height:1.9; color:var(--text-secondary);">
+          <li>• Major NI / Cash-Flow divergence</li>
+          <li>• Loss-making parent → uncovered dividend</li>
+          <li>• Working capital MAD 13.9Bn vs revenue 2.7Bn</li>
+          <li>• Interest coverage 1.65x</li>
+          <li>• Effective tax rate 11% (vs 25.5% statutory)</li>
+          <li>• Off-balance sheet commitments +42% YoY</li>
+        </ul></div>
       </div>
       <div class="card" style="border-top:3px solid var(--accent);">
-        <div class="card-title" style="color:var(--accent);">► Verdict</div>
-        <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
-          Dossier de qualité <strong style="color:var(--warning)">FAIBLE à MOYEN</strong>. Une thèse "deep value" est défendable sur la décote P/B,
-          mais le couple <em>ROIC 2 % / Levier 7x EBITDA / Coverage 1,65x</em> est structurellement fragile.
-        </p>
-        <p style="font-size:13px; line-height:1.7; color:var(--text-secondary); margin-top:10px;">
-          <strong style="color:var(--text-primary)">Investissement long terme :</strong> à éviter tant que le FCF reste négatif sur 2 semestres consécutifs.
-        </p>
+        <div class="card-title" style="color:var(--accent);" data-i18n="card.verdict">► Verdict</div>
+        <div data-lang="fr">
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            Dossier de qualité <strong style="color:var(--warning)">FAIBLE à MOYEN</strong>. Une thèse "deep value" est défendable sur la décote P/B,
+            mais le couple <em>ROIC 2 % / Levier 7x EBITDA / Coverage 1,65x</em> est structurellement fragile.
+          </p>
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary); margin-top:10px;">
+            <strong style="color:var(--text-primary)">Investissement long terme :</strong> à éviter tant que le FCF reste négatif sur 2 semestres consécutifs.
+          </p>
+        </div>
+        <div data-lang="en" style="display:none">
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            Investment quality: <strong style="color:var(--warning)">LOW to MEDIUM</strong>. A "deep value" thesis is defensible on the P/B discount,
+            but the combination <em>ROIC 2% / Leverage 7x EBITDA / Coverage 1.65x</em> is structurally fragile.
+          </p>
+          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary); margin-top:10px;">
+            <strong style="color:var(--text-primary)">Long-term investment:</strong> avoid until FCF turns positive for 2 consecutive halves.
+          </p>
+        </div>
       </div>
     </div>
   </section>
@@ -1110,52 +1185,57 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s1">
     <div class="section-header">
       <span class="section-num">01 //</span>
-      <h2 class="section-title">Performance Opérationnelle</h2>
+      <h2 class="section-title" data-i18n="s1.title">Performance Opérationnelle</h2>
     </div>
-    <p class="section-subtitle">La rupture comptable masque une stagnation économique réelle</p>
+    <div data-lang="fr"><p class="section-subtitle">La rupture comptable masque une stagnation économique réelle</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">The accounting break hides real economic stagnation</p></div>
 
     <div class="grid grid-2" style="margin-bottom:20px;">
       <div class="chart-card">
-        <div class="chart-title">Évolution du Chiffre d'Affaires</div>
-        <div class="chart-desc">Le pro-forma "ancien référentiel" n'est pas auditable — à traiter comme communication management</div>
+        <div class="chart-title"><span data-lang="fr">Évolution du Chiffre d'Affaires</span><span data-lang="en" style="display:none">Revenue Trend</span></div>
+        <div class="chart-desc"><span data-lang="fr">Le pro-forma "ancien référentiel" n'est pas auditable — à traiter comme communication management</span><span data-lang="en" style="display:none">The "old standard" pro-forma is unauditable — treat as management communication only</span></div>
         <div class="chart-wrap"><canvas id="chartCA"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Marges Opérationnelles</div>
-        <div class="chart-desc">Marge brute +100 bps mais REX en érosion (-1,3 %)</div>
+        <div class="chart-title"><span data-lang="fr">Marges Opérationnelles</span><span data-lang="en" style="display:none">Operating Margins</span></div>
+        <div class="chart-desc"><span data-lang="fr">Marge brute +100 bps mais REX en érosion (-1,3 %)</span><span data-lang="en" style="display:none">Gross margin +100 bps but EBIT eroding (-1.3%)</span></div>
         <div class="chart-wrap"><canvas id="chartMarges"></canvas></div>
       </div>
     </div>
 
     <div class="grid grid-2" style="margin-bottom:20px;">
       <div class="chart-card">
-        <div class="chart-title">Mix Géographique du CA</div>
-        <div class="chart-desc">L'Afrique de l'Ouest porte 41 % du CA — risque pays/devise non hedgé</div>
+        <div class="chart-title"><span data-lang="fr">Mix Géographique du CA</span><span data-lang="en" style="display:none">Revenue Geographic Mix</span></div>
+        <div class="chart-desc"><span data-lang="fr">L'Afrique de l'Ouest porte 41 % du CA — risque pays/devise non hedgé</span><span data-lang="en" style="display:none">West Africa accounts for 41% of revenue — unhedged country/currency risk</span></div>
         <div class="chart-wrap"><canvas id="chartGeo"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Mix par Standing (Maroc)</div>
-        <div class="chart-desc">Effondrement Haut Standing -47 % — segment qui devait porter les marges</div>
+        <div class="chart-title"><span data-lang="fr">Mix par Standing (Maroc)</span><span data-lang="en" style="display:none">Segment Mix by Category (Morocco)</span></div>
+        <div class="chart-desc"><span data-lang="fr">Effondrement Haut Standing -47 % — segment qui devait porter les marges</span><span data-lang="en" style="display:none">High-end segment collapse -47% — the segment that was meant to drive margins</span></div>
         <div class="chart-wrap"><canvas id="chartStanding"></canvas></div>
       </div>
     </div>
 
     <div class="quote quote-warn">
-      <strong>Retraitement du résultat normatif :</strong> Le bond du RN +70 % est artificiellement gonflé par
+      <span data-lang="fr"><strong>Retraitement du résultat normatif :</strong> Le bond du RN +70 % est artificiellement gonflé par
       (i) un résultat financier qui passe de +14 à +131 MMAD (reprises de provisions, change), et
       (ii) un taux d'imposition effectif de 10,96 % vs 25,5 % théorique. <strong>RN normatif estimé ~360 MMAD</strong> →
-      l'amélioration réelle est ~+18 %, pas +70 %.
+      l'amélioration réelle est ~+18 %, pas +70 %.</span>
+      <span data-lang="en" style="display:none"><strong>Normalised earnings restatement:</strong> The +70% net income jump is artificially inflated by
+      (i) finance result swinging from +MAD 14M to +MAD 131M (provision write-backs, FX), and
+      (ii) an effective tax rate of 10.96% vs 25.5% statutory. <strong>Estimated normalised net income ~MAD 360M</strong> →
+      the real improvement is ~+18%, not +70%.</span>
     </div>
 
     <div class="card-elevated card">
-      <div class="card-title">Tableau de retraitement</div>
+      <div class="card-title"><span data-lang="fr">Tableau de retraitement</span><span data-lang="en" style="display:none">Restatement table</span></div>
       <table class="data-table">
-        <thead><tr><th>MMAD</th><th class="num">Publié 2025</th><th class="num">Retraitement</th><th class="num">Normatif</th></tr></thead>
+        <thead><tr><th>MMAD</th><th class="num"><span data-lang="fr">Publié 2025</span><span data-lang="en" style="display:none">Reported 2025</span></th><th class="num"><span data-lang="fr">Retraitement</span><span data-lang="en" style="display:none">Adjustment</span></th><th class="num"><span data-lang="fr">Normatif</span><span data-lang="en" style="display:none">Normalised</span></th></tr></thead>
         <tbody>
-          <tr><td class="label-cell">Résultat opérationnel (REX)</td><td class="num">448</td><td class="num">0</td><td class="num">448</td></tr>
-          <tr><td class="label-cell">Résultat financier</td><td class="num" style="color:var(--success)">+131</td><td class="num" style="color:var(--danger)">-117</td><td class="num">+14</td></tr>
-          <tr><td class="label-cell">Charge d'impôt (taux effectif)</td><td class="num">-64 (11%)</td><td class="num" style="color:var(--danger)">-90</td><td class="num">-154 (25,5%)</td></tr>
-          <tr class="strong-row"><td class="label-cell">RN Consolidé</td><td class="num">516</td><td class="num">-156</td><td class="num">~360</td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Résultat opérationnel (REX)</span><span data-lang="en" style="display:none">Operating income (EBIT)</span></td><td class="num">448</td><td class="num">0</td><td class="num">448</td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Résultat financier</span><span data-lang="en" style="display:none">Finance result</span></td><td class="num" style="color:var(--success)">+131</td><td class="num" style="color:var(--danger)">-117</td><td class="num">+14</td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Charge d'impôt (taux effectif)</span><span data-lang="en" style="display:none">Tax charge (effective rate)</span></td><td class="num">-64 (11%)</td><td class="num" style="color:var(--danger)">-90</td><td class="num">-154 (25.5%)</td></tr>
+          <tr class="strong-row"><td class="label-cell"><span data-lang="fr">RN Consolidé</span><span data-lang="en" style="display:none">Consolidated Net Income</span></td><td class="num">516</td><td class="num">-156</td><td class="num">~360</td></tr>
         </tbody>
       </table>
     </div>
@@ -1165,48 +1245,51 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s2">
     <div class="section-header">
       <span class="section-num">02 //</span>
-      <h2 class="section-title">Cash-Flow &amp; BFR</h2>
+      <h2 class="section-title" data-i18n="s2.title">Cash-Flow &amp; BFR</h2>
     </div>
-    <p class="section-subtitle">L'incohérence majeure du dossier — la machine à profits ne génère pas de cash</p>
+    <div data-lang="fr"><p class="section-subtitle">L'incohérence majeure du dossier — la machine à profits ne génère pas de cash</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">The major inconsistency — the profit machine generates no cash</p></div>
 
     <div class="quote quote-danger" style="margin-bottom:24px;">
-      🚨 <strong>RED FLAG #1 :</strong> Résultat Net intégré +516 MMAD ↔ Free Cash Flow opérationnel <strong>-7 MMAD</strong>.
-      Le BFR a absorbé 100 % de la CAF (-559 MMAD). Stocks +1 588 MMAD sur l'année. Ratio stocks/CA = <strong>6,3 années</strong>.
+      <span data-lang="fr">🚨 <strong>RED FLAG #1 :</strong> Résultat Net intégré +516 MMAD ↔ Free Cash Flow opérationnel <strong>-7 MMAD</strong>.
+      Le BFR a absorbé 100 % de la CAF (-559 MMAD). Stocks +1 588 MMAD sur l'année. Ratio stocks/CA = <strong>6,3 années</strong>.</span>
+      <span data-lang="en" style="display:none">🚨 <strong>RED FLAG #1:</strong> Net income +MAD 516M ↔ Operating Free Cash Flow <strong>-MAD 7M</strong>.
+      Working capital absorbed 100% of operating cash flow (-MAD 559M). Inventories +MAD 1,588M over the year. Inventory/Revenue ratio = <strong>6.3 years</strong>.</span>
     </div>
 
     <div class="chart-card" style="margin-bottom:20px;">
-      <div class="chart-title">Bridge Cash-Flow : RN → FCF Opérationnel</div>
-      <div class="chart-desc">Visualisation waterfall — le BFR détruit la conversion cash</div>
+      <div class="chart-title"><span data-lang="fr">Bridge Cash-Flow : RN → FCF Opérationnel</span><span data-lang="en" style="display:none">Cash Flow Bridge: Net Income → Operating FCF</span></div>
+      <div class="chart-desc"><span data-lang="fr">Visualisation waterfall — le BFR détruit la conversion cash</span><span data-lang="en" style="display:none">Waterfall chart — working capital destroys cash conversion</span></div>
       <div class="chart-wrap chart-wrap-tall"><canvas id="chartWaterfall"></canvas></div>
     </div>
 
     <div class="grid grid-3" style="margin-bottom:20px;">
       <div class="card">
-        <div class="card-title">DSO — Délai client</div>
-        <div class="card-value">148<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
-        <div class="card-foot">Lent, partiellement compensé par avances clients (+441 MMAD)</div>
+        <div class="card-title">DSO — <span data-lang="fr">Délai client</span><span data-lang="en" style="display:none">Days Sales Outstanding</span></div>
+        <div class="card-value">148<span style="font-size:14px;color:var(--text-muted);"> <span data-lang="fr">jours</span><span data-lang="en" style="display:none">days</span></span></div>
+        <div class="card-foot"><span data-lang="fr">Lent, partiellement compensé par avances clients (+441 MMAD)</span><span data-lang="en" style="display:none">Slow, partially offset by customer advances (+MAD 441M)</span></div>
       </div>
       <div class="card">
-        <div class="card-title">DPO — Délai fournisseur</div>
-        <div class="card-value" style="color:var(--warning)">247<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
-        <div class="card-foot">Étirement anormal — financement par retard fournisseurs</div>
+        <div class="card-title">DPO — <span data-lang="fr">Délai fournisseur</span><span data-lang="en" style="display:none">Days Payable Outstanding</span></div>
+        <div class="card-value" style="color:var(--warning)">247<span style="font-size:14px;color:var(--text-muted);"> <span data-lang="fr">jours</span><span data-lang="en" style="display:none">days</span></span></div>
+        <div class="card-foot"><span data-lang="fr">Étirement anormal — financement par retard fournisseurs</span><span data-lang="en" style="display:none">Abnormal extension — implicit financing via late supplier payments</span></div>
       </div>
       <div class="card">
-        <div class="card-title">DIO — Rotation stocks</div>
-        <div class="card-value" style="color:var(--danger)">~2 300<span style="font-size:14px;color:var(--text-muted);"> jours</span></div>
-        <div class="card-foot">Acceptable secteur, mais cumulativement insoutenable</div>
+        <div class="card-title">DIO — <span data-lang="fr">Rotation stocks</span><span data-lang="en" style="display:none">Days Inventory Outstanding</span></div>
+        <div class="card-value" style="color:var(--danger)">~2 300<span style="font-size:14px;color:var(--text-muted);"> <span data-lang="fr">jours</span><span data-lang="en" style="display:none">days</span></span></div>
+        <div class="card-foot"><span data-lang="fr">Acceptable secteur, mais cumulativement insoutenable</span><span data-lang="en" style="display:none">Sector-acceptable individually, but cumulatively unsustainable</span></div>
       </div>
     </div>
 
     <div class="grid grid-2">
       <div class="chart-card">
-        <div class="chart-title">Évolution du BFR</div>
-        <div class="chart-desc">Croissance mécanique liée aux stocks — bombe à retardement de liquidité</div>
+        <div class="chart-title"><span data-lang="fr">Évolution du BFR</span><span data-lang="en" style="display:none">Working Capital Trend</span></div>
+        <div class="chart-desc"><span data-lang="fr">Croissance mécanique liée aux stocks — bombe à retardement de liquidité</span><span data-lang="en" style="display:none">Mechanical growth driven by inventories — ticking liquidity bomb</span></div>
         <div class="chart-wrap"><canvas id="chartBFR"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Capex — Sous-investissement structurel</div>
-        <div class="chart-desc">21 MMAD de Capex pour 17 Md de stocks — outil non renouvelé</div>
+        <div class="chart-title"><span data-lang="fr">Capex — Sous-investissement structurel</span><span data-lang="en" style="display:none">Capex — Structural Under-investment</span></div>
+        <div class="chart-desc"><span data-lang="fr">21 MMAD de Capex pour 17 Md de stocks — outil non renouvelé</span><span data-lang="en" style="display:none">MAD 21M Capex against MAD 17Bn inventory base — asset base not being renewed</span></div>
         <div class="chart-wrap"><canvas id="chartCapex"></canvas></div>
       </div>
     </div>
@@ -1216,62 +1299,66 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s3">
     <div class="section-header">
       <span class="section-num">03 //</span>
-      <h2 class="section-title">Structure Financière &amp; Solvabilité</h2>
+      <h2 class="section-title" data-i18n="s3.title">Structure Financière &amp; Solvabilité</h2>
     </div>
-    <p class="section-subtitle">Solidité affichée, fragilité réelle — divergence du gearing communiqué</p>
+    <div data-lang="fr"><p class="section-subtitle">Solidité affichée, fragilité réelle — divergence du gearing communiqué</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">Displayed solidity, real fragility — divergence from reported gearing</p></div>
 
     <div class="grid grid-4" style="margin-bottom:20px;">
       <div class="card">
-        <div class="card-title">Dette Nette</div>
+        <div class="card-title"><span data-lang="fr">Dette Nette</span><span data-lang="en" style="display:none">Net Debt</span></div>
         <div class="card-value">4 385<span style="font-size:12px;color:var(--text-muted);"> MMAD</span></div>
-        <div class="card-foot">Stable vs 4 119 en 2024</div>
+        <div class="card-foot"><span data-lang="fr">Stable vs 4 119 en 2024</span><span data-lang="en" style="display:none">Stable vs MAD 4,119M in 2024</span></div>
       </div>
       <div class="card">
-        <div class="card-title">Gearing publié</div>
+        <div class="card-title"><span data-lang="fr">Gearing publié</span><span data-lang="en" style="display:none">Reported Gearing</span></div>
         <div class="card-value" style="color:var(--success)">30 %</div>
-        <div class="card-foot">Communication officielle</div>
+        <div class="card-foot"><span data-lang="fr">Communication officielle</span><span data-lang="en" style="display:none">Official management figure</span></div>
       </div>
       <div class="card" style="border-color:var(--warning);">
-        <div class="card-title" style="color:var(--warning)">Gearing recalculé</div>
+        <div class="card-title" style="color:var(--warning)"><span data-lang="fr">Gearing recalculé</span><span data-lang="en" style="display:none">Recalculated Leverage</span></div>
         <div class="card-value" style="color:var(--warning)">42 %</div>
-        <div class="card-foot">Avec découverts bancaires</div>
+        <div class="card-foot"><span data-lang="fr">Avec découverts bancaires</span><span data-lang="en" style="display:none">Including bank overdrafts</span></div>
       </div>
       <div class="card" style="border-color:var(--danger);">
         <div class="card-title" style="color:var(--danger)">Coverage Ratio</div>
         <div class="card-value" style="color:var(--danger)">1,65x</div>
-        <div class="card-foot">EBIT / Charges d'intérêts</div>
+        <div class="card-foot"><span data-lang="fr">EBIT / Charges d'intérêts</span><span data-lang="en" style="display:none">EBIT / Interest expense</span></div>
       </div>
     </div>
 
     <div class="grid grid-2" style="margin-bottom:20px;">
       <div class="chart-card">
-        <div class="chart-title">Composition de l'Endettement</div>
-        <div class="chart-desc">~960 MMAD de découverts bancaires = dépendance court terme</div>
+        <div class="chart-title"><span data-lang="fr">Composition de l'Endettement</span><span data-lang="en" style="display:none">Debt Composition</span></div>
+        <div class="chart-desc"><span data-lang="fr">~960 MMAD de découverts bancaires = dépendance court terme</span><span data-lang="en" style="display:none">~MAD 960M bank overdrafts = short-term dependency</span></div>
         <div class="chart-wrap"><canvas id="chartDette"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Sensibilité Coverage Ratio aux taux</div>
-        <div class="chart-desc">+100 bps → Coverage tombe à 1,3x — zone critique</div>
+        <div class="chart-title"><span data-lang="fr">Sensibilité Coverage Ratio aux taux</span><span data-lang="en" style="display:none">Interest Coverage Sensitivity to Rates</span></div>
+        <div class="chart-desc"><span data-lang="fr">+100 bps → Coverage tombe à 1,3x — zone critique</span><span data-lang="en" style="display:none">+100 bps → Coverage drops to 1.3x — critical zone</span></div>
         <div class="chart-wrap"><canvas id="chartSensibTaux"></canvas></div>
       </div>
     </div>
 
     <div class="quote quote-warn">
-      <strong>Incohérence de présentation :</strong> Le management communique un gearing de 30 %, mais Dette Nette / CP =
+      <span data-lang="fr"><strong>Incohérence de présentation :</strong> Le management communique un gearing de 30 %, mais Dette Nette / CP =
       4 385 / 10 411 = <strong>42 %</strong>. Le calcul officiel exclut probablement les découverts bancaires (~960 MMAD)
-      des "dettes financières". <strong>Trésorerie nette négative</strong> de 960 MMAD — le Groupe vit sur les facilités à vue.
+      des "dettes financières". <strong>Trésorerie nette négative</strong> de 960 MMAD — le Groupe vit sur les facilités à vue.</span>
+      <span data-lang="en" style="display:none"><strong>Presentation inconsistency:</strong> Management reports gearing of 30%, but Net Debt / Equity =
+      4,385 / 10,411 = <strong>42%</strong>. The official calculation likely excludes bank overdrafts (~MAD 960M)
+      from "financial debt". <strong>Net cash negative</strong> by MAD 960M — the Group lives on demand facilities.</span>
     </div>
 
     <div class="card">
-      <div class="card-title">Profil de la dette</div>
+      <div class="card-title"><span data-lang="fr">Profil de la dette</span><span data-lang="en" style="display:none">Debt profile</span></div>
       <table class="data-table">
-        <thead><tr><th>Composante</th><th class="num">Montant (MMAD)</th><th class="num">% du total</th><th>Maturité</th></tr></thead>
+        <thead><tr><th><span data-lang="fr">Composante</span><span data-lang="en" style="display:none">Component</span></th><th class="num"><span data-lang="fr">Montant (MMAD)</span><span data-lang="en" style="display:none">Amount (MAD M)</span></th><th class="num"><span data-lang="fr">% du total</span><span data-lang="en" style="display:none">% of total</span></th><th><span data-lang="fr">Maturité</span><span data-lang="en" style="display:none">Maturity</span></th></tr></thead>
         <tbody>
-          <tr><td class="label-cell">Emprunts obligataires</td><td class="num">883</td><td class="num">19 %</td><td>Refinancements récurrents</td></tr>
-          <tr><td class="label-cell">Crédits bancaires LMT</td><td class="num">2 542</td><td class="num">56 %</td><td>Mixte</td></tr>
-          <tr><td class="label-cell">Crédits CT</td><td class="num">1 128</td><td class="num">25 %</td><td>&lt; 1 an</td></tr>
-          <tr><td class="label-cell">Découverts bancaires</td><td class="num" style="color:var(--warning)">~960</td><td class="num">21 %*</td><td>À vue</td></tr>
-          <tr class="strong-row"><td class="label-cell">Dette financière brute</td><td class="num">~5 513</td><td class="num">100 %</td><td>Coût moyen ~6,1 %</td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Emprunts obligataires</span><span data-lang="en" style="display:none">Bonds</span></td><td class="num">883</td><td class="num">19 %</td><td><span data-lang="fr">Refinancements récurrents</span><span data-lang="en" style="display:none">Recurring refinancings</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Crédits bancaires LMT</span><span data-lang="en" style="display:none">LT bank credit</span></td><td class="num">2 542</td><td class="num">56 %</td><td><span data-lang="fr">Mixte</span><span data-lang="en" style="display:none">Mixed</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Crédits CT</span><span data-lang="en" style="display:none">ST credit</span></td><td class="num">1 128</td><td class="num">25 %</td><td>&lt; 1 <span data-lang="fr">an</span><span data-lang="en" style="display:none">yr</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Découverts bancaires</span><span data-lang="en" style="display:none">Bank overdrafts</span></td><td class="num" style="color:var(--warning)">~960</td><td class="num">21 %*</td><td><span data-lang="fr">À vue</span><span data-lang="en" style="display:none">On demand</span></td></tr>
+          <tr class="strong-row"><td class="label-cell"><span data-lang="fr">Dette financière brute</span><span data-lang="en" style="display:none">Gross financial debt</span></td><td class="num">~5 513</td><td class="num">100 %</td><td><span data-lang="fr">Coût moyen ~6,1 %</span><span data-lang="en" style="display:none">Average cost ~6.1%</span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1281,9 +1368,10 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s4">
     <div class="section-header">
       <span class="section-num">04 //</span>
-      <h2 class="section-title">Création (Destruction) de Valeur</h2>
+      <h2 class="section-title" data-i18n="s4.title">Création (Destruction) de Valeur</h2>
     </div>
-    <p class="section-subtitle">L'EVA est négatif depuis plusieurs années — ROIC bien sous le coût du capital</p>
+    <div data-lang="fr"><p class="section-subtitle">L'EVA est négatif depuis plusieurs années — ROIC bien sous le coût du capital</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">EVA has been negative for several years — ROIC well below cost of capital</p></div>
 
     <div class="grid grid-3" style="margin-bottom:20px;">
       <div class="chart-card">
@@ -1300,7 +1388,7 @@ cours boursier via investing.com (snapshot au 30/04/2026).
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title" style="text-align:center;">ROE vs Coût des Fonds Propres</div>
+        <div class="chart-title" style="text-align:center;"><span data-lang="fr">ROE vs Coût des Fonds Propres</span><span data-lang="en" style="display:none">ROE vs Cost of Equity</span></div>
         <div class="gauge-wrap">
           <svg class="gauge-svg" viewBox="0 0 200 120">
             <path d="M 20 110 A 80 80 0 0 1 180 110" fill="none" stroke="#243049" stroke-width="14" stroke-linecap="round"/>
@@ -1313,20 +1401,21 @@ cours boursier via investing.com (snapshot au 30/04/2026).
         </div>
       </div>
       <div class="chart-card">
-        <div class="chart-title" style="text-align:center;">EVA Estimé</div>
+        <div class="chart-title" style="text-align:center;"><span data-lang="fr">EVA Estimé</span><span data-lang="en" style="display:none">Estimated EVA</span></div>
         <div class="gauge-wrap" style="padding-top:32px;">
           <div style="font-family:var(--mono); font-size:36px; font-weight:800; color:var(--danger);">-900</div>
-          <div style="color:var(--text-muted); font-size:11px; margin-top:6px;">MMAD/an</div>
+          <div style="color:var(--text-muted); font-size:11px; margin-top:6px;">MMAD/<span data-lang="fr">an</span><span data-lang="en" style="display:none">yr</span></div>
           <div style="margin-top:18px; font-size:12px; color:var(--text-secondary); text-align:center; line-height:1.6;">
-            Destruction structurelle de valeur économique — typique du secteur immobilier marocain post-2012
+            <span data-lang="fr">Destruction structurelle de valeur économique — typique du secteur immobilier marocain post-2012</span>
+            <span data-lang="en" style="display:none">Structural economic value destruction — typical of the Moroccan real estate sector post-2012</span>
           </div>
         </div>
       </div>
     </div>
 
     <div class="chart-card">
-      <div class="chart-title">Décomposition DuPont du ROE</div>
-      <div class="chart-desc">Marge nette acceptable mais turnover famélique × levier modéré → ROE structurellement bas</div>
+      <div class="chart-title"><span data-lang="fr">Décomposition DuPont du ROE</span><span data-lang="en" style="display:none">DuPont ROE Decomposition</span></div>
+      <div class="chart-desc"><span data-lang="fr">Marge nette acceptable mais turnover famélique × levier modéré → ROE structurellement bas</span><span data-lang="en" style="display:none">Acceptable net margin but anaemic asset turnover × moderate leverage → structurally low ROE</span></div>
       <div class="chart-wrap"><canvas id="chartDupont"></canvas></div>
     </div>
   </section>
@@ -1335,81 +1424,92 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s5">
     <div class="section-header">
       <span class="section-num">05 //</span>
-      <h2 class="section-title">Analyse Qualitative &amp; Annexes</h2>
+      <h2 class="section-title" data-i18n="s5.title">Analyse Qualitative &amp; Annexes</h2>
     </div>
-    <p class="section-subtitle">Les zones grises pointées par les Commissaires aux Comptes (Key Audit Matters)</p>
+    <div data-lang="fr"><p class="section-subtitle">Les zones grises pointées par les Commissaires aux Comptes (Key Audit Matters)</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">Risk areas highlighted by Auditors (Key Audit Matters)</p></div>
 
     <div class="tabs">
-      <button class="tab active" data-tab="holding">Holding social (DPGA)</button>
-      <button class="tab" data-tab="filiales">Portefeuille Filiales</button>
-      <button class="tab" data-tab="hors-bilan">Engagements Hors-Bilan</button>
-      <button class="tab" data-tab="parties-liees">Parties Liées</button>
+      <button class="tab active" data-tab="holding"><span data-lang="fr">Holding social (DPGA)</span><span data-lang="en" style="display:none">Parent company (DPGA)</span></button>
+      <button class="tab" data-tab="filiales"><span data-lang="fr">Portefeuille Filiales</span><span data-lang="en" style="display:none">Subsidiary Portfolio</span></button>
+      <button class="tab" data-tab="hors-bilan"><span data-lang="fr">Engagements Hors-Bilan</span><span data-lang="en" style="display:none">Off-Balance Sheet</span></button>
+      <button class="tab" data-tab="parties-liees"><span data-lang="fr">Parties Liées</span><span data-lang="en" style="display:none">Related Parties</span></button>
     </div>
 
     <div class="tab-panel active" data-panel="holding">
       <div class="quote quote-danger">
-        <strong>🚨 RED FLAG #2 :</strong> La société-mère <em>Douja Promotion Groupe Addoha</em> affiche
+        <span data-lang="fr"><strong>🚨 RED FLAG #2 :</strong> La société-mère <em>Douja Promotion Groupe Addoha</em> affiche
         <strong>-90 MMAD de perte nette</strong>, <strong>-129 MMAD de résultat d'exploitation</strong>,
         et un CA en chute de -60 % à 473 MMAD. Pourtant, <strong>distribution de 201 MMAD de dividendes</strong>
-        puisée sur les réserves accumulées (2,6 Md disponibles).
+        puisée sur les réserves accumulées (2,6 Md disponibles).</span>
+        <span data-lang="en" style="display:none"><strong>🚨 RED FLAG #2:</strong> The parent company <em>Douja Promotion Groupe Addoha</em> reports
+        <strong>net loss of MAD -90M</strong>, <strong>operating loss of MAD -129M</strong>,
+        and revenue down -60% to MAD 473M. Yet, <strong>MAD 201M dividend distribution</strong>
+        drawn from accumulated reserves (MAD 2.6Bn available).</span>
       </div>
 
       <div class="grid grid-4" style="margin-top:20px;">
         <div class="card">
-          <div class="card-title">CA Social</div>
+          <div class="card-title"><span data-lang="fr">CA Social</span><span data-lang="en" style="display:none">Parent Revenue</span></div>
           <div class="card-value" style="color:var(--danger)">473</div>
           <div class="card-delta delta-neg">-60 % YoY</div>
         </div>
         <div class="card">
-          <div class="card-title">Résultat d'exploitation</div>
+          <div class="card-title"><span data-lang="fr">Résultat d'exploitation</span><span data-lang="en" style="display:none">Operating income (EBIT)</span></div>
           <div class="card-value" style="color:var(--danger)">-129</div>
-          <div class="card-delta delta-neg">vs +86 en 2024</div>
+          <div class="card-delta delta-neg"><span data-lang="fr">vs +86 en 2024</span><span data-lang="en" style="display:none">vs +86 in 2024</span></div>
         </div>
         <div class="card">
-          <div class="card-title">Résultat Net Social</div>
+          <div class="card-title"><span data-lang="fr">Résultat Net Social</span><span data-lang="en" style="display:none">Parent Net Income</span></div>
           <div class="card-value" style="color:var(--danger)">-90</div>
-          <div class="card-delta delta-neg">vs +57 en 2024</div>
+          <div class="card-delta delta-neg"><span data-lang="fr">vs +57 en 2024</span><span data-lang="en" style="display:none">vs +57 in 2024</span></div>
         </div>
         <div class="card">
-          <div class="card-title">Dividende distribué</div>
+          <div class="card-title"><span data-lang="fr">Dividende distribué</span><span data-lang="en" style="display:none">Dividend paid</span></div>
           <div class="card-value" style="color:var(--warning)">201</div>
-          <div class="card-delta delta-neg">Non couvert par le RN</div>
+          <div class="card-delta delta-neg"><span data-lang="fr">Non couvert par le RN</span><span data-lang="en" style="display:none">Not covered by net income</span></div>
         </div>
       </div>
     </div>
 
     <div class="tab-panel" data-panel="filiales">
       <div class="quote quote-warn">
-        <strong>Provisions sur titres de participation : 863 MMAD</strong> non reprises en 2025.
-        Plusieurs filiales sont structurellement provisionnées à 100 % — actifs morts maintenus au périmètre.
+        <span data-lang="fr"><strong>Provisions sur titres de participation : 863 MMAD</strong> non reprises en 2025.
+        Plusieurs filiales sont structurellement provisionnées à 100 % — actifs morts maintenus au périmètre.</span>
+        <span data-lang="en" style="display:none"><strong>Investment write-downs: MAD 863M</strong> not reversed in 2025.
+        Several subsidiaries are structurally written down 100% — dead assets kept in scope.</span>
       </div>
       <div class="card" style="margin-top:16px;">
         <table class="data-table">
-          <thead><tr><th>Filiale</th><th class="num">Prix d'acquisition</th><th class="num">Valeur nette</th><th class="num">Dépréciation</th><th>Statut</th></tr></thead>
+          <thead><tr><th><span data-lang="fr">Filiale</span><span data-lang="en" style="display:none">Subsidiary</span></th><th class="num"><span data-lang="fr">Prix d'acquisition</span><span data-lang="en" style="display:none">Acquisition cost</span></th><th class="num"><span data-lang="fr">Valeur nette</span><span data-lang="en" style="display:none">Net value</span></th><th class="num"><span data-lang="fr">Dépréciation</span><span data-lang="en" style="display:none">Impairment</span></th><th><span data-lang="fr">Statut</span><span data-lang="en" style="display:none">Status</span></th></tr></thead>
           <tbody>
-            <tr><td class="label-cell">Al Makane Al Jamil</td><td class="num">124</td><td class="num">0</td><td class="num" style="color:var(--danger)">-124</td><td><span class="badge badge-danger">Sinistré</span></td></tr>
-            <tr><td class="label-cell">Beladi Hadj Fatah</td><td class="num">391</td><td class="num">0</td><td class="num" style="color:var(--danger)">-391</td><td><span class="badge badge-danger">Sinistré</span></td></tr>
-            <tr><td class="label-cell">Marrakech Golden Resort</td><td class="num">419</td><td class="num">398</td><td class="num" style="color:var(--warning)">-20</td><td><span class="badge badge-warning">Surveillance</span></td></tr>
-            <tr><td class="label-cell">Mabani Détroit (ex GIL Maroc)</td><td class="num">840</td><td class="num">825</td><td class="num">-15</td><td><span class="badge badge-success">Sain</span></td></tr>
-            <tr><td class="label-cell">CITA</td><td class="num">829</td><td class="num">829</td><td class="num">0</td><td><span class="badge badge-warning">Perte 2025</span></td></tr>
-            <tr><td class="label-cell">DPGA Côte d'Ivoire</td><td class="num">63</td><td class="num">63</td><td class="num">0</td><td><span class="badge badge-success">Top contributeur</span></td></tr>
-            <tr><td class="label-cell">DPGA Cameroun / Congo / Tchad / Niger / Burundi</td><td class="num">~0,8</td><td class="num">0</td><td class="num">-0,8</td><td><span class="badge badge-muted">Coquilles</span></td></tr>
+            <tr><td class="label-cell">Al Makane Al Jamil</td><td class="num">124</td><td class="num">0</td><td class="num" style="color:var(--danger)">-124</td><td><span class="badge badge-danger"><span data-lang="fr">Sinistré</span><span data-lang="en" style="display:none">Written off</span></span></td></tr>
+            <tr><td class="label-cell">Beladi Hadj Fatah</td><td class="num">391</td><td class="num">0</td><td class="num" style="color:var(--danger)">-391</td><td><span class="badge badge-danger"><span data-lang="fr">Sinistré</span><span data-lang="en" style="display:none">Written off</span></span></td></tr>
+            <tr><td class="label-cell">Marrakech Golden Resort</td><td class="num">419</td><td class="num">398</td><td class="num" style="color:var(--warning)">-20</td><td><span class="badge badge-warning"><span data-lang="fr">Surveillance</span><span data-lang="en" style="display:none">Watch</span></span></td></tr>
+            <tr><td class="label-cell">Mabani Détroit (ex GIL Maroc)</td><td class="num">840</td><td class="num">825</td><td class="num">-15</td><td><span class="badge badge-success"><span data-lang="fr">Sain</span><span data-lang="en" style="display:none">Healthy</span></span></td></tr>
+            <tr><td class="label-cell">CITA</td><td class="num">829</td><td class="num">829</td><td class="num">0</td><td><span class="badge badge-warning"><span data-lang="fr">Perte 2025</span><span data-lang="en" style="display:none">Loss 2025</span></span></td></tr>
+            <tr><td class="label-cell">DPGA Côte d'Ivoire</td><td class="num">63</td><td class="num">63</td><td class="num">0</td><td><span class="badge badge-success"><span data-lang="fr">Top contributeur</span><span data-lang="en" style="display:none">Top contributor</span></span></td></tr>
+            <tr><td class="label-cell">DPGA Cameroun / Congo / Tchad / Niger / Burundi</td><td class="num">~0,8</td><td class="num">0</td><td class="num">-0,8</td><td><span class="badge badge-muted"><span data-lang="fr">Coquilles</span><span data-lang="en" style="display:none">Shell companies</span></span></td></tr>
           </tbody>
         </table>
       </div>
       <p style="margin-top:14px; color:var(--text-muted); font-size:12px; font-style:italic;">
-        En MMAD. Source : RFA Annexe B4 (Tableau des titres de participation).
-        <strong>Question clé d'audit signalée par les CAC</strong> : évaluation des titres et des avances filiales.
+        <span data-lang="fr">En MMAD. Source : RFA Annexe B4 (Tableau des titres de participation).
+        <strong>Question clé d'audit signalée par les CAC</strong> : évaluation des titres et des avances filiales.</span>
+        <span data-lang="en" style="display:none">In MAD M. Source: Annual Report Annex B4 (investment securities schedule).
+        <strong>Key audit matter flagged by statutory auditors</strong>: valuation of equity investments and subsidiary advances.</span>
       </p>
     </div>
 
     <div class="tab-panel" data-panel="hors-bilan">
       <div class="quote quote-warn">
-        Engagements hors-bilan en <strong>croissance de +42 %</strong> en un an : 4 602 MMAD vs 3 239 MMAD en 2024.
-        Niveau désormais équivalent à <strong>~50 % des fonds propres</strong>.
+        <span data-lang="fr">Engagements hors-bilan en <strong>croissance de +42 %</strong> en un an : 4 602 MMAD vs 3 239 MMAD en 2024.
+        Niveau désormais équivalent à <strong>~50 % des fonds propres</strong>.</span>
+        <span data-lang="en" style="display:none">Off-balance sheet commitments <strong>+42% growth</strong> in one year: MAD 4,602M vs MAD 3,239M in 2024.
+        Level now equivalent to <strong>~50% of shareholders' equity</strong>.</span>
       </div>
       <div class="chart-card" style="margin-top:16px;">
-        <div class="chart-title">Évolution des engagements donnés</div>
+        <div class="chart-title"><span data-lang="fr">Évolution des engagements donnés</span><span data-lang="en" style="display:none">Off-balance sheet commitments trend</span></div>
         <div class="chart-wrap"><canvas id="chartHorsBilan"></canvas></div>
       </div>
     </div>
@@ -1417,22 +1517,25 @@ cours boursier via investing.com (snapshot au 30/04/2026).
     <div class="tab-panel" data-panel="parties-liees">
       <div class="grid grid-2">
         <div class="card">
-          <div class="card-title">Compte courant — M. Anas Sefrioui</div>
+          <div class="card-title"><span data-lang="fr">Compte courant — M. Anas Sefrioui</span><span data-lang="en" style="display:none">Shareholder loan — Mr. Anas Sefrioui</span></div>
           <div class="card-value">615<span style="font-size:14px;color:var(--text-muted);"> MMAD</span></div>
-          <div class="card-foot">Dont <strong>500 MMAD bloqués 4 ans</strong>. Taux 2,60 % HT.</div>
+          <div class="card-foot"><span data-lang="fr">Dont <strong>500 MMAD bloqués 4 ans</strong>. Taux 2,60 % HT.</span><span data-lang="en" style="display:none">of which <strong>MAD 500M locked 4 years</strong>. Rate 2.60% excl. VAT.</span></div>
           <p style="margin-top:12px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
-            <span class="badge badge-info">Signal mixte</span><br>
-            ✓ Engagement personnel positif de l'actionnaire de référence<br>
-            ✗ Dépendance non orthodoxe au financement intra-actionnaire
+            <span class="badge badge-info"><span data-lang="fr">Signal mixte</span><span data-lang="en" style="display:none">Mixed signal</span></span><br>
+            <span data-lang="fr">✓ Engagement personnel positif de l'actionnaire de référence<br>
+            ✗ Dépendance non orthodoxe au financement intra-actionnaire</span>
+            <span data-lang="en" style="display:none">✓ Positive personal commitment from controlling shareholder<br>
+            ✗ Unorthodox dependence on intra-shareholder financing</span>
           </p>
         </div>
         <div class="card">
-          <div class="card-title">Avances aux filiales</div>
+          <div class="card-title"><span data-lang="fr">Avances aux filiales</span><span data-lang="en" style="display:none">Subsidiary advances</span></div>
           <div class="card-value">1 192<span style="font-size:14px;color:var(--text-muted);"> MMAD</span></div>
-          <div class="card-foot">Rémunérées à 2,74 % — <strong>sous le coût du capital</strong></div>
+          <div class="card-foot"><span data-lang="fr">Rémunérées à 2,74 % — <strong>sous le coût du capital</strong></span><span data-lang="en" style="display:none">Bearing interest at 2.74% — <strong>below cost of capital</strong></span></div>
           <p style="margin-top:12px; font-size:12px; color:var(--text-secondary); line-height:1.6;">
-            Top destinataires : Immolog 409, Addoha Sud 295, Foncière Iskane 147, Mabani Détroit 115, Kamam 65.
-            <span class="badge badge-warning" style="margin-top:8px; display:inline-block;">Risque de non-recouvrement</span>
+            <span data-lang="fr">Top destinataires : Immolog 409, Addoha Sud 295, Foncière Iskane 147, Mabani Détroit 115, Kamam 65.</span>
+            <span data-lang="en" style="display:none">Top recipients: Immolog 409, Addoha Sud 295, Foncière Iskane 147, Mabani Détroit 115, Kamam 65.</span>
+            <span class="badge badge-warning" style="margin-top:8px; display:inline-block;"><span data-lang="fr">Risque de non-recouvrement</span><span data-lang="en" style="display:none">Recovery risk</span></span>
           </p>
         </div>
       </div>
@@ -1443,95 +1546,96 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s6">
     <div class="section-header">
       <span class="section-num">06 //</span>
-      <h2 class="section-title">Détection des Red Flags</h2>
+      <h2 class="section-title" data-i18n="s6.title">Détection des Red Flags</h2>
     </div>
-    <p class="section-subtitle">10 signaux d'alerte cartographiés par sévérité</p>
+    <div data-lang="fr"><p class="section-subtitle">10 signaux d'alerte cartographiés par sévérité</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">10 risk signals mapped by severity</p></div>
 
     <div class="flags-grid">
       <div class="flag-card flag-critical">
         <div class="flag-num">01</div>
         <div class="flag-content">
-          <div class="flag-title">RN +70 % vs FCF opérationnel négatif</div>
-          <div class="flag-desc">516 MMAD de RN consolidé vs -7 MMAD de FCF. Le BFR absorbe toute la CAF.</div>
-          <div class="flag-severity">⬤ Critique</div>
+          <div class="flag-title"><span data-lang="fr">RN +70 % vs FCF opérationnel négatif</span><span data-lang="en" style="display:none">Net income +70% vs negative operating FCF</span></div>
+          <div class="flag-desc"><span data-lang="fr">516 MMAD de RN consolidé vs -7 MMAD de FCF. Le BFR absorbe toute la CAF.</span><span data-lang="en" style="display:none">MAD 516M consolidated net income vs -MAD 7M FCF. Working capital absorbs all operating cash flow.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Critique</span><span data-lang="en" style="display:none">⬤ Critical</span></div>
         </div>
       </div>
       <div class="flag-card flag-critical">
         <div class="flag-num">02</div>
         <div class="flag-content">
-          <div class="flag-title">Holding en perte distribuant un dividende</div>
-          <div class="flag-desc">DPGA -90 MMAD vs distribution 201 MMAD. Soutenabilité 24 mois questionnable.</div>
-          <div class="flag-severity">⬤ Critique</div>
+          <div class="flag-title"><span data-lang="fr">Holding en perte distribuant un dividende</span><span data-lang="en" style="display:none">Loss-making parent paying a dividend</span></div>
+          <div class="flag-desc"><span data-lang="fr">DPGA -90 MMAD vs distribution 201 MMAD. Soutenabilité 24 mois questionnable.</span><span data-lang="en" style="display:none">DPGA -MAD 90M vs MAD 201M distribution. 24-month sustainability questionable.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Critique</span><span data-lang="en" style="display:none">⬤ Critical</span></div>
         </div>
       </div>
       <div class="flag-card flag-high">
         <div class="flag-num">03</div>
         <div class="flag-content">
-          <div class="flag-title">Dual-reporting du CA</div>
-          <div class="flag-desc">Pourquoi maintenir un pro-forma "ancien référentiel" non auditable (+36 %) ?</div>
-          <div class="flag-severity">⬤ Élevé</div>
+          <div class="flag-title"><span data-lang="fr">Dual-reporting du CA</span><span data-lang="en" style="display:none">Dual-reporting of revenue</span></div>
+          <div class="flag-desc"><span data-lang="fr">Pourquoi maintenir un pro-forma "ancien référentiel" non auditable (+36 %) ?</span><span data-lang="en" style="display:none">Why maintain an unauditable "old standard" pro-forma (+36%)?</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Élevé</span><span data-lang="en" style="display:none">⬤ High</span></div>
         </div>
       </div>
       <div class="flag-card flag-high">
         <div class="flag-num">04</div>
         <div class="flag-content">
-          <div class="flag-title">Taux d'imposition effectif anormal</div>
-          <div class="flag-desc">10,96 % vs 25,5 % théorique → boost RN non récurrent.</div>
-          <div class="flag-severity">⬤ Élevé</div>
+          <div class="flag-title"><span data-lang="fr">Taux d'imposition effectif anormal</span><span data-lang="en" style="display:none">Abnormal effective tax rate</span></div>
+          <div class="flag-desc"><span data-lang="fr">10,96 % vs 25,5 % théorique → boost RN non récurrent.</span><span data-lang="en" style="display:none">10.96% vs 25.5% statutory → non-recurring net income boost.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Élevé</span><span data-lang="en" style="display:none">⬤ High</span></div>
         </div>
       </div>
       <div class="flag-card flag-high">
         <div class="flag-num">05</div>
         <div class="flag-content">
-          <div class="flag-title">Gearing communiqué vs réel</div>
-          <div class="flag-desc">30 % publié vs 42 % avec découverts bancaires inclus.</div>
-          <div class="flag-severity">⬤ Élevé</div>
+          <div class="flag-title"><span data-lang="fr">Gearing communiqué vs réel</span><span data-lang="en" style="display:none">Reported vs actual gearing</span></div>
+          <div class="flag-desc"><span data-lang="fr">30 % publié vs 42 % avec découverts bancaires inclus.</span><span data-lang="en" style="display:none">30% reported vs 42% including bank overdrafts.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Élevé</span><span data-lang="en" style="display:none">⬤ High</span></div>
         </div>
       </div>
       <div class="flag-card flag-high">
         <div class="flag-num">06</div>
         <div class="flag-content">
-          <div class="flag-title">Engagements hors-bilan +42 %</div>
-          <div class="flag-desc">4 602 MMAD de cautions/avals — ~50 % des fonds propres.</div>
-          <div class="flag-severity">⬤ Élevé</div>
+          <div class="flag-title"><span data-lang="fr">Engagements hors-bilan +42 %</span><span data-lang="en" style="display:none">Off-balance sheet commitments +42%</span></div>
+          <div class="flag-desc"><span data-lang="fr">4 602 MMAD de cautions/avals — ~50 % des fonds propres.</span><span data-lang="en" style="display:none">MAD 4,602M in guarantees/endorsements — ~50% of shareholders' equity.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Élevé</span><span data-lang="en" style="display:none">⬤ High</span></div>
         </div>
       </div>
       <div class="flag-card flag-high">
         <div class="flag-num">07</div>
         <div class="flag-content">
-          <div class="flag-title">Coverage 1,65x — fragilité aux taux</div>
-          <div class="flag-desc">+100 bps → 1,3x. Refinancement obligataire récurrent.</div>
-          <div class="flag-severity">⬤ Élevé</div>
+          <div class="flag-title"><span data-lang="fr">Coverage 1,65x — fragilité aux taux</span><span data-lang="en" style="display:none">Coverage 1.65x — rate sensitivity</span></div>
+          <div class="flag-desc"><span data-lang="fr">+100 bps → 1,3x. Refinancement obligataire récurrent.</span><span data-lang="en" style="display:none">+100 bps → 1.3x. Recurring bond refinancing.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Élevé</span><span data-lang="en" style="display:none">⬤ High</span></div>
         </div>
       </div>
       <div class="flag-card flag-medium">
         <div class="flag-num">08</div>
         <div class="flag-content">
-          <div class="flag-title">DPO 247 jours — étirement fournisseurs</div>
-          <div class="flag-desc">Financement implicite par retard de paiement aux sous-traitants.</div>
-          <div class="flag-severity">⬤ Modéré</div>
+          <div class="flag-title"><span data-lang="fr">DPO 247 jours — étirement fournisseurs</span><span data-lang="en" style="display:none">DPO 247 days — supplier payment stretch</span></div>
+          <div class="flag-desc"><span data-lang="fr">Financement implicite par retard de paiement aux sous-traitants.</span><span data-lang="en" style="display:none">Implicit financing via late payments to subcontractors.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Modéré</span><span data-lang="en" style="display:none">⬤ Moderate</span></div>
         </div>
       </div>
       <div class="flag-card flag-medium">
         <div class="flag-num">09</div>
         <div class="flag-content">
-          <div class="flag-title">Exposition Afrique non hedgée</div>
-          <div class="flag-desc">31 % du CA sécurisé en Afrique — XOF/GNF sans hedging documenté.</div>
-          <div class="flag-severity">⬤ Modéré</div>
+          <div class="flag-title"><span data-lang="fr">Exposition Afrique non hedgée</span><span data-lang="en" style="display:none">Unhedged Africa exposure</span></div>
+          <div class="flag-desc"><span data-lang="fr">31 % du CA sécurisé en Afrique — XOF/GNF sans hedging documenté.</span><span data-lang="en" style="display:none">31% of secured revenue in Africa — XOF/GNF without documented hedging.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Modéré</span><span data-lang="en" style="display:none">⬤ Moderate</span></div>
         </div>
       </div>
       <div class="flag-card flag-medium">
         <div class="flag-num">10</div>
         <div class="flag-content">
-          <div class="flag-title">Stocks provisionnés 239 MMAD</div>
-          <div class="flag-desc">Produits finis vieillissants — rotation à risque sur certains projets.</div>
-          <div class="flag-severity">⬤ Modéré</div>
+          <div class="flag-title"><span data-lang="fr">Stocks provisionnés 239 MMAD</span><span data-lang="en" style="display:none">Provisioned inventory MAD 239M</span></div>
+          <div class="flag-desc"><span data-lang="fr">Produits finis vieillissants — rotation à risque sur certains projets.</span><span data-lang="en" style="display:none">Ageing finished goods — at-risk turnover on certain projects.</span></div>
+          <div class="flag-severity"><span data-lang="fr">⬤ Modéré</span><span data-lang="en" style="display:none">⬤ Moderate</span></div>
         </div>
       </div>
     </div>
 
     <div class="card-elevated card" style="margin-top:24px;">
-      <div class="card-title">Score Global Red Flags</div>
+      <div class="card-title" data-i18n="flag.score">Score Global Red Flags</div>
       <div style="display:flex; align-items:center; gap:24px; margin-top:8px;">
         <div style="font-family:var(--mono); font-size:48px; font-weight:800; color:var(--danger);">7,2<span style="font-size:18px; color:var(--text-muted);">/10</span></div>
         <div style="flex:1;">
@@ -1539,13 +1643,15 @@ cours boursier via investing.com (snapshot au 30/04/2026).
             <div style="height:100%; width:72%; background:linear-gradient(90deg, var(--warning), var(--danger));"></div>
           </div>
           <div style="display:flex; justify-content:space-between; margin-top:6px; font-size:10px; color:var(--text-muted); font-family:var(--mono);">
-            <span>SAIN</span><span>VIGILANCE</span><span>RISQUE</span><span>CRITIQUE</span>
+            <span data-lang="fr">SAIN</span><span data-lang="en" style="display:none">HEALTHY</span><span data-lang="fr">VIGILANCE</span><span data-lang="en" style="display:none">WATCH</span><span data-lang="fr">RISQUE</span><span data-lang="en" style="display:none">RISK</span><span data-lang="fr">CRITIQUE</span><span data-lang="en" style="display:none">CRITICAL</span>
           </div>
         </div>
       </div>
       <p style="margin-top:14px; color:var(--text-secondary); font-size:13px; line-height:1.6;">
-        Score pondéré : 2 critiques (×3) + 5 élevés (×2) + 3 modérés (×1) = 19/26 ≈ <strong style="color:var(--danger)">7,3/10</strong>.
-        Niveau de vigilance élevé requis sur les 4 prochains trimestres.
+        <span data-lang="fr">Score pondéré : 2 critiques (×3) + 5 élevés (×2) + 3 modérés (×1) = 19/26 ≈ <strong style="color:var(--danger)">7,3/10</strong>.
+        Niveau de vigilance élevé requis sur les 4 prochains trimestres.</span>
+        <span data-lang="en" style="display:none">Weighted score: 2 critical (×3) + 5 high (×2) + 3 moderate (×1) = 19/26 ≈ <strong style="color:var(--danger)">7.3/10</strong>.
+        High vigilance required over the next 4 quarters.</span>
       </p>
     </div>
   </section>
@@ -1554,62 +1660,225 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s7">
     <div class="section-header">
       <span class="section-num">07 //</span>
-      <h2 class="section-title">Valorisation &amp; Comparables</h2>
+      <h2 class="section-title" data-i18n="s7.title">Valorisation &amp; Comparables</h2>
     </div>
-    <p class="section-subtitle">Décote book value massive vs prime EV/EBITDA — lecture contradictoire</p>
+    <div data-lang="fr"><p class="section-subtitle">Décote book value massive vs prime EV/EBITDA — lecture contradictoire</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">Massive book value discount vs EV/EBITDA premium — contradictory reading</p></div>
 
     <div class="quote">
-      <strong>Hypothèse de travail :</strong> Cours ADH retenu à 11 MAD (fourchette historique 9-13 MAD).
-      <em>Capitalisation ≈ 4 428 MMAD · EV ≈ 8 813 MMAD.</em>
-      <span class="badge badge-info" style="margin-left:8px;">À recalibrer en data live</span>
+      <span data-lang="fr"><strong>Hypothèse de travail :</strong> Cours ADH retenu à 11 MAD (fourchette historique 9-13 MAD).
+      <em>Capitalisation ≈ 4 428 MMAD · EV ≈ 8 813 MMAD · 402,5 M actions.</em>
+      <span class="badge badge-info" style="margin-left:8px;">À recalibrer en data live</span></span>
+      <span data-lang="en" style="display:none"><strong>Working assumption:</strong> ADH reference price 11 MAD (historical range 9–13 MAD).
+      <em>Market cap ≈ MAD 4,428M · EV ≈ MAD 8,813M · 402.5M shares.</em>
+      <span class="badge badge-info" style="margin-left:8px;">To be recalibrated with live data</span></span>
+    </div>
+
+    <!-- FCF NORMALISÉ + REVERSE DCF -->
+    <div class="grid grid-2" style="margin-bottom:20px;">
+      <div class="card card-elevated">
+        <div data-lang="fr"><div class="card-title">FCF Normalisé — Base DCF corrigée</div></div>
+        <div data-lang="en" style="display:none"><div class="card-title">Normalised FCF — Corrected DCF Base</div></div>
+        <table class="data-table">
+          <thead><tr><th><span data-lang="fr">Exercice</span><span data-lang="en" style="display:none">FY</span></th><th class="num">CAF</th><th class="num">Capex</th><th class="num">FCF</th></tr></thead>
+          <tbody>
+            <tr><td>2022</td><td class="num">380</td><td class="num">25</td><td class="num delta-pos">355</td></tr>
+            <tr><td>2023</td><td class="num">450</td><td class="num">18</td><td class="num delta-pos">432</td></tr>
+            <tr><td>2024</td><td class="num">526</td><td class="num">30</td><td class="num delta-pos">223</td></tr>
+            <tr><td>2025</td><td class="num">553</td><td class="num">21</td><td class="num" style="color:var(--danger)">−7 ⚠</td></tr>
+            <tr class="strong-row"><td><span data-lang="fr">FCF Norm. (moy. 3 ans)</span><span data-lang="en" style="display:none">Norm. FCF (3-yr avg)</span></td><td colspan="2" class="num">2023–2025</td><td class="num">+216 MMAD</td></tr>
+          </tbody>
+        </table>
+        <div data-lang="fr"><p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.5;">⚠ FCF 2025 distordu par choc BFR de −559 MMAD. Utiliser le FCF normalisé (216 MMAD) comme base DCF — jamais le FCF spot.</p></div>
+        <div data-lang="en" style="display:none"><p style="font-size:11px;color:var(--text-muted);margin-top:8px;line-height:1.5;">⚠ FCF 2025 distorted by a −559 MAD M working capital shock. Use normalised FCF (MAD 216M) as DCF base — never the spot FCF.</p></div>
+      </div>
+      <div class="card" style="border-color:var(--info);">
+        <div data-lang="fr"><div class="card-title" style="color:var(--info);">Reverse DCF — Implications du cours actuel</div></div>
+        <div data-lang="en" style="display:none"><div class="card-title" style="color:var(--info);">Reverse DCF — Current Price Implications</div></div>
+        <div style="margin-top:14px;">
+          <div data-lang="fr"><div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">Pour que 11 MAD soit justifié (EV 8 813 MMAD, WACC 8,5 %, g 2,5 %) :</div></div>
+          <div data-lang="en" style="display:none"><div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;">For 11 MAD to be justified (EV MAD 8,813M, WACC 8.5%, g 2.5%) :</div></div>
+          <div style="font-family:var(--mono);font-size:26px;font-weight:800;color:var(--warning);">~530 MMAD</div>
+          <div data-lang="fr"><div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">FCF normalisé implicite requis (vs 216 MMAD actuel)</div></div>
+          <div data-lang="en" style="display:none"><div style="font-size:11px;color:var(--text-muted);margin-bottom:14px;">Implicit normalised FCF required (vs current MAD 216M)</div></div>
+          <div class="quote quote-warn" style="margin:0;padding:10px 14px;font-size:12px;">
+            <div data-lang="fr">Le marché intègre une <strong>conversion FCF complète sur 3-4 ans</strong> et le succès du pivot africain. Toute déception sur le BFR 2026 → re-rating baissier immédiat.</div>
+            <div data-lang="en" style="display:none">The market prices in <strong>full FCF recovery within 3-4 years</strong> and Africa pivot success. Any 2026 working capital disappointment → immediate downward re-rating.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAV IMMOBILIER -->
+    <div class="card card-elevated" style="margin-bottom:20px;">
+      <div data-lang="fr"><div class="card-title">Méthode NAV — Promoteur Immobilier (méthode sectorielle de référence)</div></div>
+      <div data-lang="en" style="display:none"><div class="card-title">NAV Method — Real Estate Developer (Sector Reference)</div></div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th data-lang="fr">Composante</th><th data-lang="en" style="display:none">Component</th>
+            <th class="num" data-lang="fr">Valeur brute (MMAD)</th><th class="num" data-lang="en" style="display:none">Gross value (MAD M)</th>
+            <th class="num" data-lang="fr">Haircut</th><th class="num" data-lang="en" style="display:none">Haircut</th>
+            <th class="num" data-lang="fr">Valeur nette (MMAD)</th><th class="num" data-lang="en" style="display:none">Net value (MAD M)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-cell" data-lang="fr">Stocks + encours (immo)</td><td class="label-cell" data-lang="en" style="display:none">Inventory + WIP (real estate)</td>
+            <td class="num">16 877</td><td class="num" style="color:var(--warning)">−30 %</td><td class="num delta-pos">11 814</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">Trésorerie active</td><td class="label-cell" data-lang="en" style="display:none">Cash</td>
+            <td class="num">1 128</td><td class="num">0 %</td><td class="num delta-pos">1 128</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">Autres actifs nets (PP&E + créances)</td><td class="label-cell" data-lang="en" style="display:none">Other net assets (PP&E + receivables)</td>
+            <td class="num">800</td><td class="num" style="color:var(--warning)">−20 %</td><td class="num">640</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">Dettes financières brutes</td><td class="label-cell" data-lang="en" style="display:none">Gross financial debt</td>
+            <td class="num" style="color:var(--danger)">−5 513</td><td class="num">—</td><td class="num" style="color:var(--danger)">−5 513</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">Crystallisation partielle hors-bilan (20 %)</td><td class="label-cell" data-lang="en" style="display:none">Off-balance sheet partial crystallisation (20%)</td>
+            <td class="num" style="color:var(--warning)">−4 602</td><td class="num" style="color:var(--warning)">×20 %</td><td class="num" style="color:var(--warning)">−920</td>
+          </tr>
+          <tr class="strong-row">
+            <td class="label-cell" data-lang="fr">NAV Brute Part Groupe</td><td class="label-cell" data-lang="en" style="display:none">Gross Group NAV</td>
+            <td colspan="2" class="num"></td><td class="num">7 149 MMAD<br><small style="font-weight:400;">= 17,8 MAD/<span data-lang="fr">action</span><span data-lang="en" style="display:none">share</span></small></td>
+          </tr>
+          <tr style="background:var(--warning-soft);">
+            <td class="label-cell" style="color:var(--warning);" data-lang="fr">Décote gouvernance / contrôle</td><td class="label-cell" style="color:var(--warning);display:none" data-lang="en">Governance / control discount</td>
+            <td colspan="2" style="font-size:12px;color:var(--text-muted);padding:10px 16px;" data-lang="fr">Actionnaire dominant · ESG non publié · conventions réglementées significatives</td>
+            <td colspan="2" style="font-size:12px;color:var(--text-muted);padding:10px 16px;" data-lang="en" style="display:none">Dominant shareholder · ESG not published · material related-party transactions</td>
+            <td class="num" style="color:var(--warning);">−25 %</td>
+          </tr>
+          <tr class="strong-row" style="background:var(--accent-soft);border-color:var(--accent);">
+            <td class="label-cell" style="color:var(--accent);" data-lang="fr">NAV après décote</td><td class="label-cell" style="color:var(--accent);display:none" data-lang="en">Adjusted NAV</td>
+            <td colspan="2" class="num"></td><td class="num" style="color:var(--accent);font-size:16px;">13,3 MAD/<span data-lang="fr">action</span><span data-lang="en" style="display:none">share</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- CIBLE PONDÉRÉE MULTI-MÉTHODES -->
+    <div class="card-elevated card" style="margin-bottom:20px;border-top:3px solid var(--accent);">
+      <div data-lang="fr"><div class="card-title" style="color:var(--accent);">★ Cible Pondérée Multi-Méthodes — Immobilier BVC</div></div>
+      <div data-lang="en" style="display:none"><div class="card-title" style="color:var(--accent);">★ Weighted Multi-Method Target — Real Estate BVC</div></div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th data-lang="fr">Méthode</th><th data-lang="en" style="display:none">Method</th>
+            <th class="num">Bear</th><th class="num">Base</th><th class="num">Bull</th>
+            <th class="num" data-lang="fr">Poids</th><th class="num" data-lang="en" style="display:none">Weight</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="label-cell" data-lang="fr">DCF (FCF normalisé 216 MMAD, WACC 8,5 %)</td>
+            <td class="label-cell" data-lang="en" style="display:none">DCF (norm. FCF MAD 216M, WACC 8.5%)</td>
+            <td class="num" style="color:var(--danger);">0</td><td class="num" style="color:var(--warning);">5</td><td class="num" style="color:var(--success);">9</td>
+            <td class="num">20 %</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">Multiples pairs (P/B + EV/EBITDA blendé)</td>
+            <td class="label-cell" data-lang="en" style="display:none">Peer multiples (P/B + EV/EBITDA blended)</td>
+            <td class="num" style="color:var(--danger);">5</td><td class="num" style="color:var(--warning);">9</td><td class="num" style="color:var(--success);">13</td>
+            <td class="num">30 %</td>
+          </tr>
+          <tr>
+            <td class="label-cell" data-lang="fr">NAV (promoteur immo, décote −25 %)</td>
+            <td class="label-cell" data-lang="en" style="display:none">NAV (real estate developer, −25% discount)</td>
+            <td class="num" style="color:var(--warning);">9</td><td class="num" style="color:var(--success);">13</td><td class="num" style="color:var(--success);">18</td>
+            <td class="num">50 %</td>
+          </tr>
+          <tr class="strong-row">
+            <td class="label-cell" data-lang="fr">Cible brute pondérée</td>
+            <td class="label-cell" data-lang="en" style="display:none">Weighted gross target</td>
+            <td class="num">6,5</td><td class="num">10,7</td><td class="num">14,9</td><td class="num">—</td>
+          </tr>
+          <tr style="background:var(--warning-soft);">
+            <td style="padding:10px 16px;color:var(--warning);font-size:12px;" data-lang="fr">Décote liquidité BVC small-cap (−15 %)</td>
+            <td style="padding:10px 16px;color:var(--warning);font-size:12px;" data-lang="en" style="display:none">BVC small-cap liquidity discount (−15%)</td>
+            <td colspan="3" style="padding:10px 16px;font-size:11px;color:var(--text-muted);" data-lang="fr">Flottant limité · volume journalier &lt; 0,3 % du capital · spread bid-ask ~2-3 %</td>
+            <td colspan="3" style="padding:10px 16px;font-size:11px;color:var(--text-muted);" data-lang="en" style="display:none">Limited free float · daily volume &lt; 0.3% of capital · bid-ask spread ~2-3%</td>
+            <td class="num" style="color:var(--warning);">−15 %</td>
+          </tr>
+          <tr class="strong-row" style="background:var(--accent-soft);border-color:var(--accent);">
+            <td class="label-cell" style="color:var(--accent);font-size:15px;" data-lang="fr">★ Cible finale ajustée (MAD)</td>
+            <td class="label-cell" style="color:var(--accent);font-size:15px;" data-lang="en" style="display:none">★ Adjusted final target (MAD)</td>
+            <td class="num" style="color:var(--danger);font-size:18px;font-weight:800;">5,5</td>
+            <td class="num" style="color:var(--warning);font-size:18px;font-weight:800;">9,1</td>
+            <td class="num" style="color:var(--success);font-size:18px;font-weight:800;">12,7</td>
+            <td class="num" style="color:var(--accent);">MAD</td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px;font-size:12px;color:var(--text-muted);line-height:1.6;">
+        <div data-lang="fr">vs cours de référence <strong style="color:var(--text-primary)">11 MAD</strong> : Bear <span style="color:var(--danger)">−50 %</span> · Base <span style="color:var(--warning)">−17 %</span> · Bull <span style="color:var(--success)">+15 %</span> — Confirme le biais négatif. Le Bull Case est conditionnel à la conversion cash sur 2 semestres consécutifs.</div>
+        <div data-lang="en" style="display:none">vs reference price <strong style="color:var(--text-primary)">MAD 11</strong>: Bear <span style="color:var(--danger)">−50%</span> · Base <span style="color:var(--warning)">−17%</span> · Bull <span style="color:var(--success)">+15%</span> — Confirms negative bias. Bull Case is conditional on cash conversion over 2 consecutive halves.</div>
+      </div>
+    </div>
+
+    <!-- CHART PONDÉRÉ -->
+    <div class="chart-card" style="margin-bottom:20px;">
+      <div data-lang="fr">
+        <div class="chart-title">Fourchette de Valorisation — Synthèse Multi-Méthodes</div>
+        <div class="chart-desc">Bear / Base / Bull par méthode · cible pondérée finale après décote liquidité</div>
+      </div>
+      <div data-lang="en" style="display:none">
+        <div class="chart-title">Valuation Range — Multi-Method Summary</div>
+        <div class="chart-desc">Bear / Base / Bull by method · weighted final target after liquidity discount</div>
+      </div>
+      <div class="chart-wrap"><canvas id="chartWeightedVal"></canvas></div>
     </div>
 
     <div class="grid grid-4" style="margin-bottom:20px;">
       <div class="card">
-        <div class="card-title">P/E (publié)</div>
+        <div class="card-title"><span data-lang="fr">P/E (publié)</span><span data-lang="en" style="display:none">P/E (reported)</span></div>
         <div class="card-value">9,7x</div>
-        <div class="card-foot">BPA 1,13 MAD</div>
+        <div class="card-foot"><span data-lang="fr">BPA 1,13 MAD</span><span data-lang="en" style="display:none">EPS 1.13 MAD</span></div>
       </div>
       <div class="card" style="border-color:var(--warning);">
-        <div class="card-title">P/E (normatif)</div>
+        <div class="card-title"><span data-lang="fr">P/E (normatif)</span><span data-lang="en" style="display:none">P/E (normalised)</span></div>
         <div class="card-value" style="color:var(--warning)">13,7x</div>
-        <div class="card-foot">BPA retraité ~0,80 MAD</div>
+        <div class="card-foot"><span data-lang="fr">BPA retraité ~0,80 MAD</span><span data-lang="en" style="display:none">Adjusted EPS ~0.80 MAD</span></div>
       </div>
       <div class="card" style="border-color:var(--success);">
         <div class="card-title">P/B</div>
         <div class="card-value" style="color:var(--success)">0,47x</div>
-        <div class="card-foot">Décote massive sur fonds propres</div>
+        <div class="card-foot"><span data-lang="fr">Décote massive sur fonds propres</span><span data-lang="en" style="display:none">Massive discount to book value</span></div>
       </div>
       <div class="card" style="border-color:var(--danger);">
         <div class="card-title">EV/EBITDA</div>
         <div class="card-value" style="color:var(--danger)">~14,7x</div>
-        <div class="card-foot">Cher vs pairs 8-10x</div>
+        <div class="card-foot"><span data-lang="fr">Cher vs pairs 8-10x</span><span data-lang="en" style="display:none">Expensive vs peers 8–10x</span></div>
       </div>
     </div>
 
     <div class="grid grid-2" style="margin-bottom:20px;">
       <div class="chart-card">
-        <div class="chart-title">Multiples vs Pairs Sectoriels</div>
-        <div class="chart-desc">EV/EBITDA premium difficile à justifier au regard du ROIC</div>
+        <div class="chart-title"><span data-lang="fr">Multiples vs Pairs Sectoriels</span><span data-lang="en" style="display:none">Multiples vs Sector Peers</span></div>
+        <div class="chart-desc"><span data-lang="fr">EV/EBITDA premium difficile à justifier au regard du ROIC</span><span data-lang="en" style="display:none">EV/EBITDA premium hard to justify given the ROIC level</span></div>
         <div class="chart-wrap"><canvas id="chartMultiples"></canvas></div>
       </div>
       <div class="chart-card">
-        <div class="chart-title">Sensibilité de la Valorisation</div>
-        <div class="chart-desc">Impact sur l'EV de variations clés</div>
+        <div class="chart-title"><span data-lang="fr">Sensibilité de la Valorisation</span><span data-lang="en" style="display:none">Valuation Sensitivity</span></div>
+        <div class="chart-desc"><span data-lang="fr">Impact sur l'EV de variations clés</span><span data-lang="en" style="display:none">EV impact of key variable changes</span></div>
         <div class="chart-wrap"><canvas id="chartSensibVal"></canvas></div>
       </div>
     </div>
 
     <div class="card-elevated card">
-      <div class="card-title">Tableau de Sensibilité</div>
+      <div class="card-title"><span data-lang="fr">Tableau de Sensibilité</span><span data-lang="en" style="display:none">Sensitivity Table</span></div>
       <table class="data-table">
-        <thead><tr><th>Scénario</th><th class="num">Impact RN</th><th class="num">Impact EV/EBITDA</th><th class="num">Impact Gearing</th><th>Lecture</th></tr></thead>
+        <thead><tr><th><span data-lang="fr">Scénario</span><span data-lang="en" style="display:none">Scenario</span></th><th class="num"><span data-lang="fr">Impact RN</span><span data-lang="en" style="display:none">Net income impact</span></th><th class="num">Impact EV/EBITDA</th><th class="num"><span data-lang="fr">Impact Gearing</span><span data-lang="en" style="display:none">Leverage impact</span></th><th><span data-lang="fr">Lecture</span><span data-lang="en" style="display:none">Reading</span></th></tr></thead>
         <tbody>
-          <tr><td class="label-cell">+100 bps taux directeur</td><td class="num" style="color:var(--danger)">-50 MMAD</td><td class="num">+0,5x</td><td class="num">+1 pt</td><td><span class="badge badge-warning">Sensible</span></td></tr>
-          <tr><td class="label-cell">-5 % marge brute</td><td class="num" style="color:var(--danger)">-100 MMAD</td><td class="num">+2,5x</td><td class="num">+3 pts</td><td><span class="badge badge-danger">Critique</span></td></tr>
-          <tr><td class="label-cell">+10 % BFR (stocks)</td><td class="num">~0</td><td class="num">~0</td><td class="num" style="color:var(--danger)">+13 pts</td><td><span class="badge badge-danger">Critique</span></td></tr>
-          <tr><td class="label-cell">Choc XOF -10 %</td><td class="num" style="color:var(--danger)">-25 MMAD</td><td class="num">+0,3x</td><td class="num">~0</td><td><span class="badge badge-info">Modéré</span></td></tr>
-          <tr><td class="label-cell">Lancement Blanca City Park</td><td class="num" style="color:var(--success)">+150 MMAD T+24</td><td class="num">-2x</td><td class="num">+5 pts (CT)</td><td><span class="badge badge-success">Catalyseur</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">+100 bps taux directeur</span><span data-lang="en" style="display:none">+100 bps policy rate</span></td><td class="num" style="color:var(--danger)">-50 MMAD</td><td class="num">+0,5x</td><td class="num">+1 pt</td><td><span class="badge badge-warning"><span data-lang="fr">Sensible</span><span data-lang="en" style="display:none">Sensitive</span></span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">-5 % marge brute</span><span data-lang="en" style="display:none">-5% gross margin</span></td><td class="num" style="color:var(--danger)">-100 MMAD</td><td class="num">+2,5x</td><td class="num">+3 pts</td><td><span class="badge badge-danger"><span data-lang="fr">Critique</span><span data-lang="en" style="display:none">Critical</span></span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">+10 % BFR (stocks)</span><span data-lang="en" style="display:none">+10% working capital (inventories)</span></td><td class="num">~0</td><td class="num">~0</td><td class="num" style="color:var(--danger)">+13 pts</td><td><span class="badge badge-danger"><span data-lang="fr">Critique</span><span data-lang="en" style="display:none">Critical</span></span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Choc XOF -10 %</span><span data-lang="en" style="display:none">XOF -10% shock</span></td><td class="num" style="color:var(--danger)">-25 MMAD</td><td class="num">+0,3x</td><td class="num">~0</td><td><span class="badge badge-info"><span data-lang="fr">Modéré</span><span data-lang="en" style="display:none">Moderate</span></span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Lancement Blanca City Park</span><span data-lang="en" style="display:none">Blanca City Park launch</span></td><td class="num" style="color:var(--success)">+150 MMAD T+24</td><td class="num">-2x</td><td class="num">+5 pts (CT)</td><td><span class="badge badge-success"><span data-lang="fr">Catalyseur</span><span data-lang="en" style="display:none">Catalyst</span></span></td></tr>
         </tbody>
       </table>
     </div>
@@ -1619,65 +1888,106 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s8">
     <div class="section-header">
       <span class="section-num">08 //</span>
-      <h2 class="section-title">Scénarios Bull vs Bear</h2>
+      <h2 class="section-title" data-i18n="s8.title">Scénarios Bull vs Bear</h2>
     </div>
-    <p class="section-subtitle">Les deux thèses extrêmes — point d'équilibre actuel : Bear l'emporte sur les fondamentaux cash</p>
+    <div data-lang="fr"><p class="section-subtitle">Les deux thèses extrêmes — point d'équilibre actuel : Bear l'emporte sur les fondamentaux cash</p></div>
+    <div data-lang="en" style="display:none"><p class="section-subtitle">The two extreme theses — current equilibrium: Bear prevails on cash fundamentals</p></div>
 
     <div class="scenarios">
       <div class="scenario scenario-bull">
         <div class="scenario-head">
           <span class="badge badge-success">BULL CASE</span>
-          <span class="scenario-title">+45 % upside potentiel</span>
+          <span class="scenario-title"><span data-lang="fr">+45 % upside potentiel</span><span data-lang="en" style="display:none">+45% potential upside</span></span>
         </div>
-        <ul class="scenario-list">
+        <div data-lang="fr"><ul class="scenario-list">
           <li><span class="scenario-bullet">▲</span><span><strong>Pivot africain réussi.</strong> CI +152 % YoY · pipeline 4,2 Md sécurisé · 5 pays opérationnels</span></li>
           <li><span class="scenario-bullet">▲</span><span><strong>Visibilité commerciale.</strong> 11,7 Md de CA sécurisé = 4,3 années de revenus garantis</span></li>
           <li><span class="scenario-bullet">▲</span><span><strong>Restructuration achevée.</strong> Désendettement maîtrisé, structure assainie</span></li>
           <li><span class="scenario-bullet">▲</span><span><strong>Décote deep value.</strong> P/B 0,47x – un acquéreur stratégique paierait 7-8 Md pour les fonds propres comptables</span></li>
           <li><span class="scenario-bullet">▲</span><span><strong>Acquisitions foncières prime.</strong> Abidjan Zone 4 (3 Md potentiel), Dar Bouazza, Marrakech Annakhil</span></li>
           <li><span class="scenario-bullet">▲</span><span><strong>Yield 4,5 %.</strong> Dividende rétabli – signal positif aux actionnaires</span></li>
-        </ul>
+        </ul></div>
+        <div data-lang="en" style="display:none"><ul class="scenario-list">
+          <li><span class="scenario-bullet">▲</span><span><strong>Successful Africa pivot.</strong> Côte d'Ivoire +152% YoY · MAD 4.2Bn secured pipeline · 5 operating countries</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Revenue visibility.</strong> MAD 11.7Bn secured backlog = 4.3 years of guaranteed revenue</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Restructuring complete.</strong> Controlled deleveraging, cleaner balance sheet</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Deep value discount.</strong> P/B 0.47x – a strategic acquirer would pay MAD 7–8Bn for book equity</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Prime land acquisitions.</strong> Abidjan Zone 4 (MAD 3Bn potential), Dar Bouazza, Marrakech Annakhil</span></li>
+          <li><span class="scenario-bullet">▲</span><span><strong>Yield 4.5%.</strong> Dividend reinstated – positive shareholder signal</span></li>
+        </ul></div>
       </div>
 
       <div class="scenario scenario-bear">
         <div class="scenario-head">
           <span class="badge badge-danger">BEAR CASE</span>
-          <span class="scenario-title">-30 % downside potentiel</span>
+          <span class="scenario-title"><span data-lang="fr">-30 % downside potentiel</span><span data-lang="en" style="display:none">-30% potential downside</span></span>
         </div>
-        <ul class="scenario-list">
+        <div data-lang="fr"><ul class="scenario-list">
           <li><span class="scenario-bullet">▼</span><span><strong>Cash-flow opérationnel négatif.</strong> Le RN ne se convertit pas en cash – modèle économique à interroger</span></li>
           <li><span class="scenario-bullet">▼</span><span><strong>Holding en perte sociale.</strong> Distribution non couverte – tension liquidité à 24 mois</span></li>
           <li><span class="scenario-bullet">▼</span><span><strong>Destruction de valeur économique.</strong> ROIC 2,3 % vs WACC ~8 % = -600 bps</span></li>
           <li><span class="scenario-bullet">▼</span><span><strong>BFR explosif.</strong> 13,9 Md vs CA 2,7 Md – bombe à retardement de liquidité</span></li>
           <li><span class="scenario-bullet">▼</span><span><strong>Coverage 1,65x.</strong> Toute remontée de taux fragilise structurellement</span></li>
           <li><span class="scenario-bullet">▼</span><span><strong>Filiales sinistrées.</strong> 863 MMAD de provisions sur titres non reprises</span></li>
-        </ul>
+        </ul></div>
+        <div data-lang="en" style="display:none"><ul class="scenario-list">
+          <li><span class="scenario-bullet">▼</span><span><strong>Negative operating cash flow.</strong> Net income not converting to cash – business model needs scrutiny</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Loss-making parent company.</strong> Uncovered distribution – liquidity pressure within 24 months</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Economic value destruction.</strong> ROIC 2.3% vs WACC ~8% = -600 bps</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Explosive working capital.</strong> MAD 13.9Bn vs revenue 2.7Bn – ticking liquidity bomb</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Coverage 1.65x.</strong> Any rate increase structurally weakens the position</span></li>
+          <li><span class="scenario-bullet">▼</span><span><strong>Written-off subsidiaries.</strong> MAD 863M in unrecovered share write-downs</span></li>
+        </ul></div>
       </div>
     </div>
 
     <div class="chart-card" style="margin-top:20px;">
-      <div class="chart-title">Catalyseurs 12 mois — Timeline</div>
-      <div class="chart-desc">Événements binaires susceptibles de débloquer ou détruire la valeur</div>
+      <div class="chart-title"><span data-lang="fr">Catalyseurs 12 mois — Timeline</span><span data-lang="en" style="display:none">12-month Catalysts — Timeline</span></div>
+      <div class="chart-desc"><span data-lang="fr">Événements binaires susceptibles de débloquer ou détruire la valeur</span><span data-lang="en" style="display:none">Binary events capable of unlocking or destroying value</span></div>
       <div class="timeline">
         <div class="timeline-item">
-          <div class="timeline-date">▶ T2 2026</div>
-          <div class="timeline-title">Publication semestrielle S1 2026</div>
-          <div class="timeline-desc">Test critique de la conversion CAF → cash. Si BFR continue de grossir → confirmation Bear case.</div>
+          <div class="timeline-date">▶ Q2 2026</div>
+          <div data-lang="fr">
+            <div class="timeline-title">Publication semestrielle S1 2026</div>
+            <div class="timeline-desc">Test critique de la conversion CAF → cash. Si BFR continue de grossir → confirmation Bear case.</div>
+          </div>
+          <div data-lang="en" style="display:none">
+            <div class="timeline-title">H1 2026 Semi-annual Results</div>
+            <div class="timeline-desc">Critical test of operating cash flow conversion. If working capital keeps growing → Bear case confirmed.</div>
+          </div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">▶ T3 2026</div>
-          <div class="timeline-title">Lancement effectif Blanca City Park</div>
-          <div class="timeline-desc">Catalyseur positif majeur — CA potentiel 12 Md sur 5-7 ans. Re-rating possible vers HOLD+.</div>
+          <div class="timeline-date">▶ Q3 2026</div>
+          <div data-lang="fr">
+            <div class="timeline-title">Lancement effectif Blanca City Park</div>
+            <div class="timeline-desc">Catalyseur positif majeur — CA potentiel 12 Md sur 5-7 ans. Re-rating possible vers HOLD+.</div>
+          </div>
+          <div data-lang="en" style="display:none">
+            <div class="timeline-title">Blanca City Park Launch</div>
+            <div class="timeline-desc">Major positive catalyst — MAD 12Bn potential revenue over 5-7 years. Re-rating possible toward HOLD+.</div>
+          </div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">▶ T4 2026</div>
-          <div class="timeline-title">Refinancement obligataire</div>
-          <div class="timeline-desc">Test du marché obligataire marocain. Spread d'émission = thermomètre du risque crédit perçu.</div>
+          <div class="timeline-date">▶ Q4 2026</div>
+          <div data-lang="fr">
+            <div class="timeline-title">Refinancement obligataire</div>
+            <div class="timeline-desc">Test du marché obligataire marocain. Spread d'émission = thermomètre du risque crédit perçu.</div>
+          </div>
+          <div data-lang="en" style="display:none">
+            <div class="timeline-title">Bond Refinancing</div>
+            <div class="timeline-desc">Test of the Moroccan bond market. Issuance spread = thermometer for perceived credit risk.</div>
+          </div>
         </div>
         <div class="timeline-item">
-          <div class="timeline-date">▶ Continu</div>
-          <div class="timeline-title">Évolution taux BAM</div>
-          <div class="timeline-desc">Statu quo attendu à 2,75 % – impact neutre. Toute hausse = stress sur Coverage Ratio.</div>
+          <div class="timeline-date">▶ Ongoing</div>
+          <div data-lang="fr">
+            <div class="timeline-title">Évolution taux BAM</div>
+            <div class="timeline-desc">Statu quo attendu à 2,75 % – impact neutre. Toute hausse = stress sur Coverage Ratio.</div>
+          </div>
+          <div data-lang="en" style="display:none">
+            <div class="timeline-title">BAM Policy Rate</div>
+            <div class="timeline-desc">Status quo expected at 2.75% – neutral impact. Any rate hike = stress on Interest Coverage Ratio.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1687,84 +1997,119 @@ cours boursier via investing.com (snapshot au 30/04/2026).
   <section class="section" id="s9">
     <div class="section-header">
       <span class="section-num">09 //</span>
-      <h2 class="section-title">Recommandation Finale &amp; Plan d'Action</h2>
+      <h2 class="section-title" data-i18n="s9.title">Recommandation Finale &amp; Plan d'Action</h2>
     </div>
 
     <div class="hero" style="margin-top:0;">
-      <div class="hero-tag">VERDICT TRANCHÉ</div>
-      <h2 class="hero-title">Qualité du dossier : <span style="color:var(--warning)">FAIBLE à MOYEN</span></h2>
-      <p class="hero-sub">
-        Addoha présente un narrative de redressement crédible (préventes, pipeline, Afrique) <strong>contredit par les fondamentaux cash</strong>.
-        La machine génère du résultat comptable mais ne génère pas de cash, finance sa croissance par l'extension du BFR
-        et les avances de l'actionnaire de référence, et distribue un dividende non couvert.
-      </p>
+      <div class="hero-tag"><span data-lang="fr">VERDICT TRANCHÉ</span><span data-lang="en" style="display:none">CLEAR VERDICT</span></div>
+      <div data-lang="fr">
+        <h2 class="hero-title">Qualité du dossier : <span style="color:var(--warning)">FAIBLE à MOYEN</span></h2>
+        <p class="hero-sub">
+          Addoha présente un narrative de redressement crédible (préventes, pipeline, Afrique) <strong>contredit par les fondamentaux cash</strong>.
+          La machine génère du résultat comptable mais ne génère pas de cash, finance sa croissance par l'extension du BFR
+          et les avances de l'actionnaire de référence, et distribue un dividende non couvert.
+        </p>
+      </div>
+      <div data-lang="en" style="display:none">
+        <h2 class="hero-title">Investment quality: <span style="color:var(--warning)">LOW to MEDIUM</span></h2>
+        <p class="hero-sub">
+          Addoha presents a credible recovery narrative (pre-sales, pipeline, Africa) <strong>contradicted by cash fundamentals</strong>.
+          The machine generates accounting earnings but no cash, funds growth by expanding working capital
+          and controlling shareholder advances, and pays an uncovered dividend.
+        </p>
+      </div>
 
       <div class="grid grid-3" style="margin-top:24px;">
         <div class="card" style="background:var(--bg-primary);">
-          <div class="card-title">Profil Trade Spéculatif</div>
-          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+          <div data-lang="fr"><div class="card-title">Profil Trade Spéculatif</div></div>
+          <div data-lang="en" style="display:none"><div class="card-title">Speculative Trade Profile</div></div>
+          <div data-lang="fr"><p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
             Positionnement court terme possible sur catalyseur Blanca City Park ou re-rating sectoriel.
             <strong style="color:var(--success)">Fenêtre tactique uniquement.</strong>
-          </p>
+          </p></div>
+          <div data-lang="en" style="display:none"><p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            Short-term positioning possible on Blanca City Park catalyst or sector re-rating.
+            <strong style="color:var(--success)">Tactical window only.</strong>
+          </p></div>
         </div>
         <div class="card" style="background:var(--bg-primary); border-color:var(--warning);">
-          <div class="card-title" style="color:var(--warning)">Profil Investissement LT</div>
-          <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+          <div data-lang="fr"><div class="card-title" style="color:var(--warning)">Profil Investissement LT</div></div>
+          <div data-lang="en" style="display:none"><div class="card-title" style="color:var(--warning)">Long-Term Investment Profile</div></div>
+          <div data-lang="fr"><p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
             <strong style="color:var(--warning)">À éviter</strong> tant que la conversion cash ne se matérialise pas
             sur 2 semestres consécutifs. Re-rating possible si BFR se résorbe.
-          </p>
+          </p></div>
+          <div data-lang="en" style="display:none"><p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
+            <strong style="color:var(--warning)">Avoid</strong> until cash conversion materialises
+            over 2 consecutive halves. Re-rating possible if working capital resolves.
+          </p></div>
         </div>
         <div class="card" style="background:var(--bg-primary); border-color:var(--info);">
-          <div class="card-title" style="color:var(--info)">Profil Deep Value</div>
+          <div data-lang="fr"><div class="card-title" style="color:var(--info)">Profil Deep Value</div></div>
+          <div data-lang="en" style="display:none"><div class="card-title" style="color:var(--info)">Deep Value Profile</div></div>
           <p style="font-size:13px; line-height:1.7; color:var(--text-secondary);">
-            Décote P/B 0,47x défendable, mais <strong>asset quality discount</strong> justifié par
-            les filiales provisionnées et le risque foncier.
+            <span data-lang="fr">Décote P/B 0,47x défendable, mais <strong>asset quality discount</strong> justifié par
+            les filiales provisionnées et le risque foncier.</span>
+            <span data-lang="en" style="display:none">P/B 0.47x discount is defensible, but <strong>asset quality discount</strong> justified by
+            written-down subsidiaries and land risk.</span>
           </p>
         </div>
       </div>
     </div>
 
     <div class="card" style="margin-top:24px;">
-      <div class="card-title">Questions à challenger directement avec l'IR (Anas Berrada — a.berrada@groupeaddoha.com)</div>
+      <div class="card-title"><span data-lang="fr">Questions à challenger directement avec l'IR (Anas Berrada — a.berrada@groupeaddoha.com)</span><span data-lang="en" style="display:none">Questions to challenge directly with IR (Anas Berrada — a.berrada@groupeaddoha.com)</span></div>
       <ol class="question-list">
-        <li>Justification du pro-forma "ancien référentiel" — pourquoi maintenir 2 lectures du CA, et est-ce conforme aux recommandations AMMC en matière de communication financière ?</li>
-        <li>Plan de résorption du BFR sur 2026-2027 : quel est le rythme cible de monétisation des stocks (DIO target, % stocks vieillissants à écouler) ?</li>
-        <li>Couverture du dividende social par les remontées de filiales : quelle politique de remontée et quel échéancier de retour à un ROE social positif ?</li>
-        <li>Stratégie de hedging FCFA / GNF sur les filiales africaines (33 % du CA sécurisé), et appétit au risque change ?</li>
-        <li>Échéancier précis de la dette obligataire : montants, maturités 2026-2028 et stratégie de refinancement dans un contexte de taux stable ?</li>
-        <li>Justification du taux d'imposition effectif à 11 % (vs 25,5 %) — quels actifs d'impôt différé ont été activés et sur quelles hypothèses de bénéfices futurs ?</li>
-        <li>Statut opérationnel des filiales africaines totalement provisionnées (Cameroun, Congo, Tchad, Niger, Burundi) — projet de cession ou maintien stratégique ?</li>
+        <li><span data-lang="fr">Justification du pro-forma "ancien référentiel" — pourquoi maintenir 2 lectures du CA, et est-ce conforme aux recommandations AMMC en matière de communication financière ?</span><span data-lang="en" style="display:none">Justification for the "old standard" pro-forma — why maintain 2 revenue figures, and does this comply with AMMC financial communication guidelines?</span></li>
+        <li><span data-lang="fr">Plan de résorption du BFR sur 2026-2027 : quel est le rythme cible de monétisation des stocks (DIO target, % stocks vieillissants à écouler) ?</span><span data-lang="en" style="display:none">Working capital reduction plan for 2026–2027: what is the target inventory monetisation pace (DIO target, % of ageing inventory to clear)?</span></li>
+        <li><span data-lang="fr">Couverture du dividende social par les remontées de filiales : quelle politique de remontée et quel échéancier de retour à un ROE social positif ?</span><span data-lang="en" style="display:none">Parent dividend coverage by subsidiary upstreaming: what is the upstreaming policy and timeline to return to positive parent ROE?</span></li>
+        <li><span data-lang="fr">Stratégie de hedging FCFA / GNF sur les filiales africaines (33 % du CA sécurisé), et appétit au risque change ?</span><span data-lang="en" style="display:none">FCFA / GNF hedging strategy on African subsidiaries (33% of secured revenue), and FX risk appetite?</span></li>
+        <li><span data-lang="fr">Échéancier précis de la dette obligataire : montants, maturités 2026-2028 et stratégie de refinancement dans un contexte de taux stable ?</span><span data-lang="en" style="display:none">Detailed bond maturity schedule: amounts, 2026–2028 maturities, and refinancing strategy in a stable rate environment?</span></li>
+        <li><span data-lang="fr">Justification du taux d'imposition effectif à 11 % (vs 25,5 %) — quels actifs d'impôt différé ont été activés et sur quelles hypothèses de bénéfices futurs ?</span><span data-lang="en" style="display:none">Justification for the 11% effective tax rate (vs 25.5%) — which deferred tax assets were recognised and on what future earnings assumptions?</span></li>
+        <li><span data-lang="fr">Statut opérationnel des filiales africaines totalement provisionnées (Cameroun, Congo, Tchad, Niger, Burundi) — projet de cession ou maintien stratégique ?</span><span data-lang="en" style="display:none">Operational status of fully written-down African subsidiaries (Cameroon, Congo, Chad, Niger, Burundi) — disposal plan or strategic retention?</span></li>
       </ol>
     </div>
 
     <div class="card" style="margin-top:24px;">
-      <div class="card-title">Watchlist — Indicateurs à surveiller activement</div>
+      <div class="card-title"><span data-lang="fr">Watchlist — Indicateurs à surveiller activement</span><span data-lang="en" style="display:none">Watchlist — Indicators to monitor actively</span></div>
       <table class="data-table">
-        <thead><tr><th>Indicateur</th><th class="num">Valeur 2025</th><th class="num">Seuil d'alerte</th><th class="num">Cible re-rating</th><th>Fréquence</th></tr></thead>
+        <thead><tr><th><span data-lang="fr">Indicateur</span><span data-lang="en" style="display:none">Indicator</span></th><th class="num"><span data-lang="fr">Valeur 2025</span><span data-lang="en" style="display:none">2025 value</span></th><th class="num"><span data-lang="fr">Seuil d'alerte</span><span data-lang="en" style="display:none">Alert threshold</span></th><th class="num"><span data-lang="fr">Cible re-rating</span><span data-lang="en" style="display:none">Re-rating target</span></th><th><span data-lang="fr">Fréquence</span><span data-lang="en" style="display:none">Frequency</span></th></tr></thead>
         <tbody>
-          <tr><td class="label-cell">FCF opérationnel</td><td class="num" style="color:var(--danger)">-7</td><td class="num">&lt; -200</td><td class="num" style="color:var(--success)">&gt; +300</td><td>Trimestriel</td></tr>
-          <tr><td class="label-cell">BFR (MMAD)</td><td class="num">13 900</td><td class="num">&gt; 15 000</td><td class="num" style="color:var(--success)">&lt; 12 500</td><td>Semestriel</td></tr>
-          <tr><td class="label-cell">Interest Coverage</td><td class="num">1,65x</td><td class="num">&lt; 1,3x</td><td class="num" style="color:var(--success)">&gt; 2,5x</td><td>Trimestriel</td></tr>
-          <tr><td class="label-cell">Découverts bancaires</td><td class="num">~960</td><td class="num">&gt; 1 200</td><td class="num" style="color:var(--success)">&lt; 500</td><td>Mensuel</td></tr>
-          <tr><td class="label-cell">CA sécurisé (Md)</td><td class="num" style="color:var(--success)">11,7</td><td class="num">&lt; 9,0</td><td class="num" style="color:var(--success)">&gt; 13,5</td><td>Semestriel</td></tr>
-          <tr><td class="label-cell">Préventes (unités)</td><td class="num" style="color:var(--success)">11 035</td><td class="num">&lt; 9 500</td><td class="num" style="color:var(--success)">&gt; 12 500</td><td>Trimestriel</td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">FCF opérationnel</span><span data-lang="en" style="display:none">Operating FCF</span></td><td class="num" style="color:var(--danger)">-7</td><td class="num">&lt; -200</td><td class="num" style="color:var(--success)">&gt; +300</td><td><span data-lang="fr">Trimestriel</span><span data-lang="en" style="display:none">Quarterly</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">BFR (MMAD)</span><span data-lang="en" style="display:none">Working capital (MAD M)</span></td><td class="num">13 900</td><td class="num">&gt; 15 000</td><td class="num" style="color:var(--success)">&lt; 12 500</td><td><span data-lang="fr">Semestriel</span><span data-lang="en" style="display:none">Semi-annual</span></td></tr>
+          <tr><td class="label-cell">Interest Coverage</td><td class="num">1,65x</td><td class="num">&lt; 1,3x</td><td class="num" style="color:var(--success)">&gt; 2,5x</td><td><span data-lang="fr">Trimestriel</span><span data-lang="en" style="display:none">Quarterly</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Découverts bancaires</span><span data-lang="en" style="display:none">Bank overdrafts</span></td><td class="num">~960</td><td class="num">&gt; 1 200</td><td class="num" style="color:var(--success)">&lt; 500</td><td><span data-lang="fr">Mensuel</span><span data-lang="en" style="display:none">Monthly</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">CA sécurisé (Md)</span><span data-lang="en" style="display:none">Secured revenue backlog (Bn)</span></td><td class="num" style="color:var(--success)">11,7</td><td class="num">&lt; 9,0</td><td class="num" style="color:var(--success)">&gt; 13,5</td><td><span data-lang="fr">Semestriel</span><span data-lang="en" style="display:none">Semi-annual</span></td></tr>
+          <tr><td class="label-cell"><span data-lang="fr">Préventes (unités)</span><span data-lang="en" style="display:none">Pre-sales (units)</span></td><td class="num" style="color:var(--success)">11 035</td><td class="num">&lt; 9 500</td><td class="num" style="color:var(--success)">&gt; 12 500</td><td><span data-lang="fr">Trimestriel</span><span data-lang="en" style="display:none">Quarterly</span></td></tr>
         </tbody>
       </table>
     </div>
   </section>
 
   <div class="footer">
-    Analyse établie sous contrainte d'informations <code>RFA 2025</code> uniquement (129 pages).<br>
+    <span data-lang="fr">Analyse établie sous contrainte d'informations <code>RFA 2025</code> uniquement (129 pages).<br>
     Cours boursier capturé via investing.com au <code>30/04/2026</code>.<br>
-    Hypothèses : <code>WACC 8-9 %</code> · <code>Ke 11-12 %</code> basées sur taux BAM 2,75 % + prime Maroc + prime secteur immobilier.
+    Hypothèses : <code>WACC 8-9 %</code> · <code>Ke 11-12 %</code> basées sur taux BAM 2,75 % + prime Maroc + prime secteur immobilier.</span>
+    <span data-lang="en" style="display:none">Analysis based solely on <code>RFA 2025</code> data (129 pages).<br>
+    Share price captured via investing.com on <code>30/04/2026</code>.<br>
+    Assumptions: <code>WACC 8–9%</code> · <code>Ke 11–12%</code> based on BAM rate 2.75% + Morocco risk premium + real estate sector premium.</span>
   </div>
 
   <!-- ============ LEGAL FOOTER (obligatoire) ============ -->
   <footer style="margin: 48px -28px -28px; padding: 24px 32px; background: var(--bg-secondary); border-top: 2px solid var(--warning); font-size: 11px; color: var(--text-muted); line-height: 1.7;">
     <div style="max-width: 980px; margin: 0 auto;">
-      <p style="margin-bottom: 10px;"><strong style="color: var(--warning);">DISCLAIMER LÉGAL —</strong> Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation à acheter ou vendre des instruments financiers, ni une analyse financière indépendante</strong> au sens réglementaire (AMMC pour le Maroc). L'auteur n'assume aucune responsabilité quant aux décisions prises sur la base de ce document. Les performances passées ne préjugent pas des performances futures. La valeur des investissements peut fluctuer à la baisse comme à la hausse.</p>
-      <p style="margin-bottom: 10px;"><strong style="color: var(--text-secondary);">Sources —</strong> <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">Rapport Financier Annuel 2025 d'Addoha publié sur ammc.ma</a> (129 pages) · Cours boursier <a href="https://www.investing.com/equities/addoha" target="_blank" rel="noopener" style="color: var(--accent);">via investing.com</a> au <span id="footerPriceDate">30 avril 2026</span> · Taux BAM 2,75 % au 28/04/2026 · Calculs WACC selon CAPM (Rf 10Y MAD ~3 %, ERP Maroc ~7 %, β secteur immobilier ~1,1).</p>
-      <p style="text-align: center; color: var(--text-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);">Toute décision d'investissement doit être prise après consultation d'un <strong>conseiller en investissement agréé</strong> et lecture intégrale des documents officiels de l'émetteur.</p>
+      <p style="margin-bottom: 10px;">
+        <span data-lang="fr"><strong style="color: var(--warning);">DISCLAIMER LÉGAL —</strong> Ce document est produit à des fins <strong>éducatives et informationnelles uniquement</strong>. Il ne constitue <strong>ni un conseil en investissement, ni une recommandation personnalisée, ni une sollicitation à acheter ou vendre des instruments financiers, ni une analyse financière indépendante</strong> au sens réglementaire (AMMC pour le Maroc). L'auteur n'assume aucune responsabilité quant aux décisions prises sur la base de ce document. Les performances passées ne préjugent pas des performances futures. La valeur des investissements peut fluctuer à la baisse comme à la hausse.</span>
+        <span data-lang="en" style="display:none"><strong style="color: var(--warning);">LEGAL DISCLAIMER —</strong> This document is produced for <strong>educational and informational purposes only</strong>. It does not constitute <strong>investment advice, a personalised recommendation, a solicitation to buy or sell financial instruments, or an independent financial analysis</strong> in the regulatory sense (AMMC for Morocco). The author assumes no liability for decisions made on the basis of this document. Past performance is not indicative of future results. Investment values may fluctuate up or down.</span>
+      </p>
+      <p style="margin-bottom: 10px;">
+        <span data-lang="fr"><strong style="color: var(--text-secondary);">Sources —</strong> <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">Rapport Financier Annuel 2025 d'Addoha publié sur ammc.ma</a> (129 pages) · Cours boursier <a href="https://www.investing.com/equities/addoha" target="_blank" rel="noopener" style="color: var(--accent);">via investing.com</a> au <span id="footerPriceDate">30 avril 2026</span> · Taux BAM 2,75 % au 28/04/2026 · Calculs WACC selon CAPM (Rf 10Y MAD ~3 %, ERP Maroc ~7 %, β secteur immobilier ~1,1).</span>
+        <span data-lang="en" style="display:none"><strong style="color: var(--text-secondary);">Sources —</strong> <a href="https://www.ammc.ma/" target="_blank" rel="noopener" style="color: var(--accent);">Addoha Annual Report 2025 published on ammc.ma</a> (129 pages) · Share price <a href="https://www.investing.com/equities/addoha" target="_blank" rel="noopener" style="color: var(--accent);">via investing.com</a> as of <span>30 April 2026</span> · BAM rate 2.75% as of 28/04/2026 · WACC calculations per CAPM (Rf 10Y MAD ~3%, ERP Morocco ~7%, β real estate sector ~1.1).</span>
+      </p>
+      <p style="text-align: center; color: var(--text-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border);">
+        <span data-lang="fr">Toute décision d'investissement doit être prise après consultation d'un <strong>conseiller en investissement agréé</strong> et lecture intégrale des documents officiels de l'émetteur.</span>
+        <span data-lang="en" style="display:none">Any investment decision must be made after consulting a <strong>licensed investment adviser</strong> and reading the issuer's official documents in full.</span>
+      </p>
     </div>
   </footer>
 
@@ -2242,6 +2587,221 @@ new Chart(document.getElementById('chartMultiples'), {
       x: { grid: { display: false } }
     }
   }
+});
+
+// ============ WEIGHTED VALUATION CHART ============
+new Chart(document.getElementById('chartWeightedVal'), {
+  type: 'bar',
+  data: {
+    labels: ['DCF\n(FCF norm.)', 'Multiples\npairs', 'NAV\n(immo)', 'Cible\nbrute', 'Cible finale\n(−15 % liq.)'],
+    datasets: [
+      {
+        label: 'Bear',
+        data: [0, 5, 9, 6.5, 5.5],
+        backgroundColor: COLORS.danger,
+        borderRadius: 4
+      },
+      {
+        label: 'Base',
+        data: [5, 9, 13, 10.7, 9.1],
+        backgroundColor: COLORS.warning,
+        borderRadius: 4
+      },
+      {
+        label: 'Bull',
+        data: [9, 13, 18, 14.9, 12.7],
+        backgroundColor: COLORS.success,
+        borderRadius: 4
+      }
+    ]
+  },
+  options: {
+    maintainAspectRatio: false,
+    plugins: {
+      legend: { position: 'bottom' },
+      annotation: {
+        annotations: {
+          currentPrice: {
+            type: 'line',
+            yMin: 11, yMax: 11,
+            borderColor: COLORS.accent,
+            borderWidth: 2,
+            borderDash: [6, 3],
+            label: { content: 'Cours réf. 11 MAD', enabled: true, position: 'end', backgroundColor: 'rgba(245,158,11,0.15)', color: COLORS.accent, font: { size: 11 } }
+          }
+        }
+      }
+    },
+    scales: {
+      y: {
+        grid: { color: '#1f2842' },
+        ticks: { callback: v => v + ' MAD' },
+        suggestedMax: 22
+      },
+      x: { grid: { display: false } }
+    }
+  }
+});
+
+// ============ I18N & LANG TOGGLE ============
+const i18n = {
+  fr: {
+    'nav.overview': 'Synthèse Exécutive', 'nav.s1': 'P&L &amp; Performance',
+    'nav.s2': 'Cash &amp; BFR', 'nav.s3': 'Structure Financière',
+    'nav.s4': 'Création de Valeur', 'nav.s5': 'Annexes &amp; Qualitatif',
+    'nav.s6': 'Red Flags', 'nav.s7': 'Valorisation',
+    'nav.s8': 'Bull vs Bear', 'nav.s9': 'Recommandation',
+    'kpi.revenue': 'CA Consolidé', 'kpi.netincome': 'RN Part Groupe',
+    'kpi.fcf': 'FCF Opérationnel', 'kpi.roic': 'ROIC',
+    's1.title': 'Performance Opérationnelle', 's2.title': 'Cash-Flow &amp; BFR',
+    's3.title': 'Structure Financière &amp; Solvabilité', 's4.title': 'Création (Destruction) de Valeur',
+    's5.title': 'Analyse Qualitative &amp; Annexes', 's6.title': 'Détection des Red Flags',
+    's7.title': 'Valorisation &amp; Comparables', 's8.title': 'Scénarios Bull vs Bear',
+    's9.title': 'Recommandation Finale &amp; Plan d\'Action',
+    'rec.label': 'Recommandation', 'rec.conviction': 'Conviction analytique',
+    'card.strengths': '▲ Points Forts', 'card.risks': '▼ Risques Critiques', 'card.verdict': '► Verdict',
+    'flag.score': 'Score Global Red Flags'
+  },
+  en: {
+    'nav.overview': 'Executive Summary', 'nav.s1': 'P&amp;L &amp; Performance',
+    'nav.s2': 'Cash &amp; Working Capital', 'nav.s3': 'Financial Structure',
+    'nav.s4': 'Value Creation', 'nav.s5': 'Qualitative &amp; Notes',
+    'nav.s6': 'Red Flags', 'nav.s7': 'Valuation',
+    'nav.s8': 'Bull vs Bear', 'nav.s9': 'Recommendation',
+    'kpi.revenue': 'Revenue', 'kpi.netincome': 'Net Income (Group)',
+    'kpi.fcf': 'Operating FCF', 'kpi.roic': 'ROIC',
+    's1.title': 'Operating Performance', 's2.title': 'Cash Flow &amp; Working Capital',
+    's3.title': 'Financial Structure &amp; Solvency', 's4.title': 'Value Creation (Destruction)',
+    's5.title': 'Qualitative Analysis &amp; Notes', 's6.title': 'Red Flag Detection',
+    's7.title': 'Valuation &amp; Comparables', 's8.title': 'Bull vs Bear Scenarios',
+    's9.title': 'Final Recommendation &amp; Action Plan',
+    'rec.label': 'Recommendation', 'rec.conviction': 'Analytical conviction',
+    'card.strengths': '▲ Key Strengths', 'card.risks': '▼ Critical Risks', 'card.verdict': '► Verdict',
+    'flag.score': 'Overall Red Flag Score'
+  }
+};
+
+const chartLabels = {
+  chartCA: {
+    fr: ['CA Reporté (MMAD)', 'CA Pro-forma ancien référentiel'],
+    en: ['Reported Revenue (MAD M)', 'Pro-forma Revenue (old standard)']
+  },
+  chartMarges: {
+    fr: ['Marge Brute %', 'Marge d\'Exploitation %', 'Marge Nette %'],
+    en: ['Gross Margin %', 'Operating Margin %', 'Net Margin %']
+  },
+  chartBFR: {
+    fr: ['BFR (Md MAD)', 'CA (Md MAD)'],
+    en: ['Working Capital (MAD Bn)', 'Revenue (MAD Bn)']
+  },
+  chartCapex: {
+    fr: ['Capex (MMAD)', 'CAF (MMAD)'],
+    en: ['Capex (MAD M)', 'Operating Cash Flow (MAD M)']
+  },
+  chartDupont: {
+    fr: ['ADH 2025', 'Pair sectoriel médian'],
+    en: ['ADH 2025', 'Sector peer median']
+  },
+  chartMultiples: {
+    fr: ['P/E', 'EV/EBITDA', 'P/B'],
+    en: ['P/E', 'EV/EBITDA', 'P/B']
+  },
+  chartWeightedVal: {
+    fr: ['Bear', 'Base', 'Bull'],
+    en: ['Bear', 'Base', 'Bull']
+  },
+  chartStanding: {
+    fr: ['2024', '2025'],
+    en: ['2024', '2025']
+  },
+  chartHorsBilan: {
+    fr: ['2024', '2025'],
+    en: ['2024', '2025']
+  },
+  chartSensibTaux: {
+    fr: ['Coverage Ratio (EBIT/Intérêts)'],
+    en: ['Interest Coverage Ratio (EBIT/Interest)']
+  }
+};
+
+const chartAxisLabels = {
+  chartDupont: {
+    fr: ['Marge nette', 'Asset Turnover', 'Levier financier', 'ROE résultant'],
+    en: ['Net margin', 'Asset Turnover', 'Financial leverage', 'Resulting ROE']
+  },
+  chartStanding: {
+    fr: ['Économique & Moyen Standing', 'Haut Standing'],
+    en: ['Affordable & Mid-range', 'High-end']
+  },
+  chartGeo: {
+    fr: ['Maroc', 'Côte d\'Ivoire', 'Guinée', 'Sénégal'],
+    en: ['Morocco', 'Côte d\'Ivoire', 'Guinea', 'Senegal']
+  },
+  chartDette: {
+    fr: ['Crédits LMT', 'Crédits CT', 'Découverts', 'Obligataire'],
+    en: ['LT bank credit', 'ST credit', 'Overdrafts', 'Bonds']
+  },
+  chartHorsBilan: {
+    fr: ['Avals & cautions bancaires', 'Promesses hypothèque', 'Autres engagements'],
+    en: ['Bank guarantees & endorsements', 'Mortgage commitments', 'Other commitments']
+  },
+  chartMultiples: {
+    fr: ['ADH', 'Pair Sect. Maroc', 'Médiane Internationale'],
+    en: ['ADH', 'Moroccan sector peer', 'International median']
+  },
+  chartSensibTaux: {
+    fr: ['-100 bps', 'Actuel', '+50 bps', '+100 bps', '+150 bps', '+200 bps'],
+    en: ['-100 bps', 'Current', '+50 bps', '+100 bps', '+150 bps', '+200 bps']
+  },
+  chartSensibVal: {
+    fr: ['Hausse 100bps', 'Baisse marge -5%', 'Hausse BFR +10%', 'Choc XOF -10%', 'Lancement Blanca'],
+    en: ['+100bps rate', 'Gross margin -5%', 'Working capital +10%', 'XOF shock -10%', 'Blanca launch']
+  },
+  chartWeightedVal: {
+    fr: ['DCF\n(FCF norm.)', 'Multiples\npairs', 'NAV\n(immo)', 'Cible\nbrute', 'Cible finale\n(−15 % liq.)'],
+    en: ['DCF\n(norm. FCF)', 'Peer\nmultiples', 'NAV\n(real estate)', 'Gross\ntarget', 'Final target\n(−15% liq.)']
+  }
+};
+
+function setLang(lang) {
+  // 1. Update data-i18n labels
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const v = i18n[lang]?.[el.dataset.i18n];
+    if (v !== undefined) el.innerHTML = v;
+  });
+  // 2. Toggle data-lang narrative blocks
+  document.querySelectorAll('[data-lang]:not(.lang-btn)').forEach(el => {
+    el.style.display = el.dataset.lang === lang ? '' : 'none';
+  });
+  // 3. Toggle button active state
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  // 4. Update Chart.js dataset labels without animation
+  if (typeof Chart !== 'undefined') {
+    Object.values(Chart.instances).forEach(chart => {
+      const id = chart.canvas?.id;
+      if (chartLabels[id]?.[lang]) {
+        chart.data.datasets.forEach((ds, i) => {
+          if (chartLabels[id][lang][i] !== undefined) ds.label = chartLabels[id][lang][i];
+        });
+        chart.update('none');
+      }
+      // Also update axis (data) labels if defined
+      if (chartAxisLabels[id]?.[lang]) {
+        chart.data.labels = chartAxisLabels[id][lang];
+        chart.update('none');
+      }
+    });
+  }
+  // 5. Persist preference
+  localStorage.setItem('rfa-lang', lang);
+}
+
+// Restore saved preference on load
+document.addEventListener('DOMContentLoaded', () => {
+  const saved = localStorage.getItem('rfa-lang') || 'fr';
+  if (saved !== 'fr') setLang(saved);
 });
 
 // ============ SENSIBILITE VAL ============

@@ -39,6 +39,7 @@
    - Style Bloomberg Terminal dark
    - Navigation sidebar avec scroll-spy
    - Charts Chart.js (waterfall P&L, doughnut BFR, ROIC vs WACC, scénarios DCF)
+   - **Toggle FR/EN intégré** — toute l'analyse (libellés UI + texte analytique) bascule en un clic, préférence mémorisée en localStorage (`--lang=BILINGUAL`)
    - Mobile-first (sidebar off-canvas + hamburger ≤ 768px)
    - Meta tags Open Graph pour partage WhatsApp / LinkedIn
    - Fichier unique HTML standalone, partageable via Netlify Drop / Surge / GitHub Pages
@@ -48,7 +49,7 @@
 Le skill est conçu pour fonctionner sur **toute société cotée**. Calibrations pré-encodées (WACC, devise, référentiel comptable, régulateur) :
 
 | Marché | Devise | Référentiel | Régulateur | Source cours |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- |
 | **BVC / Maroc (MASI)** | MAD | IFRS / CGNC | AMMC | casablanca-bourse.com |
 | **Euronext (Paris, Amsterdam, Bruxelles…)** | EUR | IFRS | AMF / AFM / FSMA | live.euronext.com |
 | **LSE (Londres)** | GBP | IFRS UK-endorsed | FCA | londonstockexchange.com |
@@ -76,16 +77,18 @@ Le skill est immédiatement disponible dans Claude Code — il s'auto-déclenche
 ### Vérifier l'installation
 
 Dans Claude Code :
-```
+
+```text
 /skills
 ```
+
 Vous devriez voir `analyse-rfa-institutionnelle` dans la liste.
 
 ## Utilisation
 
 ### Invocation explicite
 
-```
+```text
 /analyse-rfa-institutionnelle chemin/vers/rapport-annuel-2024.pdf
 ```
 
@@ -100,20 +103,23 @@ Demandez simplement à Claude Code :
 
 ### Arguments optionnels
 
-```
-/analyse-rfa-institutionnelle <pdf-path> [--year=YYYY] [--market=BVC|EURONEXT|LSE|NYSE|...] [--out-dir=path]
+```text
+/analyse-rfa-institutionnelle <pdf-path> [--year=YYYY] [--market=BVC|EURONEXT|LSE|NYSE|...] [--lang=FR|EN|BILINGUAL] [--out-dir=path]
 ```
 
 - `--year` : année à analyser si le rapport contient plusieurs exercices (défaut : le plus récent)
 - `--market` : forcer la calibration marché (défaut : déduit du ticker / rapport)
+- `--lang` : langue du livrable — `FR` (défaut), `EN`, ou `BILINGUAL` (toggle FR/EN dans le HTML)
 - `--out-dir` : dossier de sortie (défaut : `<HOME>/<TICKER>-Analysis-<YEAR>/`)
 
 ## Sortie
 
 Le skill crée un dossier `<TICKER>-Analysis-<YEAR>/` contenant :
+
 - `index.html` — la présentation interactive complète
 
 Pour partager publiquement, plusieurs options :
+
 - **Netlify Drop** (le plus simple) : drag-and-drop le dossier sur https://app.netlify.com/drop
 - **Surge.sh** : `npx surge .` depuis le dossier
 - **GitHub Pages** : push dans un repo et activer Pages
@@ -126,7 +132,7 @@ Pour partager publiquement, plusieurs options :
 Le skill choisit automatiquement une couleur d'accent visuelle cohérente avec le secteur :
 
 | Secteur | Couleur | Hex |
-|---|---|---|
+| --- | --- | --- |
 | Real Estate / Immobilier | Amber | `#f59e0b` |
 | Financials / Banques | Blue | `#3b82f6` |
 | Tech / Télécoms | Purple | `#8b5cf6` |
@@ -139,6 +145,7 @@ Le skill choisit automatiquement une couleur d'accent visuelle cohérente avec l
 ### Échelle de recommandations
 
 Échelle institutionnelle classique :
+
 - **ACHAT FORT** — upside > 25% + faible risque
 - **ACHAT** — upside 10-25%
 - **NEUTRE** (biais positif/négatif) — upside ±10%
